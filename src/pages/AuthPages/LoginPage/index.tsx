@@ -69,10 +69,10 @@ export const LoginPage = () => {
               className="lg:h-10 h-7.5 w-auto object-contain"
             />
             <div className="flex flex-col gap-2">
-              <h1 className="text-2xl font-medium leading-8 tracking-[-0.02em] text-grey-900">
+              <h1 className="text-[32px] font-medium leading-10 text-grey-900">
                 Welcome!
               </h1>
-              <p className="text-sm leading-5 font-normal tracking-normal text-grey-500">
+              <p className="text-sm leading-5 font-normal text-grey-500">
                 Kindly enter your email and password to log in.
               </p>
             </div>
@@ -82,7 +82,7 @@ export const LoginPage = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1">
               <label className="text-sm font-medium leading-5 tracking-normal text-grey-900">
                 Email Address
               </label>
@@ -138,11 +138,11 @@ export const LoginPage = () => {
                   className="size-4 rounded border-grey-300 accent-primary cursor-pointer"
                   {...register("rememberMe")}
                 />
-                <span className="text-sm text-grey-600">Remember me</span>
+                <span className="text-sm text-grey-900">Remember me</span>
               </label>
               <Link
                 to="/forgot-password"
-                className="text-sm font-normal text-primary-500 hover:text-primary-500 transition-colors"
+                className="text-sm font-normal leading-5 text-primary-500 hover:text-primary-500 transition-colors"
               >
                 Forgot password?
               </Link>
@@ -152,7 +152,7 @@ export const LoginPage = () => {
               type="submit"
               variant="default"
               size="lg"
-              className="w-full"
+              className="w-full text-base font-normal leading-6"
               disabled={isPending}
             >
               {isPending ? "Logging in..." : "Login"}

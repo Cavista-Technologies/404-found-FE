@@ -7,14 +7,14 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-     --font-poppins: "Poppins", "sans-serif";
+  --font-poppins: "Poppins", "sans-serif";
 
   /* Disabling Tailwind CSS default colors to allow only colors used in project */
   --color-*: initial;
 
-  --color-info: #2432F5;
-  --color-info-container: #F0F1FE;
-  --color-info-container-2: #C5C8FC;
+  --color-info: #2432f5;
+  --color-info-container: #f0f1fe;
+  --color-info-container-2: #c5c8fc;
 
   --color-white: #fff;
   --color-black: #000;
@@ -86,4 +86,14 @@
   --color-error-700: #971b17;
   --color-error-800: #751512;
   --color-error-900: #59100d;
+}
+
+@layer base {
+  /* * {
+    @apply border-border outline-ring/50;
+  } */
+  body {
+    font-size: 14px;
+    font-family: "Poppins", "sans-serif";
+  }
 }
