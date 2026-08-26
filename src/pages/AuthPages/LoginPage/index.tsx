@@ -40,7 +40,7 @@ export const LoginPage = () => {
   const isPending = isSubmitting;
 
   return (
-    <div className="min-h-screen w-full bg-white px-8.5 py-10 flex flex-row-reverse items-stretch font-poppins overflow-hidden border border-primary">
+    <div className="min-h-screen w-full bg-white px-8.5 py-10 flex flex-row-reverse items-stretch font-poppins overflow-hidden">
       {/* Left panel */}
       <div
         className="relative hidden lg:flex shrink-0 overflow-hidden w-[52.24%] rounded-4xl border border-grey-300"
