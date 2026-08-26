@@ -1,20 +1,17 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Input } from "../../../components/ui/input";
-import { Skeleton } from "../../../components/ui/skeleton";
 import { Button } from "../../../components/ui/button";
 import { Link } from "react-router-dom";
 import type { LoginFormValues } from "../../../types/Authentication";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "../../../schemas";
-import { cn } from "../../../lib/utils";
-import LoginImage from "../../../assets/images/ct-recruita.png"
-import Logo from "../../../assets/images/CavistaLogoWithText.png"
+import LoginImage from "../../../assets/images/ct-recruita.png";
+import Logo from "../../../assets/images/CavistaLogoWithText.png";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
   //   const login = useLogin();
 
   const {
@@ -43,20 +40,18 @@ export const LoginPage = () => {
   const isPending = isSubmitting;
 
   return (
-    <div className="min-h-screen w-full bg-white px-8.5 flex flex-row-reverse items-stretch font-poppins overflow-hidden">
+    <div className="min-h-screen w-full bg-white px-8.5 py-10 flex flex-row-reverse items-stretch font-poppins overflow-hidden border border-primary">
       {/* Left panel */}
-      <div className="hidden lg:flex shrink-0 h-screen overflow-hidden w-[52.24%] py-6">
-        {!imageLoaded && <Skeleton className="w-full h-full rounded-[30px]" />}
-
-        <img
-          src={LoginImage}
-          alt="CT-Care lifestyle"
-          onLoad={() => setImageLoaded(true)}
-          className={cn(
-            "w-full h-full object-cover rounded-[30px]",
-            imageLoaded ? "block" : "hidden",
-          )}
-        />
+      <div
+        className="relative hidden lg:flex shrink-0 overflow-hidden w-[52.24%] rounded-4xl border border-grey-300"
+        style={{ backgroundImage: `url(${LoginImage})` }}
+      >
+        <div className="absolute top-0 left-0 h-full w-full inset-0 bg-linear-to-b from-black/10 to-black/20 px-12.75 py-27 flex flex-col gap-2 justify-end">
+          <h2 className="text-white font-medium text-4xl">
+            Every Role. Every stage. Tracked.
+          </h2>
+          <p className="text-grey-300 text-lg leading-7">Structure hiring data, timestamped automatically - so your metrics are trustworthy and your bottlenecks are explainable, not guessed at.</p>
+        </div>
       </div>
 
       {/* Right panel — unchanged */}
