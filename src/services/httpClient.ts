@@ -201,5 +201,5 @@ export class HttpClient{
 }
 
 export const httpClient = new HttpClient(
-  import.meta.env.VITE_API_BASE_URL || "http://iokagbue-001-site4.ktempurl.com",
+  import.meta.env.VITE_API_BASE_URL || "https://devprosper-001-site1.htempurl.com",
 );

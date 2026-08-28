@@ -26,7 +26,8 @@ export const ForgotPassword = () => {
 
   //   const forgotPassword = useForgotPassword();
 
-  const onSubmit = async (data: ForgotPasswordFormValues) => {
+//   const onSubmit = async (data: ForgotPasswordFormValues) => {
+  const onSubmit = async () => {
     // await forgotPassword.mutateAsync(
     //   { email: data.email },
     //   {
