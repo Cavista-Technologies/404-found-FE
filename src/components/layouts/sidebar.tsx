@@ -6,22 +6,20 @@ import {
   ChevronRight,
   ChevronUp,
 } from "lucide-react";
-import { CTLogo, CTLogoWithText } from "@/assets/images/images";
-import { Logout03, UserSwitch } from "@/components/icons";
+import { CTRecruitaLogoWithText, CTMobileLogo } from "@/assets/images/images";
+import { Logout03 } from "@/components/icons";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { bottomMenuItems, menuItems, type MenuItem } from "@/config/menuConfig";
+import { menuItems, type MenuItem } from "@/config/menuConfig";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import { clearCredentials } from "@/store/slices/auth.slice";
-import { resolveRedirect } from "@/lib/resolveRedirect";
 import { capitalizeName, getAvatarInitials } from "../../constants/Helpers";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { setRole } from "@/store/slices/role.slice";
 
 export function Sidebar() {
   const [open, setOpen] = useState(true);
@@ -30,41 +28,22 @@ export function Sidebar() {
   const activeRole = useSelector((state: RootState) => state.role.activeRole);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { username, roles, fullName } = useSelector(
+  const { username, role, fullName } = useSelector(
     (state: RootState) => state.auth,
   );
 
   const dashboardPath =
-    activeRole === "admin"
+    activeRole === "SuperAdmin"
       ? "/dashboard/admin"
-      : activeRole === "manager"
-        ? "/dashboard/manager"
-        : "/dashboard/employee";
+      : activeRole === "Recruiter"
+        ? "/dashboard/recruiterr"
+        : "/dashboard/hiring-manager";
 
   const logOut = () => {
     dispatch(clearCredentials());
     navigate("/login", { replace: true });
   };
 
-  const handleSwitch = () => {
-    const newRole = activeRole === "admin" ? "manager" : "admin";
-    dispatch(setRole(newRole));
-    navigate(resolveRedirect([newRole]), { replace: true });
-    setOpenPopover(false);
-  };
-  const handleSwitchAdminEmployee = () => {
-    const newRole = activeRole === "admin" ? "employee" : "admin";
-    dispatch(setRole(newRole));
-    navigate(resolveRedirect([newRole]), { replace: true });
-    setOpenPopover(false);
-  };
-  const resolvedRoles = resolveRoles(roles);
-
-  const isAdminAndManager =
-    resolvedRoles.includes("Admin") && resolvedRoles.includes("Manager");
-
-  const isAdminAndEmployee =
-    resolvedRoles.includes("Admin") && resolvedRoles.includes("Employee");
 
   const hasRoleAccess = (item: MenuItem): boolean => {
     if (!item.roles || item.roles.length === 0) return false;
@@ -123,9 +102,6 @@ export function Sidebar() {
       if (visibleChildren.length === 0) {
         return null;
       }
-
-      //Find active child, if any
-      // const activeChild = visibleChildren.find((child) => location.pathname === child.path);
 
       return (
         <div key={item.name} className="space-y-1">
@@ -225,13 +201,13 @@ export function Sidebar() {
             >
               {open ? (
                 <img
-                  src={CTLogoWithText}
+                  src={CTRecruitaLogoWithText}
                   alt="Logo"
                   className="w-38 h-7.75 object-cover ml-2"
                 />
               ) : (
                 <img
-                  src={CTLogo}
+                  src={CTMobileLogo}
                   alt="Logo"
                   className="w-8 h-7.5 object-cover ml-1"
                 />
@@ -244,7 +220,7 @@ export function Sidebar() {
             className="cursor-pointer block md:hidden mb-10"
           >
             <img
-              src={CTLogoWithText}
+              src={CTRecruitaLogoWithText}
               alt="Logo"
               className="w-38 h-7.75 object-cover block md:hidden mb-10"
             />
@@ -270,31 +246,6 @@ export function Sidebar() {
                 sideOffset={4}
                 className="p-4 bg-white rounded-3xl border border-grey-200 shadow-md w-70 max-w-72 flex flex-col gap-3"
               >
-                <nav className="flex-1 flex flex-col gap-y-4">
-                  {bottomMenuItems.map((item) => renderMenuItem(item, 0, true))}
-                </nav>
-                {isAdminAndManager && (
-                  <div
-                    className="p-3 text-base text-grey-500 font-poppins flex items-center gap-2 cursor-pointer hover:bg-primary-50 rounded-3xl"
-                    onClick={handleSwitch}
-                  >
-                    <UserSwitch className="size-6" />
-                    <span>
-                      Switch to {activeRole == "admin" ? "Manager" : "Admin"}
-                    </span>
-                  </div>
-                )}
-                {isAdminAndEmployee && (
-                  <div
-                    className="p-3 text-base text-grey-500 font-poppins flex items-center gap-2 cursor-pointer hover:bg-primary-50 rounded-3xl"
-                    onClick={handleSwitchAdminEmployee}
-                  >
-                    <UserSwitch className="size-6" />
-                    <span>
-                      Switch to {activeRole == "admin" ? "Employee" : "Admin"}
-                    </span>
-                  </div>
-                )}
                 <div
                   className="p-3 text-primary-500 font-poppins flex items-center gap-2 text-base cursor-pointer hover:bg-primary-50 rounded-3xl"
                   onClick={logOut}
@@ -332,31 +283,6 @@ export function Sidebar() {
                 sideOffset={4}
                 className="p-4 bg-white rounded-3xl border border-grey-200 shadow-md w-70 max-w-72 flex flex-col gap-3"
               >
-                <nav className="flex-1 flex flex-col gap-y-4">
-                  {bottomMenuItems.map((item) => renderMenuItem(item))}
-                </nav>
-                {isAdminAndManager && (
-                  <div
-                    className="p-3 text-base text-grey-500 font-poppins flex items-center gap-2 cursor-pointer hover:bg-primary-50 rounded-3xl"
-                    onClick={handleSwitch}
-                  >
-                    <UserSwitch className="size-6" />
-                    <span>
-                      Switch to {activeRole == "admin" ? "Manager" : "Admin"}
-                    </span>
-                  </div>
-                )}
-                {isAdminAndEmployee && (
-                  <div
-                    className="p-3 text-base text-grey-500 font-poppins flex items-center gap-2 cursor-pointer hover:bg-primary-50 rounded-3xl"
-                    onClick={handleSwitchAdminEmployee}
-                  >
-                    <UserSwitch className="size-6" />
-                    <span>
-                      Switch to {activeRole == "admin" ? "Employee" : "Admin"}
-                    </span>
-                  </div>
-                )}
                 <div
                   className="p-3 text-primary-500 font-poppins flex items-center gap-2 text-base cursor-pointer hover:bg-primary-50 rounded-3xl"
                   onClick={logOut}

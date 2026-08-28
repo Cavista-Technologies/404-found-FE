@@ -8,27 +8,17 @@ import {
 import type { SVGProps } from "react";
 
 export type UserRole =
-  | "admin"
-  | "manager"
-  | "employee"
-  | "people team"
-  | "acting manager";
+  | "SuperAdmin"
+  | "Recruiter";
 
-/** AccountType Enum
- *
- * [Description("Admin")]Admin = 1,
- * [Description("Manager")]Manager,
- * [Description("Employee")]Employee,
- * [Description("People Team")]PeopleTeam,
- *
- **/
+
 export type AccountType = 1 | 2 | 3 | 4;
 
 export interface MenuItem {
   name: string;
   path: string;
   icon: React.ComponentType<SVGProps<SVGSVGElement>>;
-  roles?: UserRole[];
+  roles?: UserRole;
   accountTypes?: AccountType[];
   children?: MenuItem[];
   badgeCount?: number;
@@ -43,30 +33,30 @@ export const menuItems: MenuItem[] = [
     name: "Dashboard",
     path: "/dashboard/admin",
     icon: DashboardSquare01,
-    roles: ["admin"],
+    roles: "SuperAdmin",
   },
   {
     name: "Create Role",
     path: "/dashboard/admin/create-role",
     icon: PlusIcon,
-    roles: ["admin"],
+    roles: "SuperAdmin",
   },
   {
     name: "Roles",
     path: "/dashboard/admin/roles",
     icon: LeftToRightListBullet,
-    roles: ["admin"],
+    roles: "SuperAdmin",
   },
   {
     name: "Analytics",
     path: "/dashboard/admin/analytics",
     icon: VueSaxLinearDiagram,
-    roles: ["admin"],
+    roles: "SuperAdmin",
   },
   {
     name: "Profile Settings",
     path: "/dashboard/admin/calendar",
     icon: UserSettings01,
-    roles: ["admin"],
+    roles: "SuperAdmin",
   },
 ];

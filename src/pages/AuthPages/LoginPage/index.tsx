@@ -9,10 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "../../../schemas";
 import LoginImage from "../../../assets/images/ct-recruita.png";
 import Logo from "../../../assets/images/CavistaLogoWithText.png";
+import { useLogin } from "@/hooks/auth/useLogin";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  //   const login = useLogin();
+    const login = useLogin();
 
   const {
     register,
@@ -27,17 +28,15 @@ export const LoginPage = () => {
     },
   });
 
-  //  const onSubmit = async ({ email, password, rememberMe }: LoginFormValues) => {
-  const onSubmit = async ({}: LoginFormValues) => {
-    // await login.mutateAsync({
-    //   emailAddress: email,
-    //   password,
-    //   rememberMe: rememberMe ?? true,
-    // });
+   const onSubmit = async ({ email, password, rememberMe }: LoginFormValues) => {
+    await login.mutateAsync({
+      emailAddress: email,
+      password,
+      rememberMe: rememberMe ?? true,
+    });
   };
 
-  //   const isPending = isSubmitting || login.isPending;
-  const isPending = isSubmitting;
+    const isPending = isSubmitting || login.isPending;
 
   return (
     <div className="min-h-screen w-full bg-white px-8.5 py-10 flex flex-row-reverse items-stretch font-poppins overflow-hidden">
