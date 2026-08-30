@@ -25,7 +25,10 @@ const authSlice = createSlice({
       state.refreshToken = data.refreshToken;
       state.tokenExpiration = data.tokenExpiration;
       state.username = data.username;
+      state.fullName = data.fullName;
+      state.role = data.role;
       state.isAuthenticated = true;
+      
 
       // rememberMe=true  → localStorage  (survives browser close)
       // rememberMe=false → sessionStorage (cleared on browser close)
@@ -38,6 +41,7 @@ const authSlice = createSlice({
       state.tokenExpiration = null;
       state.username = null;
       state.role = null;
+      state.fullName = null;
       state.isAuthenticated = false;
 
       clearSession();

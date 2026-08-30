@@ -28,9 +28,10 @@ export function Sidebar() {
   const activeRole = useSelector((state: RootState) => state.role.activeRole);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { username, role, fullName } = useSelector(
+  const { username, fullName } = useSelector(
     (state: RootState) => state.auth,
   );
+  console.log(username, fullName)
 
   const dashboardPath =
     activeRole === "SuperAdmin"
@@ -134,7 +135,7 @@ export function Sidebar() {
                     key={child.name}
                     to={child.path}
                     className={({ isActive }) =>
-                      `flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                      `flex items-center px-3 py-2 text-sm font-medium rounded-[10px] transition-colors ${
                         isActive
                           ? "bg-primary-50 text-gray-900"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
@@ -144,7 +145,7 @@ export function Sidebar() {
                   >
                     {/* {isActiveChild ? child.icon : <div className="w-4 h-4" />} */}
                     {isActiveChild ? (
-                      <div className="bg-gray-600 w-2 h-2 rounded-full" />
+                      <div className="bg-gray-600 w-2 h-2 rounded-[10px]" />
                     ) : (
                       <div className="w-2 h-2" />
                     )}
@@ -163,7 +164,7 @@ export function Sidebar() {
         key={item.name}
         to={item.path}
         className={({ isActive }) =>
-          `flex items-center py-2 px-3 text-base rounded-full transition-colors ${
+          `flex items-center py-2 px-3 text-base rounded-[10px] transition-colors ${
             isActive && location.pathname === item.path
               ? "bg-primary-500 text-white "
               : "text-grey-500 hover:bg-primary-50 hover:text-grey-900"
@@ -203,7 +204,7 @@ export function Sidebar() {
                 <img
                   src={CTRecruitaLogoWithText}
                   alt="Logo"
-                  className="w-38 h-7.75 object-cover ml-2"
+                  className="w-52 h-9 object-cover ml-2"
                 />
               ) : (
                 <img
@@ -258,7 +259,7 @@ export function Sidebar() {
           ) : (
             <Popover open={openPopover} onOpenChange={setOpenPopover}>
               <PopoverTrigger asChild>
-                <div className="w-full h-18 p-3 pr-8 bg-grey-50 rounded-full flex gap-3 items-center cursor-pointer">
+                <div className="w-full h-18 p-3 pr-8 bg-grey-50 rounded-[10px] flex gap-3 items-center cursor-pointer">
                   <div className="shrink-0 rounded-full w-8 h-8 bg-[#414141] text-white font-poppins font-medium flex justify-center items-center">
                     {getAvatarInitials(fullName!)}
                   </div>

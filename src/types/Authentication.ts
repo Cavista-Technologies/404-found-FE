@@ -24,6 +24,7 @@ export interface LoginData {
     refreshToken: string,
     username: string,
     role: string,
+    fullName: string | null,
 }
 
 export interface LoginRequest {
