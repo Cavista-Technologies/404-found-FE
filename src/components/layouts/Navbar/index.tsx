@@ -1,29 +1,15 @@
-// import { CTLogo } from "@/assets/images/images";
-// import { Menu11 } from "@/components/icons";
 import { menuItems } from "@/config/menuConfig";
-// import type { RootState } from "@/store";
-// import { useSelector } from "react-redux";
-// import { useLocation, useNavigate } from "react-router-dom";
+import { formatCurrentDate } from "@/constants/Helpers";
 import { useLocation } from "react-router-dom";
 
-const Navbar = ({ rightSlot }: { rightSlot?: React.ReactNode }) => {
+const Navbar = () => {
   const location = useLocation();
-//   const navigate = useNavigate();
-//   const activeRole = useSelector((state: RootState) => state.role.activeRole);
-
-//   const dashboardPath =
-//     activeRole === "admin"
-//       ? "/dashboard/admin"
-//       : activeRole === "manager"
-//         ? "/dashboard/manager"
-//         : "/dashboard/employee";
 
   const allMenuItems = [...menuItems];
   const activeItem = allMenuItems.find(
     (item) => item.path === location.pathname,
   );
 
-//   const isCalendar = location?.pathname == "/dashboard/admin/calendar";
 
   return (
     <>
@@ -37,6 +23,10 @@ const Navbar = ({ rightSlot }: { rightSlot?: React.ReactNode }) => {
             <h3 className="text-grey-900 font-medium font-poppins text-[32px] whitespace-nowrap">
               {activeItem?.name}
             </h3>
+
+            <div className="py-2 px-3 rounded-[10px] bg-success-25 border border-success-200 text-success-500">
+                {formatCurrentDate()}
+            </div>
           </div>
         </div>
       </header>

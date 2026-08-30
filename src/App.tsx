@@ -3,6 +3,7 @@ import { LoginPage } from "./pages/AuthPages/LoginPage";
 import { ForgotPassword } from "./pages/AuthPages/ForgotPassword";
 import { CheckEmail } from "./pages/AuthPages/CheckEmail";
 import { AuthenticatedLayout } from "./components/layouts/AuthLayout";
+import { AdminDashboard } from "./pages/AdminPages/AdminDashboard";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         {/* NESTED Routes from Dashboard */}
 
         <Route path="/dashboard/*" element={<AuthenticatedLayout />}>
-
+            <Route path="admin" index element={<AdminDashboard />}/>
         </Route>
       </Routes>
     </div>
