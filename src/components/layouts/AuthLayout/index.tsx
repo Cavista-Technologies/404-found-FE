@@ -8,7 +8,7 @@ export const AuthenticatedLayout = () => {
 
   return (
     <>
-      <div className="h-screen overflow-y-hidden hidden md:flex bg-gray-50">
+      <div className="h-screen overflow-y-hidden hidden md:flex bg-grey-50">
         {/* Sidebar */}
         <Sidebar />
 

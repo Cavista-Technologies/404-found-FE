@@ -386,5 +386,87 @@ export const InformationSquare = (props: SVGProps<SVGSVGElement>) => {
   );
 };
 
+export const Briefcase02 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M0.808696 5.34378C0.755669 4.90146 0.729155 4.68029 0.766443 4.49925C0.872852 3.98261 1.32735 3.56369 1.93306 3.42396C2.14531 3.375 2.41178 3.375 2.9447 3.375H12.8033C13.3363 3.375 13.6027 3.375 13.815 3.42396C14.4207 3.56369 14.8752 3.98261 14.9816 4.49925C15.0189 4.68029 14.9924 4.90146 14.9393 5.34378C14.8178 6.35752 14.2483 6.91204 13.1624 7.23173L10.0341 8.15273C8.9646 8.46758 8.42988 8.625 7.87402 8.625C7.31817 8.625 6.78344 8.46758 5.71399 8.15273L2.58564 7.23173C1.49973 6.91204 0.930227 6.35752 0.808696 5.34378Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+      />
+      <path
+        d="M1.47115 6.75L1.32396 8.45678C1.06013 11.5163 0.928213 13.046 1.77453 14.023C2.62084 15 4.07791 15 6.99204 15H8.75601C11.6701 15 13.1272 15 13.9735 14.023C14.8198 13.046 14.6879 11.5163 14.4241 8.45679L14.2769 6.75"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M10.499 3L10.4411 2.80132C10.1523 1.81129 10.0079 1.31627 9.66421 1.03314C9.32048 0.75 8.86391 0.75 7.95078 0.75H7.79727C6.88413 0.75 6.42756 0.75 6.08384 1.03314C5.74011 1.31627 5.59573 1.81129 5.30697 2.80132L5.24902 3"
+        stroke="currentColor"
+        stroke-width="1.5"
+      />
+    </svg>
+  );
+};
 
-// export const
+export const CheckmarkSquare01 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M0.75 7.875C0.75 4.51624 0.75 2.83686 1.79343 1.79343C2.83686 0.75 4.51624 0.75 7.875 0.75C11.2338 0.75 12.9131 0.75 13.9566 1.79343C15 2.83686 15 4.51624 15 7.875C15 11.2338 15 12.9131 13.9566 13.9566C12.9131 15 11.2338 15 7.875 15C4.51624 15 2.83686 15 1.79343 13.9566C0.75 12.9131 0.75 11.2338 0.75 7.875Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+      />
+      <path
+        d="M4.875 9.1875C4.875 9.1875 6.075 9.87189 6.675 10.875C6.675 10.875 8.475 6.9375 10.875 5.625"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const Clock01 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle
+        cx="8.25"
+        cy="8.25"
+        r="7.5"
+        stroke="currentColor"
+        stroke-width="1.5"
+      />
+      <path
+        d="M8.25 5.25V8.25L9.75 9.75"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
