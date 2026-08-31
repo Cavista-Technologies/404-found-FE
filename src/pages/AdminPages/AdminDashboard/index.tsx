@@ -1,4 +1,5 @@
 import { DashboardCards } from "@/components/cards/DashboardCards";
+import { SingleAreaChart } from "@/components/charts/SingleAreaChart";
 import SingleBarChart from "@/components/charts/SingleBarChart";
 import {
   Briefcase02,
@@ -66,37 +67,50 @@ export const AdminDashboard = () => {
     { department: "Operations", averageDays: 24 },
   ];
 
+  const timeToFillTrends = [
+    { month: "Aug", timeToFill: 42 },
+    { month: "Mar", timeToFill: 35 },
+    { month: "Sep", timeToFill: 28 },
+    { month: "Jul", timeToFill: 31 },
+    { month: "Dec", timeToFill: 24 },
+    { month: "Jan", timeToFill: 24 },
+  ];
+
   return (
     <div className="border border-primary">
       <h2 className="text-grey-700 text-2xl font-medium leading-8 mb-4">
         Hiring portfolio snapshot
       </h2>
 
-      <div className="flex gap-8">
-        {cards.map((card) => (
-          <DashboardCards
-            icon={card.icon}
-            title={card.title}
-            value={card.value}
-            bottomText={card.bottomText}
-          />
-        ))}
-      </div>
+      <div className="space-y-8">
+        <div className="flex justify-between">
+          {cards.map((card) => (
+            <DashboardCards
+              icon={card.icon}
+              title={card.title}
+              value={card.value}
+              bottomText={card.bottomText}
+            />
+          ))}
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* <DoughnutPieChart
-          title="User Type Distribution"
-          titleFont="text-grey-600 font-medium font-poppins text-lg leading-7"
-          data={userTypeData}
-        /> */}
-        <SingleBarChart
-          title="Average Time to fill by departments"
-          data={averageTimeToFillByDepartment}
-          labelKey="department"
-          valueKey="averageDays"
-          titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
-          //   loading={chartsLoading}
-        />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <SingleAreaChart
+            title="Time to fill trends: 6 months"
+            titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
+            data={timeToFillTrends}
+            labelKey="month"
+            valueKey="timeToFill"
+          />
+          <SingleBarChart
+            title="Average Time to fill by departments"
+            data={averageTimeToFillByDepartment}
+            labelKey="department"
+            valueKey="averageDays"
+            titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
+            //   loading={chartsLoading}
+          />
+        </div>
       </div>
     </div>
   );

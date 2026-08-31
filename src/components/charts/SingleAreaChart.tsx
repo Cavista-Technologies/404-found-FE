@@ -54,7 +54,7 @@ export const SingleAreaChart: React.FC<SingleAreaChartDataProps> = ({
                     x2="0"
                     y2="1"
                   >
-                    <stop offset="0%" stopColor="#00AB3A" stopOpacity={0.4} />
+                    <stop offset="0%" stopColor="#C7D2FE" stopOpacity={0.4} />
                     <stop offset="100%" stopColor="#EEF2FF" stopOpacity={0.4} />
                   </linearGradient>
                 </defs>
@@ -62,20 +62,20 @@ export const SingleAreaChart: React.FC<SingleAreaChartDataProps> = ({
                   dataKey={labelKey}
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: "#6b7280" }}
+                  tick={{ fontSize: 12, fill: "#7A7172" }}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: "#6b7280" }}
+                  tick={{ fontSize: 12, fill: "#7A7172" }}
                 />
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip />
                 <Area
                   type="monotone"
                   dataKey={valueKey}
-                  stroke="#00AB3A"
-                  strokeWidth={2}
+                  stroke="#2432F5"
+                  strokeWidth={1}
                   fill="url(#colorGradient)"
                 />
               </AreaChart>
