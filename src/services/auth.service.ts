@@ -51,7 +51,6 @@ export const authService = {
     }),
 };
 
-// Refresh token API call
 export const refreshTokenApi = async (): Promise<any> => {
   const session = loadSession();
   const currentRefreshToken = session.refreshToken;
@@ -63,13 +62,9 @@ export const refreshTokenApi = async (): Promise<any> => {
 
   const response = await httpClient.post<LoginData>(
     "/auth/refresh-token",
-    {
-      refreshToken: currentRefreshToken,
-      accessToken: currentToken,
-    },
+    { refreshToken: currentRefreshToken, accessToken: currentToken },
     { returnFullEnvelope: true },
   );
-
   if (!response.data) return;
 
   const decoded = decodeJwtPayload<{
@@ -77,16 +72,18 @@ export const refreshTokenApi = async (): Promise<any> => {
     "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
   }>(response.data.token);
 
-  saveSession(response.data, true);
+  const mergedData = {
+    ...response.data,
+    fullName:
+      decoded?.[
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+      ] ?? null,
+  };
+
+  saveSession(mergedData, true);   // ✅ now persists fullName too
 
   return {
     ...response,
-    data: {
-      ...response.data,
-      fullName:
-        decoded?.[
-          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-        ] ?? null,
-    },
+    data: mergedData,
   };
 };

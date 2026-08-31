@@ -31,7 +31,7 @@ export const SingleAreaChart: React.FC<SingleAreaChartDataProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-2xl border border-primary-50 bg-white overflow-hidden flex flex-col ${className}`}
+      className={`rounded-2xl bg-white overflow-hidden flex flex-col w-full ${className}`}
     >
       <div className="border-b border-grey-200 px-4 py-3">
         <h3 className={titleClassName}>{title}</h3>
@@ -43,9 +43,9 @@ export const SingleAreaChart: React.FC<SingleAreaChartDataProps> = ({
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
           </div>
         ) : (
-          <div className="h-78.25">
+          <div className="h-100 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data}>
+              <AreaChart data={data} margin={{left: -38, right: 0, top: 0, bottom: 0}}>
                 <defs>
                   <linearGradient
                     id="colorGradient"
@@ -62,6 +62,7 @@ export const SingleAreaChart: React.FC<SingleAreaChartDataProps> = ({
                   dataKey={labelKey}
                   axisLine={false}
                   tickLine={false}
+                  width={10}
                   tick={{ fontSize: 12, fill: "#7A7172" }}
                 />
                 <YAxis
@@ -69,7 +70,7 @@ export const SingleAreaChart: React.FC<SingleAreaChartDataProps> = ({
                   tickLine={false}
                   tick={{ fontSize: 12, fill: "#7A7172" }}
                 />
-                <CartesianGrid strokeDasharray="3 3"/>
+                <CartesianGrid strokeDasharray="0"/>
                 <Tooltip />
                 <Area
                   type="monotone"

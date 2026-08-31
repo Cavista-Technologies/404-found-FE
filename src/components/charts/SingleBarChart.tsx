@@ -19,6 +19,7 @@ interface SingleBarChartDataProps {
   className?: string;
   titleClassName?: string;
   loading?: boolean;
+  noCartesianGrid?: boolean;
   leftMargin?: number;
 }
 
@@ -43,12 +44,13 @@ const SingleBarChart: React.FC<SingleBarChartDataProps> = ({
   titleClassName = "text-grey-600 font-medium text-lg leading-7 font-poppins",
   loading,
   leftMargin = 16,
+  noCartesianGrid = false
 }) => {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
 
   return (
     <div
-      className={`rounded-2xl border border-primary-50 bg-white overflow-hidden flex flex-col ${className}`}
+      className={`rounded-2xl bg-white overflow-hidden flex flex-col ${className}`}
     >
       <div className="border-b border-grey-200 px-4 py-3">
         <h3 className={titleClassName}>{title}</h3>
@@ -65,11 +67,14 @@ const SingleBarChart: React.FC<SingleBarChartDataProps> = ({
               margin={{ top: 0, right: 12, left: leftMargin, bottom: 10 }}
               onMouseLeave={() => setActiveIndex(null)}
             >
+
+              {!noCartesianGrid &&
               <CartesianGrid
                 strokeDasharray="3 3"
                 stroke="#e9e8e8"
                 // vertical={false}
               />
+              }
               <XAxis
                 dataKey={labelKey}
                 axisLine={false}

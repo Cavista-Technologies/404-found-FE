@@ -77,13 +77,13 @@ export const AdminDashboard = () => {
   ];
 
   return (
-    <div className="border border-primary">
+    <div className="border border-primary w-full">
       <h2 className="text-grey-700 text-2xl font-medium leading-8 mb-4">
         Hiring portfolio snapshot
       </h2>
 
       <div className="space-y-8">
-        <div className="flex justify-between">
+        <div className="w-full flex gap-8">
           {cards.map((card) => (
             <DashboardCards
               icon={card.icon}
@@ -107,6 +107,7 @@ export const AdminDashboard = () => {
             data={averageTimeToFillByDepartment}
             labelKey="department"
             valueKey="averageDays"
+            noCartesianGrid
             titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
             //   loading={chartsLoading}
           />

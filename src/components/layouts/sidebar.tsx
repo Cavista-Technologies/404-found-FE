@@ -285,7 +285,7 @@ export function Sidebar() {
                 className="p-4 bg-white rounded-3xl border border-grey-200 shadow-md w-70 max-w-72 flex flex-col gap-3"
               >
                 <div
-                  className="p-3 text-primary-500 font-poppins flex items-center gap-2 text-base cursor-pointer hover:bg-primary-50 rounded-3xl"
+                  className="p-3 text-primary-500 font-poppins flex items-center gap-2 text-base cursor-pointer hover:rounded-[10px] hover:bg-primary-50 rounded-3xl"
                   onClick={logOut}
                 >
                   <Logout03 className="size-6" />

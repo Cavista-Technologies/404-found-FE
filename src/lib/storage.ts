@@ -27,7 +27,7 @@ export function loadSession(): StoredSession {
     tokenExpiration: readFromEither(KEYS.tokenExpiration),
     username: readFromEither(KEYS.username),
     role: JSON.parse(readFromEither(KEYS.role) ?? "[]"),
-    fullName: readFromEither(KEYS.fullName),
+    fullName: readFromEither(KEYS.fullName) || null,
   };
 }
 
@@ -40,6 +40,7 @@ export function saveSession(
     tokenExpiration: string;
     username: string;
     role: string;
+    fullName: string | null
   },
   rememberMe: boolean
 ): void {
@@ -50,6 +51,7 @@ export function saveSession(
   storage.setItem(KEYS.tokenExpiration, data.tokenExpiration);
   storage.setItem(KEYS.username, data.username);
   storage.setItem(KEYS.role, JSON.stringify(data.role));
+  storage.setItem(KEYS.fullName, data.fullName ?? "");
 }
 
 export function clearSession(): void {
