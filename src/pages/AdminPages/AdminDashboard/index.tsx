@@ -79,7 +79,7 @@ export const AdminDashboard = () => {
   return (
     <div className="w-full">
       <h2 className="text-grey-700 text-2xl font-medium leading-8 mb-4">
-        Hiring portfolio snapchat
+        Hiring portfolio snapshot
       </h2>
 
       <div className="space-y-8">
