@@ -146,7 +146,7 @@ export const LoginPage = () => {
               type="submit"
               variant="default"
               size="lg"
-              className="w-full text-base font-normal leading-6"
+              className="w-full text-base font-normal leading-6 py-6"
               disabled={isPending}
             >
               {isPending ? "Logging in..." : "Login"}
