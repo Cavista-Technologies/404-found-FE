@@ -112,6 +112,18 @@ export const AdminDashboard = () => {
             //   loading={chartsLoading}
           />
         </div>
+
+        <div className="grid lg:grid-cols-2">
+          <div
+            className="rounded-2xl bg-white overflow-hidden flex flex-col"
+          >
+            <div className="border-b border-grey-200 px-4 py-3">
+              <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
+                Candidate Funnel
+              </h3>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
