@@ -77,7 +77,7 @@ export const AdminDashboard = () => {
   ];
 
   return (
-    <div className="border border-primary w-full">
+    <div className="w-full">
       <h2 className="text-grey-700 text-2xl font-medium leading-8 mb-4">
         Hiring portfolio snapshot
       </h2>
