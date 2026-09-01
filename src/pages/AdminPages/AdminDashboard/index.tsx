@@ -7,6 +7,7 @@ import {
   Clock01,
   InformationSquare,
 } from "@/components/icons";
+import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
 
 export const AdminDashboard = () => {
   const cards = [
@@ -75,6 +76,15 @@ export const AdminDashboard = () => {
     { month: "Dec", timeToFill: 24 },
     { month: "Jan", timeToFill: 24 },
   ];
+  const candidateFunnel = [
+    { title: "Applicants", value: 42 },
+    { title: "Qualified", value: 35 },
+    { title: "Screened", value: 28 },
+    { title: "Interviewed", value: 31 },
+    { title: "Offers", value: 24 },
+    { title: "Hires", value: 24 },
+  ];
+  const totalApplicants = 42;
 
   return (
     <div className="w-full">
@@ -115,13 +125,19 @@ export const AdminDashboard = () => {
 
         <div className="grid lg:grid-cols-2">
           <div
-            className="rounded-2xl bg-white overflow-hidden flex flex-col"
+            className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6"
           >
             <div className="border-b border-grey-200 px-4 py-3">
               <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
                 Candidate Funnel
               </h3>
             </div>
+
+            <div className="flex flex-col gap-6 px-4">
+                {candidateFunnel.map((item)=>(
+                    <RangeComponent title={item.title} value={item.value} total={totalApplicants}/>
+                ))}
+              </div>
           </div>
         </div>
       </div>
