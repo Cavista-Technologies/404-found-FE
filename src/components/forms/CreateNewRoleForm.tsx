@@ -557,7 +557,7 @@ export const CreateNewRoleForm = () => {
                         <h4 className="uppercase text-grey-600 font-medium text-base">
                           Other Details
                         </h4>
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+                        <div className="grid gap-x-4 gap-y-6">
                           <Controller
                             name="salaryRange"
                             control={control}
@@ -576,6 +576,7 @@ export const CreateNewRoleForm = () => {
                                     placeholder="e.g 1,000,000 - 2,000,000"
                                     className={cn(
                                       fieldState.error && "border-error-200",
+                                      "w-1/2"
                                     )}
                                   />
                                   {fieldState.error && (
@@ -606,7 +607,7 @@ export const CreateNewRoleForm = () => {
                                     placeholder="Why is this role open?"
                                     className={cn(
                                       fieldState.error && "border-error-200",
-                                      "h-30",
+                                      "h-30 w-1/2",
                                     )}
                                   />
                                   {fieldState.error && (
@@ -679,6 +680,9 @@ export const CreateNewRoleForm = () => {
               <Link to="/dashboard/admin/roles">Cancel</Link>
             </Button>
           </div>
+
+          <p className="text-grey-600 text-base leading-6 font-poppins mt-8">Complete all required fields above to activate.<br />
+          Save as Draft with just a title.</p>
         </div>
       </div>
     </>
