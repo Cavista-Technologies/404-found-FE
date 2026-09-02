@@ -33,9 +33,37 @@ export const CreateNewRoleSchema = z.object({
     .min(1, "Please select a department")
     .transform((val) => Number(val)),
   recruiterName: z.string().min(1, "Recruiter name is required"),
-  recruiterEmail: z.string().min(1, "Recruiter email is required"),
+  recruiterEmail: z.string().superRefine((val, ctx) => {
+    if (!val || val.trim() === "") {
+      ctx.addIssue({
+        code: "custom",
+        message: "Recruiter email is required",
+      });
+      return;
+    }
+    if (!z.email().safeParse(val).success) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Invalid email format",
+      });
+    }
+  }),
   hiringManagerName: z.string().min(1, "Hiring manager name is required"),
-  hiringManagerEmail: z.string().min(1, "Hiring manager email is required"),
+  hiringManagerEmail: z.string().superRefine((val, ctx) => {
+    if (!val || val.trim() === "") {
+      ctx.addIssue({
+        code: "custom",
+        message: "Hiring manager email is required",
+      });
+      return;
+    }
+    if (!z.email().safeParse(val).success) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Invalid email format",
+      });
+    }
+  }),
   numberOfOpenings: z
     .string()
     .min(1, "Number of openings cannot be empty")
