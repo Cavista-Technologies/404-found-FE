@@ -108,7 +108,7 @@ export const CreateNewRoleForm = () => {
   return (
     <>
       <div className="flex gap-8">
-        <div className="border border-grey-200 p-6 rounded-[16px] flex-1 space-y-10">
+        <div className="border border-grey-200 p-6 rounded-2xl flex-1 space-y-10">
           <div className="space-y-2">
             <h3 className="text-grey-700 text-2xl font-medium">
               Create New Role
@@ -629,7 +629,7 @@ export const CreateNewRoleForm = () => {
           </div>
         </div>
 
-        <div className="min-w-112.5 p-6 h-fit border border-grey-200 rounded-[16px]">
+        <div className="min-w-112.5 p-6 h-fit border border-grey-200 rounded-2xl">
           <h4 className="text-grey-600 text-lg font-medium leading-7">
             Activation Readiness
           </h4>
