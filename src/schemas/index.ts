@@ -45,7 +45,7 @@ export const CreateNewRoleSchema = z.object({
     .min(1, "SLA Target days cannot be empty")
     .transform((val) => Number(val)),
   targetHireDate: z.date({ error: "Target hire date is required" }),
-  salaryRange: z.string().min(1, "Salary range is required"),
+  salaryRange: z.string().optional(),
   reason: z.string().min(1, "Reason for opening is required"),
   activate: z.boolean().default(false),
 });

@@ -9,13 +9,17 @@ import { CreateNewRoleSchema } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { DropdownInput } from "../GenericComponents/DropdownInput";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { fetchDepartments } from "@/services/lookup.service";
 import { EmploymentTypeOptions, PriorityLevelOptions } from "@/constants";
 import { Textarea } from "../ui/textarea";
 import DatePicker from "../date-picker/DatePicker";
+import { useToast } from "@/context/toastContext";
+import { createNewRole } from "@/services/roleCreation.service";
 
 export const CreateNewRoleForm = () => {
+  const {showToast} = useToast()
+
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
     queryKey: ["getDepartments"],
     queryFn: fetchDepartments,
@@ -48,9 +52,26 @@ export const CreateNewRoleForm = () => {
       activate: false,
     },
   });
+
+  const submitMutation = useMutation({
+    mutationFn: createNewRole,
+    onSuccess: (res) => {
+      reset();
+      showToast(res.message ?? "Role opened succesfully", "success");
+    },
+    onError: (error) => {
+      showToast(`${error.message}`, "error");
+    },
+  });
+
+  const onSubmit: SubmitHandler<CreateNewRoleFormOutput> = (values) => {
+    submitMutation.mutate(values);
+  };
+
+
   return (
-    <div>
-      <form action="">
+    <div className="w-full border border-primary">
+      <form id="create-new-role-form" onSubmit={handleSubmit(onSubmit)}>
         <FieldSet>
           <FieldGroup>
             <div className="space-y-6">
@@ -439,7 +460,7 @@ export const CreateNewRoleForm = () => {
                         </Field>
                       )}
                     />
-                    
+
                     <Controller
                       name="slaTargetDays"
                       control={control}
@@ -470,6 +491,77 @@ export const CreateNewRoleForm = () => {
                         </Field>
                       )}
                     />
+                  </div>
+                </div>
+
+                {/* Other Details for Role */}
+
+                {/* Hiring date Details */}
+                <div className="space-y-3">
+                  <h4 className="uppercase text-grey-600 font-medium text-base">
+                    Other Details
+                  </h4>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+                      <Controller
+                      name="salaryRange"
+                      control={control}
+                      render={({ field, fieldState }) => (
+                        <Field>
+                          <div className="space-y-1">
+                            <FieldLabel
+                              htmlFor={field.name}
+                              className="text-sm text-grey-900 font-medium"
+                            >
+                              Salary Range (Optional)
+                            </FieldLabel>
+                            <Input
+                            {...field}
+                            id="salaryRange"
+                            placeholder="e.g 1,000,000 - 2,000,000"
+                            className={cn(
+                              fieldState.error && "border-error-200",
+                            )}
+                          />
+                            {fieldState.error && (
+                              <p className="text-xs text-primary-500">
+                                {fieldState.error.message}
+                              </p>
+                            )}
+                          </div>
+                        </Field>
+                      )}
+                    />
+
+                    <Controller
+                    name="reason"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <Field>
+                        <div className="space-y-1">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-sm text-grey-900 font-medium"
+                          >
+                            Reason<span className="text-error">*</span>
+                          </FieldLabel>
+                          <Textarea
+                            {...field}
+                            id="reason"
+                            placeholder="Why is this role open?"
+                            className={cn(
+                              fieldState.error && "border-error-200",
+                              "h-30",
+                            )}
+                          />
+                          {fieldState.error && (
+                            <p className="text-xs text-primary-500">
+                              {fieldState.error.message}
+                            </p>
+                          )}
+                        </div>
+                      </Field>
+                    )}
+                  />
                   </div>
                 </div>
             </div>
