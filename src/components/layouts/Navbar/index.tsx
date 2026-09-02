@@ -20,9 +20,9 @@ const Navbar = () => {
         <div className="px-10 py-4 w-full">
           <div className="flex lg:items-center flex-col lg:flex-row justify-between gap-4">
             {/* Left Section - Page Title */}
-            <h3 className="text-grey-900 font-medium font-poppins text-[32px] whitespace-nowrap">
+            <h2 className="text-grey-900 font-medium font-poppins text-[32px] whitespace-nowrap">
               {activeItem?.name}
-            </h3>
+            </h2>
 
             <div className="py-2 px-3 rounded-[10px] bg-success-25 border border-success-200 text-success-500">
                 {formatCurrentDate()}

@@ -2,8 +2,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "./pages/AuthPages/LoginPage";
 import { ForgotPassword } from "./pages/AuthPages/ForgotPassword";
 import { CheckEmail } from "./pages/AuthPages/CheckEmail";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { AuthenticatedLayout } from "./components/layouts/AuthLayout";
 import { AdminDashboard } from "./pages/AdminPages/AdminDashboard";
+import { CreateRolePage } from "./pages/AdminPages/CreateRole";
 
 function App() {
   return (
@@ -13,12 +15,38 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/check-email" element={<CheckEmail />} />
-        
-        {/* NESTED Routes from Dashboard */}
 
-        <Route path="/dashboard/*" element={<AuthenticatedLayout />}>
-            <Route path="admin" index element={<AdminDashboard />}/>
+        {/* Protected Routes */}
+        <Route
+          path="/dashboard/*"
+          element={
+            <ProtectedRoute>
+              <AuthenticatedLayout />
+            </ProtectedRoute>
+          }
+        >
+          {/* Admin Routes */}
+          <Route path="admin">
+            <Route
+              index
+              element={
+                <ProtectedRoute requiredRoles="SuperAdmin">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="create-role"
+              element={
+                <ProtectedRoute requiredRoles="SuperAdmin">
+                  <CreateRolePage />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
         </Route>
+
+        {/* NESTED Routes from Dashboard */}
       </Routes>
     </div>
   );

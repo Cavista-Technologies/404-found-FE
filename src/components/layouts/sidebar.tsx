@@ -31,7 +31,6 @@ export function Sidebar() {
   const { username, fullName } = useSelector(
     (state: RootState) => state.auth,
   );
-  console.log(username, fullName)
 
   const dashboardPath =
     activeRole === "SuperAdmin"
