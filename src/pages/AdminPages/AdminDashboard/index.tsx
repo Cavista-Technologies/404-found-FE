@@ -14,7 +14,7 @@ export const AdminDashboard = () => {
     {
       id: "open",
       icon: (
-        <div className="size-8 bg-warning-50 rounded-[8px] flex items-center justify-center">
+        <div className="size-8 bg-warning-50 rounded-lg flex items-center justify-center">
           <Briefcase02 className="text-warning-500 size-4" />
         </div>
       ),
@@ -26,7 +26,7 @@ export const AdminDashboard = () => {
     {
       id: "filled",
       icon: (
-        <div className="size-8 bg-success-50 rounded-[8px] flex items-center justify-center">
+        <div className="size-8 bg-success-50 rounded-lg flex items-center justify-center">
           <CheckmarkSquare01 className="text-success-500 size-4" />
         </div>
       ),
@@ -38,7 +38,7 @@ export const AdminDashboard = () => {
     {
       id: "averageTime",
       icon: (
-        <div className="size-8 bg-info-container rounded-[8px] flex items-center justify-center">
+        <div className="size-8 bg-info-container rounded-lg flex items-center justify-center">
           <Clock01 className="text-info size-4" />
         </div>
       ),
@@ -50,7 +50,7 @@ export const AdminDashboard = () => {
     {
       id: "atRisk",
       icon: (
-        <div className="size-8 bg-error-50 rounded-[8px] flex items-center justify-center">
+        <div className="size-8 bg-error-50 rounded-lg flex items-center justify-center">
           <InformationSquare className="text-error-500 size-4.5" />
         </div>
       ),
