@@ -5,7 +5,7 @@ export const createNewRole = async (
   credentials: CreateNewRoleFormOutput,
 ): Promise<ApiEnvelope<string[]>> => {
   const response = await httpClient.post<string[]>(
-    "/auth/user-invite",
+    "/job-roles/create",
     credentials,
     { returnFullEnvelope: true },
   );

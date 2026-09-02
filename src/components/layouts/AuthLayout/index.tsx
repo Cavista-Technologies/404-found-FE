@@ -17,7 +17,7 @@ export const AuthenticatedLayout = () => {
           <Navbar />
 
           {/* Page Content */}
-          <main className="flex-1 h-full overflow-y-auto py-8 px-10 bg-grey-50">
+          <main className="flex-1 min-h-0 h-full overflow-y-auto py-8 px-10 bg-grey-50">
             <Outlet />
           </main>
         </div>
