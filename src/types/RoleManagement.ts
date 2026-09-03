@@ -5,5 +5,24 @@ export type CreateNewRoleFormInput = z.input<typeof CreateNewRoleSchema>
 export type CreateNewRoleFormOutput = z.output<typeof CreateNewRoleSchema>
 
 export interface RolesTableValues{
-    
+    "id": number,
+      "title": string,
+      "department": string,
+      "employmentType": number,
+      "employmentTypeStr": string,
+      "status": number,
+      "statusStr": string,
+      "priority": number,
+      "priorityStr": string,
+      "numberOfOpenings": number,
+      "slaTargetDays": number,
+      "targetHireDate": string,
+      "slaPercent": number,
+      "recruiterName": string,
+      "recruiterEmail": string | null,
+      "hiringManagerName": string,
+      "hiringManagerEmail": string,
+      "salaryRange": string | null,
+      "location": string | null,
+      "applicantsCount": number,
 }

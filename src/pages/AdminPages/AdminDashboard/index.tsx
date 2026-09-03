@@ -8,11 +8,22 @@ import {
   InformationSquare,
 } from "@/components/icons";
 import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
-import { fetchDashboardSnapshotStatistics, fetchDashboardTimeToFillTrends } from "@/services/adminDashboard.service";
+import {
+  fetchCandidateFunnelStatistics,
+  fetchDashboardSnapshotStatistics,
+  fetchDashboardTimeToFillTrends,
+} from "@/services/adminDashboard.service";
 import { useQuery } from "@tanstack/react-query";
 
+interface CandidateFunnelStats {
+  applicants: number;
+  screened: number;
+  interviewed: number;
+  offers: number;
+  hires: number;
+}
+
 export const AdminDashboard = () => {
-  
   const { data: snapShotData, isLoading: snapShotLoading } = useQuery({
     queryKey: ["fetchAdminDashboardSnapshot"],
     queryFn: fetchDashboardSnapshotStatistics,
@@ -21,10 +32,31 @@ export const AdminDashboard = () => {
     queryKey: ["fetchTimeToFillTrends"],
     queryFn: fetchDashboardTimeToFillTrends,
   });
+  const { data: candidateFunnelStats } = useQuery({
+    queryKey: ["fetchCandidateFunnel"],
+    queryFn: fetchCandidateFunnelStatistics,
+  });
 
-  console.log(timeToFillData?.monthlyTrend)
-  const monthlyTimeToFillTrend = timeToFillData?.monthlyTrend ?? []
-  const departmentTimeToFillTrend = timeToFillData?.byDepartment ?? []
+  const funnelStageMap: {
+    key: keyof CandidateFunnelStats;
+    title: string;
+  }[] = [
+    { key: "applicants", title: "Applicants" },
+    { key: "screened", title: "Screened" },
+    { key: "interviewed", title: "Interviewed" },
+    { key: "offers", title: "Offers" },
+    { key: "hires", title: "Hires" },
+  ];
+
+  const candidateFunnel = funnelStageMap.map(({ key, title }) => ({
+    title,
+    value: candidateFunnelStats?.[key] ?? 0,
+  }));
+
+  const totalApplicants = candidateFunnelStats?.applicants ?? 0;
+
+  const monthlyTimeToFillTrend = timeToFillData?.monthlyTrend ?? [];
+  const departmentTimeToFillTrend = timeToFillData?.byDepartment ?? [];
 
   const cards = [
     {
@@ -35,7 +67,7 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "Open Roles",
-        value: snapShotData?.openRoles ?? 0,
+      value: snapShotData?.openRoles ?? 0,
       bottomText: "Currently Active",
     },
     {
@@ -46,7 +78,7 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "Role Filled",
-        value: snapShotData?.rolesFilledThisQuarter ?? 0,
+      value: snapShotData?.rolesFilledThisQuarter ?? 0,
       bottomText: "This Quarter",
     },
     {
@@ -57,7 +89,7 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "Average Time to Fill",
-        value: snapShotData?.averageTimeToFillDays ?? 0,
+      value: snapShotData?.averageTimeToFillDays ?? 0,
       bottomText: "vs last month",
     },
     {
@@ -68,20 +100,10 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "At Risk",
-        value: snapShotData?.atRiskCount ?? 0,
+      value: snapShotData?.atRiskCount ?? 0,
       bottomText: "Role(s)",
     },
   ];
-
-  const candidateFunnel = [
-    { title: "Applicants", value: 42 },
-    { title: "Qualified", value: 35 },
-    { title: "Screened", value: 28 },
-    { title: "Interviewed", value: 31 },
-    { title: "Offers", value: 24 },
-    { title: "Hires", value: 24 },
-  ];
-  const totalApplicants = 42;
 
   return (
     <div className="w-full">
@@ -93,6 +115,7 @@ export const AdminDashboard = () => {
         <div className="w-full flex gap-8">
           {cards.map((card) => (
             <DashboardCards
+              key={card.title}
               icon={card.icon}
               title={card.title}
               value={card.value}
@@ -118,7 +141,7 @@ export const AdminDashboard = () => {
             valueKey="averageDays"
             noCartesianGrid
             titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
-              loading={timeToFillLoading}
+            loading={timeToFillLoading}
           />
         </div>
 
@@ -133,6 +156,7 @@ export const AdminDashboard = () => {
             <div className="flex flex-col gap-6 px-4">
               {candidateFunnel.map((item) => (
                 <RangeComponent
+                  key={item.title}
                   title={item.title}
                   value={item.value}
                   total={totalApplicants}
