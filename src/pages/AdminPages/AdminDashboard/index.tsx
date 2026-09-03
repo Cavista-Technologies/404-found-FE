@@ -91,6 +91,9 @@ export const AdminDashboard = () => {
       title: "Average Time to Fill",
       value: snapShotData?.averageTimeToFillDays ?? 0,
       bottomText: "vs last month",
+      addDays: true,
+      trend: true,
+      trendValue: snapShotData?.timeToFillDeltaVsLastMonth
     },
     {
       id: "atRisk",
@@ -119,7 +122,10 @@ export const AdminDashboard = () => {
               icon={card.icon}
               title={card.title}
               value={card.value}
+              addDays={card.addDays}
               bottomText={card.bottomText}
+              trend={card.trend}
+              trendValue={card.trendValue}
               isLoading={snapShotLoading}
             />
           ))}
