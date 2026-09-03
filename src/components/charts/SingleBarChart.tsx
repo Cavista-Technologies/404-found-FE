@@ -44,7 +44,7 @@ const SingleBarChart: React.FC<SingleBarChartDataProps> = ({
   titleClassName = "text-grey-600 font-medium text-lg leading-7 font-poppins",
   loading,
   leftMargin = 16,
-  noCartesianGrid = false
+  noCartesianGrid = false,
 }) => {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
 
@@ -59,6 +59,10 @@ const SingleBarChart: React.FC<SingleBarChartDataProps> = ({
       {/* Chart */}
       {loading ? (
         <BarChartSkeleton />
+      ) : data.length === 0 ? (
+        <div className="flex-1 flex items-center justify-center h-100">
+          <p className="text-grey-500 text-sm font-poppins">No data yet</p>
+        </div>
       ) : (
         <div className="flex-1 py-6">
           <ResponsiveContainer width="100%" height={400}>
@@ -67,14 +71,13 @@ const SingleBarChart: React.FC<SingleBarChartDataProps> = ({
               margin={{ top: 0, right: 12, left: leftMargin, bottom: 10 }}
               onMouseLeave={() => setActiveIndex(null)}
             >
-
-              {!noCartesianGrid &&
-              <CartesianGrid
-                strokeDasharray="3 3"
-                stroke="#e9e8e8"
-                // vertical={false}
-              />
-              }
+              {!noCartesianGrid && (
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="#e9e8e8"
+                  // vertical={false}
+                />
+              )}
               <XAxis
                 dataKey={labelKey}
                 axisLine={false}
