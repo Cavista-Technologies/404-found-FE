@@ -6,7 +6,7 @@ import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { AuthenticatedLayout } from "./components/layouts/AuthLayout";
 import { AdminDashboard } from "./pages/AdminPages/AdminDashboard";
 import { CreateRolePage } from "./pages/AdminPages/CreateRole";
-import { AdminRolesPage } from "./pages/AdminPages/Roles";
+// import { AdminRolesPage } from "./pages/AdminPages/Roles";
 
 function App() {
   return (
@@ -45,14 +45,14 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="roles"
               element={
                 <ProtectedRoute requiredRoles="SuperAdmin">
                   <AdminRolesPage />
                 </ProtectedRoute>
               }
-            />
+            /> */}
           </Route>
         </Route>
 

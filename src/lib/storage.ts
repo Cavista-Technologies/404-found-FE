@@ -1,8 +1,8 @@
 import type { StoredSession } from "@/types/Authentication";
 
 const KEYS = {
-  authToken: "authToken",
-  refreshToken: "refreshToken",
+  authToken: "ctr-atk",
+  refreshToken: "ctr-rtk",
   tokenExpiration: "tokenExpiration",
   username: "username",
   role: "role",

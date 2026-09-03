@@ -8,8 +8,24 @@ import {
   InformationSquare,
 } from "@/components/icons";
 import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
+import { fetchDashboardSnapshotStatistics, fetchDashboardTimeToFillTrends } from "@/services/adminDashboard.service";
+import { useQuery } from "@tanstack/react-query";
 
 export const AdminDashboard = () => {
+  
+  const { data: snapShotData, isLoading: snapShotLoading } = useQuery({
+    queryKey: ["fetchAdminDashboardSnapshot"],
+    queryFn: fetchDashboardSnapshotStatistics,
+  });
+  const { data: timeToFillData, isLoading: timeToFillLoading } = useQuery({
+    queryKey: ["fetchTimeToFillTrends"],
+    queryFn: fetchDashboardTimeToFillTrends,
+  });
+
+  console.log(timeToFillData?.monthlyTrend)
+  const monthlyTimeToFillTrend = timeToFillData?.monthlyTrend ?? []
+  const departmentTimeToFillTrend = timeToFillData?.byDepartment ?? []
+
   const cards = [
     {
       id: "open",
@@ -19,8 +35,7 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "Open Roles",
-      //   value: statistics?.totalUsers ?? 0,
-      value: 0,
+        value: snapShotData?.openRoles ?? 0,
       bottomText: "Currently Active",
     },
     {
@@ -31,8 +46,7 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "Role Filled",
-      //   value: statistics?.activeUsers ?? 0,
-      value: 0,
+        value: snapShotData?.rolesFilledThisQuarter ?? 0,
       bottomText: "This Quarter",
     },
     {
@@ -43,8 +57,7 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "Average Time to Fill",
-      //   value: statistics?.deactivatedUsers ?? 0,
-      value: 0,
+        value: snapShotData?.averageTimeToFillDays ?? 0,
       bottomText: "vs last month",
     },
     {
@@ -55,27 +68,11 @@ export const AdminDashboard = () => {
         </div>
       ),
       title: "At Risk",
-      //   value: statistics?.pendingInvitations ?? 0,
-      value: 0,
+        value: snapShotData?.atRiskCount ?? 0,
       bottomText: "Role(s)",
     },
   ];
-  const averageTimeToFillByDepartment = [
-    { department: "Engineering", averageDays: 42 },
-    { department: "Product", averageDays: 35 },
-    { department: "People", averageDays: 28 },
-    { department: "Creative", averageDays: 31 },
-    { department: "Operations", averageDays: 24 },
-  ];
 
-  const timeToFillTrends = [
-    { month: "Aug", timeToFill: 42 },
-    { month: "Mar", timeToFill: 35 },
-    { month: "Sep", timeToFill: 28 },
-    { month: "Jul", timeToFill: 31 },
-    { month: "Dec", timeToFill: 24 },
-    { month: "Jan", timeToFill: 24 },
-  ];
   const candidateFunnel = [
     { title: "Applicants", value: 42 },
     { title: "Qualified", value: 35 },
@@ -100,6 +97,7 @@ export const AdminDashboard = () => {
               title={card.title}
               value={card.value}
               bottomText={card.bottomText}
+              isLoading={snapShotLoading}
             />
           ))}
         </div>
@@ -108,25 +106,24 @@ export const AdminDashboard = () => {
           <SingleAreaChart
             title="Time to fill trends: 6 months"
             titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
-            data={timeToFillTrends}
+            data={monthlyTimeToFillTrend}
             labelKey="month"
-            valueKey="timeToFill"
+            valueKey="averageDays"
+            loading={timeToFillLoading}
           />
           <SingleBarChart
             title="Average Time to fill by departments"
-            data={averageTimeToFillByDepartment}
+            data={departmentTimeToFillTrend}
             labelKey="department"
             valueKey="averageDays"
             noCartesianGrid
             titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
-            //   loading={chartsLoading}
+              loading={timeToFillLoading}
           />
         </div>
 
         <div className="grid lg:grid-cols-2">
-          <div
-            className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6"
-          >
+          <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6">
             <div className="border-b border-grey-200 px-4 py-3">
               <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
                 Candidate Funnel
@@ -134,10 +131,14 @@ export const AdminDashboard = () => {
             </div>
 
             <div className="flex flex-col gap-6 px-4">
-                {candidateFunnel.map((item)=>(
-                    <RangeComponent title={item.title} value={item.value} total={totalApplicants}/>
-                ))}
-              </div>
+              {candidateFunnel.map((item) => (
+                <RangeComponent
+                  title={item.title}
+                  value={item.value}
+                  total={totalApplicants}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
