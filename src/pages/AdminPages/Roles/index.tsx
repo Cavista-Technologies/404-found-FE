@@ -15,6 +15,7 @@ import { fetchDepartments } from "@/services/lookup.service";
 import { buildDropdownOptions, getPriorityStyle } from "@/constants/Helpers";
 import { JobStatusOptions } from "@/constants";
 import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
+import { ViewIcon } from "@/components/icons";
 
 export const AdminRolesPage = () => {
   const [search, setSearch] = useState("");
@@ -129,6 +130,22 @@ export const AdminRolesPage = () => {
           {data.priorityStr}
         </span>
       ),
+    },
+    {
+      header: "",
+      accessor: (data) => (
+        <button
+          onClick={() => {
+            // setSelectedLeaveId(data.id);
+            // setShowDetails(true);
+          }}
+          className="flex items-center gap-2 text-sm font-medium text-info hover:text-primary-700 transition-colors whitespace-nowrap cursor-pointer"
+        >
+          <ViewIcon />
+          View Details
+        </button>
+      ),
+      width: "w-fit",
     },
   ];
 
