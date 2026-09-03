@@ -7,6 +7,7 @@ import { AuthenticatedLayout } from "./components/layouts/AuthLayout";
 import { AdminDashboard } from "./pages/AdminPages/AdminDashboard";
 import { CreateRolePage } from "./pages/AdminPages/CreateRole";
 import { AdminRolesPage } from "./pages/AdminPages/Roles";
+import { RoleDetailPage } from "./pages/AdminPages/AdminRoleDetail";
 
 function App() {
   return (
@@ -50,6 +51,15 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles="SuperAdmin">
                   <AdminRolesPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="roles/:id"
+              element={
+                <ProtectedRoute requiredRoles="SuperAdmin">
+                  <RoleDetailPage />
                 </ProtectedRoute>
               }
             />

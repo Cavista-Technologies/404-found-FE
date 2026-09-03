@@ -12,8 +12,9 @@ import type { RolesTableValues } from "@/types/RoleManagement";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllRoles } from "@/services/roleManagement.service";
 import { fetchDepartments } from "@/services/lookup.service";
-import { buildDropdownOptions } from "@/constants/Helpers";
+import { buildDropdownOptions, getPriorityStyle } from "@/constants/Helpers";
 import { JobStatusOptions } from "@/constants";
+import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
 
 export const AdminRolesPage = () => {
   const [search, setSearch] = useState("");
@@ -101,13 +102,16 @@ export const AdminRolesPage = () => {
         </span>
       ),
     },
-    // {
-    //   header: "Age",
-    //   accessor: "",
-    // },
     {
       header: "SLA%",
-      accessor: "slaPercent",
+      accessor: (data) => (
+        <RangeComponent
+          title="SLA"
+          value={data.slaPercent}
+          total={100}
+          colorByValue
+        />
+      ),
     },
     {
       header: "Openings",
@@ -115,7 +119,16 @@ export const AdminRolesPage = () => {
     },
     {
       header: "Priority",
-      accessor: "priorityStr",
+      accessor: (data) => (
+        <span
+          className={cn(
+            getPriorityStyle(data.priorityStr),
+            "px-2 py-0.75 rounded-4xl",
+          )}
+        >
+          {data.priorityStr}
+        </span>
+      ),
     },
   ];
 

@@ -55,3 +55,27 @@ export const buildDropdownOptions = (
   { id: "all", name: placeholderValue },
   ...options.map((d) => ({ id: String(d.id), name: d.name })),
 ];
+
+export const getUrgencyStyle = (urgency: string) => {
+  switch (urgency) {
+    case "Urgent":
+      return "bg-primary-50 text-primary";
+    case "Normal":
+      return "bg-info-container text-info";
+    case "Emergency":
+      return "bg-error-50 text-error-600";
+    default:
+      return "bg-grey-50 text-grey-500";
+  }
+};export const getPriorityStyle = (priority: string) => {
+  switch (priority) {
+    case "High":
+      return "bg-error-50 text-error-500";
+    case "Normal":
+      return "bg-warning text-warning";
+    case "Low":
+      return "bg-success-50 text-success-600";
+    default:
+      return "bg-grey-50 text-grey-500";
+  }
+};
