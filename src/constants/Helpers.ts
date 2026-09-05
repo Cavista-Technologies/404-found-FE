@@ -67,7 +67,9 @@ export const getUrgencyStyle = (urgency: string) => {
     default:
       return "bg-grey-50 text-grey-500";
   }
-};export const getPriorityStyle = (priority: string) => {
+}
+
+export const getPriorityStyle = (priority: string) => {
   switch (priority) {
     case "High":
       return "bg-error-50 text-error-500";
@@ -78,4 +80,39 @@ export const getUrgencyStyle = (urgency: string) => {
     default:
       return "bg-grey-50 text-grey-500";
   }
+};
+
+export const getJobStatusStyle = (jobStatus: string) => {
+  switch (jobStatus) {
+    case "Draft":
+      return  "bg-warning-50 text-warning-600";
+    case "Filled":
+      return "bg-success-50 text-success-600";
+    case "Open":
+      return "bg-info-container text-info";
+    case "Closed":
+      return "bg-error-50 text-error-600";
+    default:
+      return "bg-grey-50 text-grey-500";
+  }
+};
+
+export const formatDateTime = (isoString: string): [string, string] => {
+  const date = new Date(isoString);
+
+  // Format date as DD-MM-YYYY
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // months are 0-based
+  const year = date.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+
+  // Format time as hh:mm:ss AM/PM
+  const formattedTime = date.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+
+  return [formattedDate, formattedTime];
 };

@@ -12,10 +12,15 @@ import type { RolesTableValues } from "@/types/RoleManagement";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllRoles } from "@/services/roleManagement.service";
 import { fetchDepartments } from "@/services/lookup.service";
-import { buildDropdownOptions, getPriorityStyle } from "@/constants/Helpers";
+import {
+  buildDropdownOptions,
+  getJobStatusStyle,
+  getPriorityStyle,
+} from "@/constants/Helpers";
 import { JobStatusOptions } from "@/constants";
 import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
 import { ViewIcon } from "@/components/icons";
+import { useNavigate } from "react-router-dom";
 
 export const AdminRolesPage = () => {
   const [search, setSearch] = useState("");
@@ -25,6 +30,8 @@ export const AdminRolesPage = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLength, setPageLength] = useState(10);
+
+  const navigate = useNavigate();
 
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
     queryKey: ["getDepartments"],
@@ -64,7 +71,8 @@ export const AdminRolesPage = () => {
       ),
   });
 
-  const allRoles = roles ?? [];
+  const allRoles = roles?.items ?? [];
+  const totalItems = roles?.itemCount || 0;
 
   const columns: Column<RolesTableValues>[] = [
     {
@@ -92,11 +100,7 @@ export const AdminRolesPage = () => {
         <span
           className={cn(
             "text-xs font-medium px-3 py-0.5 rounded-3xl",
-            data.statusStr === "Pending Onboarding" &&
-              "bg-warning-50 text-warning-600",
-            data.statusStr === "Deactivated" &&
-              "bg-primary-50 text-primary-600",
-            data.statusStr === "Active" && "bg-success-50 text-success-600",
+            getJobStatusStyle(data.statusStr),
           )}
         >
           {data.statusStr}
@@ -113,6 +117,7 @@ export const AdminRolesPage = () => {
           colorByValue
         />
       ),
+      width: "250px",
     },
     {
       header: "Openings",
@@ -136,8 +141,7 @@ export const AdminRolesPage = () => {
       accessor: (data) => (
         <button
           onClick={() => {
-            // setSelectedLeaveId(data.id);
-            // setShowDetails(true);
+            navigate(`/dashboard/admin/roles/${data.id}`);
           }}
           className="flex items-center gap-2 text-sm font-medium text-info hover:text-primary-700 transition-colors whitespace-nowrap cursor-pointer"
         >
@@ -213,7 +217,7 @@ export const AdminRolesPage = () => {
             pageSize={pageLength}
             onPageChange={setCurrentPage}
             onPageSizeChange={handlePageSizeChange}
-            // totalCount={totalItems}
+            totalCount={totalItems}
           />
         </CardContent>
       </Card>
