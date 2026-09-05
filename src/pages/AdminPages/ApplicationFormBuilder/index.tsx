@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { z } from "zod";
 
 import { ArrowLeft02 } from "@/components/icons"; // already used elsewhere in your codebase
 import { Card, CardContent } from "@/components/ui/card";
@@ -97,6 +96,9 @@ export const ApplicationFormBuilderPage = () => {
       showToast("Application form created successfully", "success")
       navigate(`/dashboard/admin/roles/${id}`)
     },
+    onError: (res)=>{
+      showToast(res.message, "error")
+    }
   });
 
   const handleToggleEdit = (fieldId: string) => {
