@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -24,6 +24,8 @@ import { FormFieldItem } from "./FormFieldItem";
 import { AddFieldPanel } from "./AddFieldPanel";
 import { FormSummaryPanel } from "./FormSummaryPanel";
 import { CandidateLinkPanel } from "./CandidateLinkPanel";
+import { CreateApplicationFormSchema } from "@/schemas";
+import { useToast } from "@/context/toastContext";
 
 const createId = () => crypto.randomUUID();
 
@@ -66,26 +68,6 @@ const createDefaultStandardFields = (): ApplicationFormFieldDraft[] => [
   },
 ];
 
-/** Validates the payload shape right before we hit the API. */
-const payloadSchema = z.object({
-  jobRoleId: z.number(),
-  title: z.string().min(1, "Form title is required"),
-  introMessage: z.string(),
-  fields: z
-    .array(
-      z.object({
-        label: z.string().min(1, "Every field needs a label"),
-        placeholder: z.string(),
-        fieldType: z.number(),
-        isRequired: z.boolean(),
-        sortOrder: z.number(),
-        isStandard: z.boolean(),
-        options: z.array(z.string()),
-      }),
-    )
-    .min(1),
-});
-
 export const ApplicationFormBuilderPage = () => {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
@@ -104,11 +86,16 @@ export const ApplicationFormBuilderPage = () => {
   const [editingFieldId, setEditingFieldId] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
+  const {showToast} = useToast()
+  const navigate = useNavigate()
+
   const { mutate: submitForm, isPending: isPublishing } = useMutation({
     mutationFn: (payload: CreateApplicationFormPayload) =>
       createApplicationForm(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["application-forms"] });
+      showToast("Application form created successfully", "success")
+      navigate(`/dashboard/admin/roles/${id}`)
     },
   });
 
@@ -179,14 +166,13 @@ export const ApplicationFormBuilderPage = () => {
       })),
     };
 
-    const result = payloadSchema.safeParse(payload);
+    const result = CreateApplicationFormSchema.safeParse(payload);
     if (!result.success) {
       setFormError(
         result.error.issues[0]?.message ?? "Please check the form fields.",
       );
       return;
     }
-
     submitForm(payload);
   };
 
@@ -299,7 +285,7 @@ export const ApplicationFormBuilderPage = () => {
                   optional={optionalCount}
                 />
                 <CandidateLinkPanel
-                  link="talent.cavistatech.com/apply/..." // ⚠️ NOT WIRED — no endpoint given for this
+                  link="talent.cavistatech.com/apply/..." 
                   onPreview={() => {}}
                 />
               </CardContent>

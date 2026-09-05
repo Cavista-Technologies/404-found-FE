@@ -77,3 +77,22 @@ export const CreateNewRoleSchema = z.object({
   reason: z.string().min(1, "Reason for opening is required"),
   activate: z.boolean().default(false),
 });
+
+export const CreateApplicationFormSchema = z.object({
+  jobRoleId: z.number(),
+  title: z.string().min(1, "Form title is required"),
+  introMessage: z.string(),
+  fields: z
+    .array(
+      z.object({
+        label: z.string().min(1, "Every field needs a label"),
+        placeholder: z.string(),
+        fieldType: z.number(),
+        isRequired: z.boolean(),
+        sortOrder: z.number(),
+        isStandard: z.boolean(),
+        options: z.array(z.string()),
+      }),
+    )
+    .min(1),
+});
