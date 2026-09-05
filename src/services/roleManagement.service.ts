@@ -27,3 +27,19 @@ export const fetchRoleDetails = async(id:string):Promise<RoleDetails> => {
   const response = await httpClient.get<RoleDetails>(`/job-roles/open-roles/${id}`)
   return response
 }
+
+
+// export const fetchRolePipeline = async(id: string):Promise<>=>{
+//   const response = await httpClient.get<>(`/job-roles/$${id}/pipeline`)
+//   return response
+// }
+
+// export const fetchRoleApplicants = async(id: string):Promise<>=>{
+//   const response = await httpClient.get<>(`/job-roles/$${id}/applicants`)
+//   return response
+// }
+
+// export const fetchRoleTimeline = async(id: string):Promise<>=>{
+//   const response = await httpClient.get<>(`/job-roles/$${id}/timeline`)
+//   return response
+// }

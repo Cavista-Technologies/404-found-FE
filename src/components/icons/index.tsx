@@ -606,3 +606,256 @@ export const ViewIcon = (props: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+export const LeftToRightListNumber = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M7.41699 3.25L15.7503 3.25"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M7.41699 8.25L15.7503 8.25"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M7.41699 13.25L15.7503 13.25"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M0.75 10.75H2C2.23233 10.75 2.34849 10.75 2.44509 10.7692C2.84178 10.8481 3.15188 11.1582 3.23079 11.5549C3.25 11.6515 3.25 11.7677 3.25 12C3.25 12.2323 3.25 12.3485 3.23079 12.4451C3.15188 12.8418 2.84178 13.1519 2.44509 13.2308C2.34849 13.25 2.23233 13.25 2 13.25C1.76767 13.25 1.65151 13.25 1.55491 13.2692C1.15822 13.3481 0.848121 13.6582 0.769215 14.0549C0.75 14.1515 0.75 14.2677 0.75 14.5V15.25C0.75 15.4857 0.75 15.6036 0.823223 15.6768C0.896447 15.75 1.0143 15.75 1.25 15.75H3.25"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M0.75 0.75H1.75C1.88807 0.75 2 0.861929 2 1V5.75M2 5.75H0.75M2 5.75H3.25"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const Link05 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 19 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M10.3333 9.08333H13.25C15.5512 9.08333 17.4167 7.21785 17.4167 4.91667C17.4167 2.61548 15.5512 0.75 13.25 0.75H10.3333M7.83333 9.08333H4.91667C2.61548 9.08333 0.75 7.21785 0.75 4.91667C0.75 2.61548 2.61548 0.75 4.91667 0.75H7.83333"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6.58301 4.91699H11.583"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
+
+export const TextSmallcaps = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 19 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M8.25058 13.25H3.25058M5.75058 0.75V13.25M10.7506 2.83333V0.75H0.75V2.83333"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15.7506 15.75H12.4172M14.0839 8.25002V15.75M17.4172 9.5V8.25H10.751L10.7514 9.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const ArrowDown01 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 12 7"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M10.75 0.750038C10.75 0.750038 7.06756 5.74999 5.74996 5.75C4.43237 5.75001 0.75 0.749999 0.75 0.749999"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const Text01 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 14 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M9.08301 15.75H4.08301"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.33301 0.75C7.33301 0.335786 6.99722 0 6.58301 0C6.16879 0 5.83301 0.335786 5.83301 0.75H6.58301H7.33301ZM5.83301 15.75C5.83301 16.1642 6.16879 16.5 6.58301 16.5C6.99722 16.5 7.33301 16.1642 7.33301 15.75H6.58301H5.83301ZM6.58301 0.75H5.83301V15.75H6.58301H7.33301V0.75H6.58301Z"
+        fill="currentColor"
+      />
+      <path
+        d="M12.4167 3.25C12.4167 2.72659 12.4167 2.46489 12.3495 2.23556C12.2099 1.75855 11.8388 1.34763 11.3785 1.16021C11.1571 1.07011 10.9071 1.04456 10.407 0.993463C9.2246 0.872653 7.73948 0.75 6.58333 0.75C5.42719 0.75 3.94206 0.872653 2.75967 0.993463C2.25958 1.04456 2.00954 1.07011 1.78821 1.16021C1.32787 1.34763 0.956797 1.75855 0.817143 2.23556C0.75 2.46489 0.75 2.72659 0.75 3.25"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
+
+export const Upload03 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M4.03125 6.5835C3.45548 6.58776 3.10901 6.6054 2.83304 6.67847C1.57702 7.01105 0.71711 8.13675 0.750965 9.40409C0.760771 9.77116 0.900513 10.2249 1.18 11.1323C1.85261 13.316 2.98303 15.2117 5.51537 15.6666C5.98086 15.7502 6.50467 15.7502 7.55228 15.7502L8.94771 15.7502C9.99533 15.7502 10.5191 15.7502 10.9846 15.6666C13.517 15.2117 14.6474 13.316 15.32 11.1323C15.5995 10.2249 15.7392 9.77116 15.749 9.40409C15.7829 8.13675 14.923 7.01105 13.667 6.67847C13.391 6.6054 13.0445 6.58776 12.4688 6.5835"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8.24968 0.750081L8.24967 9.91675M8.24968 0.750081C8.63999 0.750081 8.93667 1.11517 9.53004 1.84533L10.333 2.83341M8.24968 0.750081C7.85936 0.750081 7.56268 1.11516 6.96931 1.84533L6.16634 2.83341"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const Call = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 19 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M2.23233 9.03554C1.44231 7.658 1.06085 6.53314 0.830841 5.39292C0.490662 3.70656 1.26915 2.05925 2.55879 1.00814C3.10385 0.563897 3.72867 0.715676 4.05098 1.29391L4.77863 2.59933C5.35538 3.63405 5.64376 4.15141 5.58656 4.6999C5.52936 5.2484 5.14045 5.69513 4.36262 6.58858L2.23233 9.03554ZM2.23233 9.03554C3.8314 11.8238 6.34084 14.3346 9.13234 15.9356M9.13234 15.9356C10.5099 16.7256 11.6347 17.107 12.775 17.337C14.4613 17.6772 16.1086 16.8987 17.1597 15.6091C17.604 15.064 17.4522 14.4392 16.874 14.1169L15.5686 13.3893C14.5338 12.8125 14.0165 12.5241 13.468 12.5813C12.9195 12.6385 12.4728 13.0274 11.5793 13.8053L9.13234 15.9356Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const ArrowUp02 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 9 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M4.08301 1.20947L4.08301 11.2095"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M0.75 3.8763L3.37623 1.25008C3.70956 0.916742 3.87623 0.750076 4.08333 0.750076C4.29044 0.750076 4.45711 0.916742 4.79044 1.25008L7.41667 3.8763"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const ArrowDown02 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 9 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M4.08301 10.75V0.75"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M0.75 8.0835L3.37623 10.7097C3.70956 11.0431 3.87623 11.2097 4.08333 11.2097C4.29044 11.2097 4.45711 11.0431 4.79044 10.7097L7.41667 8.0835"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

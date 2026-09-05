@@ -8,6 +8,7 @@ import { AdminDashboard } from "./pages/AdminPages/AdminDashboard";
 import { CreateRolePage } from "./pages/AdminPages/CreateRole";
 import { AdminRolesPage } from "./pages/AdminPages/Roles";
 import { RoleDetailPage } from "./pages/AdminPages/AdminRoleDetail";
+import { ApplicationFormBuilderPage } from "./pages/AdminPages/ApplicationFormBuilder";
 
 function App() {
   return (
@@ -60,6 +61,15 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles="SuperAdmin">
                   <RoleDetailPage />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="roles/:id/create-form"
+              element={
+                <ProtectedRoute requiredRoles="SuperAdmin">
+                  <ApplicationFormBuilderPage />
                 </ProtectedRoute>
               }
             />

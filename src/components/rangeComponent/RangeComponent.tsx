@@ -30,8 +30,8 @@ export const RangeComponent = ({
 
   const getBgColorByValue = (pct: number) => {
     if (pct === 0) return "bg-grey-500";
-    if (pct >= 80) return "bg-success-500";
-    return "bg-primary-500";
+    if (pct >= 80) return "bg-primary-500";
+    return "bg-success-500";
   };
 
   const bgColor = colorByValue

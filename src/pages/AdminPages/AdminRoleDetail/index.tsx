@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { ArrowLeft02 } from "@/components/icons";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { fetchRoleDetails } from "@/services/roleManagement.service";
 import { cn } from "@/lib/utils";
 import {
@@ -14,9 +14,17 @@ import { Button } from "@/components/ui/button";
 import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getAvatarInitials } from "@/constants/Helpers";
+import { useState } from "react";
+import { PipelineTab } from "./PipelineTab";
+import { ApplicantsTab } from "./ApplicantsTab";
+import { TimelineTab } from "./TimelineTab";
+
+type RoleDetailTab = "pipeline" | "applicants" | "timeline";
 
 export const RoleDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const [activeTab, setActiveTab] = useState<RoleDetailTab>("pipeline");
+  const navigate = useNavigate();
 
   const { data: role } = useQuery({
     queryKey: ["fetchRoleDetails"],
@@ -24,6 +32,11 @@ export const RoleDetailPage = () => {
     enabled: !!id,
   });
   console.log(id);
+
+  const tabs: { key: RoleDetailTab; label: string; count: number }[] = [
+    { key: "pipeline", label: "Pipeline", count: 4 },
+    { key: "applicants", label: "Applicants", count: 5 },
+  ];
 
   return (
     <div className="w-full">
@@ -78,7 +91,11 @@ export const RoleDetailPage = () => {
               </div>
             </div>
 
-            <Button variant="secondary" size="md">
+            <Button
+              variant="secondary"
+              size="md"
+              onClick={() => navigate(`/dashboard/admin/roles/${id}/create-form`)}
+            >
               Generate Application Form
             </Button>
           </div>
@@ -150,8 +167,62 @@ export const RoleDetailPage = () => {
         </CardContent>
       </Card>
 
-      <Card>
-        
+      <Card className="mt-8">
+        <CardHeader className="flex gap-0 border border-t-0 border-x-0 border-grey-200">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setActiveTab(tab.key)}
+              className={cn(
+                "p-4 border-b-2 border-grey-200 flex gap-2 items-center",
+                activeTab === tab.key && " border-primary-500",
+              )}
+            >
+              <p
+                className={cn(
+                  "text-sm font-medium leading-5 text-grey-700",
+                  activeTab === tab.key && "text-primary-500",
+                )}
+              >
+                {tab.label}
+              </p>
+              <p
+                className={cn(
+                  "px-2 rounded-xl bg-grey-100 text-grey-700 font-medium text-xs text-center",
+                  activeTab === tab.key && "bg-primary-500 text-white",
+                )}
+              >
+                {tab.count}
+              </p>
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => setActiveTab("timeline")}
+            className={cn(
+              "p-4 border-b-2 border-grey-200",
+              activeTab === "timeline" && "border-primary-500",
+            )}
+          >
+            <p
+              className={cn(
+                "text-sm font-medium leading-5 text-grey-700",
+                activeTab === "timeline" && "text-primary-500",
+              )}
+            >
+              Timeline
+            </p>
+          </button>
+        </CardHeader>
+
+        <CardContent>
+          {activeTab === "pipeline" && <PipelineTab roleId={id as string} />}
+          {activeTab === "applicants" && (
+            <ApplicantsTab roleId={id as string} />
+          )}
+          {activeTab === "timeline" && <TimelineTab roleId={id as string} />}
+        </CardContent>
       </Card>
     </div>
   );
