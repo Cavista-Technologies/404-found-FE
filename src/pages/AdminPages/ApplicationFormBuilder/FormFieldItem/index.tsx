@@ -4,7 +4,6 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import {
   Text01,
-  Mail01,
   Call,
   Upload03,
   Link05,
@@ -12,6 +11,7 @@ import {
   ArrowDown01,
   ArrowUp02,
   ArrowDown02,
+  Mail02,
 } from "@/components/icons";
 import {
   FIELD_TYPE,
@@ -27,7 +27,7 @@ const FIELD_ICON: Record<
   [FIELD_TYPE.SHORT_TEXT]: Text01,
   [FIELD_TYPE.LONG_TEXT]: TextSmallcaps,
   [FIELD_TYPE.NUMBER]: Text01,
-  [FIELD_TYPE.EMAIL]: Mail01,
+  [FIELD_TYPE.EMAIL]: Mail02,
   [FIELD_TYPE.PHONE]: Call,
   [FIELD_TYPE.URL]: Link05,
   [FIELD_TYPE.DROPDOWN]: ArrowDown01,
@@ -74,7 +74,7 @@ export const FormFieldItem = ({
           </div>
           <div className="flex flex-col gap-1 min-w-0">
             <div className="flex gap-1 items-center text-base">
-              <p className="text-grey-700 truncate">
+              <p className="text-grey-700 text-base leading-6 truncate">
                 {field.label || "Untitled field"}
               </p>
               {field.isRequired && (
@@ -87,6 +87,7 @@ export const FormFieldItem = ({
             </p>
           </div>
         </div>
+
         <div
           className="flex gap-2 items-center shrink-0"
           onClick={(e) => e.stopPropagation()}
@@ -97,7 +98,7 @@ export const FormFieldItem = ({
             onClick={() => onMoveUp(field.id)}
             className="bg-grey-50 border border-grey-200 rounded size-6 flex items-center justify-center disabled:opacity-40"
           >
-            <ArrowUp02 className="size-4" />
+            <ArrowUp02 className="size-4 text-grey-500" />
           </button>
           <button
             type="button"
@@ -105,7 +106,7 @@ export const FormFieldItem = ({
             onClick={() => onMoveDown(field.id)}
             className="bg-grey-50 border border-grey-200 rounded size-6 flex items-center justify-center disabled:opacity-40"
           >
-            <ArrowDown02 className="size-4" />
+            <ArrowDown02 className="size-4 text-grey-500" />
           </button>
         </div>
       </button>

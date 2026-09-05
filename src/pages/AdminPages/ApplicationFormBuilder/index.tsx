@@ -215,6 +215,7 @@ export const ApplicationFormBuilderPage = () => {
               </Button>
               <Button
                 type="button"
+                variant="default"
                 size="md"
                 disabled={isPublishing}
                 onClick={handlePublish}
@@ -228,8 +229,8 @@ export const ApplicationFormBuilderPage = () => {
 
           <div className="flex gap-8 items-start w-full">
             {/* Left column */}
-            <Card className="flex-1">
-              <CardContent className="flex flex-col gap-8 pt-6">
+            <Card className="flex-1 border border-primary">
+              <CardContent className="flex flex-col gap-8 pt-8 border border-grey-200 rounded-2xl">
                 <div className="flex flex-col gap-3 w-full">
                   <p className="text-grey-600 text-base font-medium">
                     OTHER DETAILS
@@ -265,7 +266,7 @@ export const ApplicationFormBuilderPage = () => {
                       Form Fields
                     </p>
                     <p className="text-grey-500 text-base">
-                      Click a field to edit · use the arrows to reorder
+                      Click a field to edit &bull; use the arrows to reorder
                     </p>
                   </div>
                   <div className="flex flex-col gap-6 w-full">
@@ -290,7 +291,7 @@ export const ApplicationFormBuilderPage = () => {
 
             {/* Right column */}
             <Card className="w-md shrink-0">
-              <CardContent className="flex flex-col gap-12 pt-6">
+              <CardContent className="flex flex-col gap-12 p-6 border border-grey-200 rounded-2xl">
                 <AddFieldPanel onAddField={handleAddField} />
                 <FormSummaryPanel
                   total={totalFields}
