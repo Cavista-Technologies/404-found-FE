@@ -134,6 +134,7 @@ export const ApplicationFormBuilderPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["application-form", id] });
       showToast("Application form saved successfully", "success");
+      navigate(`/dashboard/admin/roles/${id}`);
     },
     onError: (res) => {
       showToast(res.message, "error");
