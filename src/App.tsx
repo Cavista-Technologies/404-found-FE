@@ -10,6 +10,7 @@ import { AdminRolesPage } from "./pages/AdminPages/Roles";
 import { RoleDetailPage } from "./pages/AdminPages/AdminRoleDetail";
 import { ApplicationFormBuilderPage } from "./pages/AdminPages/ApplicationFormBuilder";
 import {CandidateApplicationForm} from "./pages/PublicPages/ApplicationForm";
+import { AnalyticsAndInsights } from "./pages/AdminPages/Analytics";
 
 function App() {
   return (
@@ -73,6 +74,16 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles="SuperAdmin">
                   <ApplicationFormBuilderPage />
+                </ProtectedRoute>
+              }
+            />
+
+
+            <Route
+              path="analytics"
+              element={
+                <ProtectedRoute requiredRoles="SuperAdmin">
+                  <AnalyticsAndInsights/>
                 </ProtectedRoute>
               }
             />
