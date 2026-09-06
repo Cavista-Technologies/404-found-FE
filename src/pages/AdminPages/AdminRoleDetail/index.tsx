@@ -27,7 +27,7 @@ export const RoleDetailPage = () => {
   const [activeTab, setActiveTab] = useState<RoleDetailTab>("pipeline");
   const navigate = useNavigate();
 
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  // const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const { data: role, isLoading: roleDetailsLoading } = useQuery({
     queryKey: ["fetchRoleDetails"],
@@ -125,7 +125,7 @@ export const RoleDetailPage = () => {
                 </Button>
               )}
               {role?.applicationFormSlug && (
-                <Link to={`${baseUrl}/job/${role.applicationFormSlug}`} className="text-info text-sm underline">
+                <Link to={`/job/${role.applicationFormSlug}`} className="text-info text-sm underline">
                   View Application Form
                 </Link>
               )}

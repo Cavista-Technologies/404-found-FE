@@ -9,7 +9,7 @@ import { CreateRolePage } from "./pages/AdminPages/CreateRole";
 import { AdminRolesPage } from "./pages/AdminPages/Roles";
 import { RoleDetailPage } from "./pages/AdminPages/AdminRoleDetail";
 import { ApplicationFormBuilderPage } from "./pages/AdminPages/ApplicationFormBuilder";
-import { ApplicationForm } from "./pages/PublicPages/ApplicationForm";
+import {CandidateApplicationForm} from "./pages/PublicPages/ApplicationForm";
 
 function App() {
   return (
@@ -19,7 +19,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/check-email" element={<CheckEmail />} />
-        <Route path="/job/:slug" element={<ApplicationForm />} />
+        <Route path="/job/:slug" element={<CandidateApplicationForm
+         />} />
 
         {/* Protected Routes */}
         <Route

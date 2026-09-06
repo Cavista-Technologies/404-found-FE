@@ -39,6 +39,11 @@ export interface OpenRoleSummary {
   applicationFormStatusStr: string;
 }
 
+export interface FormFieldOption {
+  label: string;
+  value: string;
+}
+
 export interface FormFieldDetail {
   id: number;
   label: string;
@@ -48,7 +53,7 @@ export interface FormFieldDetail {
   isRequired: boolean;
   sortOrder: number;
   isStandard: boolean;
-  options: [];
+  options: FormFieldOption[];
 }
 
 export interface ApplicationFormDetail {
@@ -64,4 +69,100 @@ export interface ApplicationFormDetail {
   requiredFields: number;
   optionalFields: number;
   fields: FormFieldDetail[];
+}
+
+export interface AnswerPayload {
+  formFieldId: number;
+  value: string;
+}
+
+export interface SubmitApplicationRequest {
+  slug: string;
+  source: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  answers: AnswerPayload[];
+}
+
+
+export interface CandidateApplicationFormDetail {
+  title: string;
+  introMessage: string;
+  fields: CandidateFormFieldDetail[];
+}
+
+/** Client-side draft of a field — includes a local `id` for React keys/reordering. */
+export interface ApplicationFormFieldDraft {
+  id: string;
+  label: string;
+  placeholder: string;
+  fieldType: FieldTypeValue;
+  isRequired: boolean;
+  isStandard: boolean;
+  options: string[];
+}
+
+/** Shape expected by POST /application-form/create */
+export interface ApplicationFormFieldPayload {
+  label: string;
+  placeholder: string;
+  fieldType: FieldTypeValue;
+  isRequired: boolean;
+  sortOrder: number;
+  isStandard: boolean;
+  options: string[];
+}
+
+export interface CreateApplicationFormPayload {
+  jobRoleId: number;
+  title: string;
+  introMessage: string;
+  fields: ApplicationFormFieldPayload[];
+}
+
+export interface OpenRoleSummary {
+  id: number;
+  title: string;
+  hasApplicationForm: boolean;
+  applicationFormId: number;
+  applicationFormSlug: string;
+  applicationFormStatus: number;
+  applicationFormStatusStr: string;
+}
+
+export interface FormFieldOption {
+  label: string;
+  value: string;
+}
+
+/** Actual shape returned by GET /application-form/public/{slug}. */
+export interface CandidateFormFieldDetail {
+  id: number;
+  label: string;
+  placeholder: string;
+  fieldType: FieldTypeValue;
+  isRequired: boolean;
+  sortOrder: number;
+  options: FormFieldOption[];
+}
+
+export interface CandidateApplicationFormDetail {
+  title: string;
+  introMessage: string;
+  fields: CandidateFormFieldDetail[];
+}
+
+export interface AnswerPayload {
+  formFieldId: number;
+  value: string;
+}
+
+export interface SubmitApplicationRequest {
+  slug: string;
+  source: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  answers: AnswerPayload[];
 }
