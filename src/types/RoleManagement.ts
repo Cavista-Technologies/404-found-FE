@@ -48,4 +48,9 @@ export interface RoleDetails {
   salaryRange: string;
   location: string;
   applicantsCount: number;
+  hasApplicationForm: boolean;
+  applicationFormId: number;
+  applicationFormSlug: string;
+  applicationFormStatus: number;
+  applicationFormStatusStr: string;
 }

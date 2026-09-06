@@ -32,4 +32,36 @@ export interface CreateApplicationFormPayload {
 export interface OpenRoleSummary {
   id: number;
   title: string;
+  hasApplicationForm: boolean;
+  applicationFormId: number;
+  applicationFormSlug: string;
+  applicationFormStatus: number;
+  applicationFormStatusStr: string;
+}
+
+export interface FormFieldDetail {
+  id: number;
+  label: string;
+  placeholder: string;
+  fieldType: number;
+  fieldTypeStr: string;
+  isRequired: boolean;
+  sortOrder: number;
+  isStandard: boolean;
+  options: [];
+}
+
+export interface ApplicationFormDetail {
+  id: number;
+  jobRoleId: number;
+  jobRoleTitle: string;
+  title: string;
+  introMessage: string;
+  status: number;
+  statusStr: string;
+  slug: string;
+  totalFields: number;
+  requiredFields: number;
+  optionalFields: number;
+  fields: FormFieldDetail[];
 }

@@ -39,6 +39,7 @@ interface FormFieldItemProps {
   isEditing: boolean;
   isFirst: boolean;
   isLast: boolean;
+  isReadOnly?: boolean;
   onToggleEdit: (id: string) => void;
   onChange: (id: string, patch: Partial<ApplicationFormFieldDraft>) => void;
   onRemove: (id: string) => void;
@@ -51,6 +52,7 @@ export const FormFieldItem = ({
   isEditing,
   isFirst,
   isLast,
+  isReadOnly = false,
   onToggleEdit,
   onChange,
   onRemove,
@@ -65,8 +67,12 @@ export const FormFieldItem = ({
     <div className="border border-grey-200 rounded-2xl w-full overflow-hidden">
       <button
         type="button"
-        onClick={() => onToggleEdit(field.id)}
-        className="flex items-center justify-between p-4 w-full text-left"
+        onClick={() => !isReadOnly && onToggleEdit(field.id)}
+        disabled={isReadOnly}
+        className={cn(
+          "flex items-center justify-between p-4 w-full text-left",
+          isReadOnly && "cursor-default",
+        )}
       >
         <div className="flex flex-1 min-w-0 gap-3 items-center">
           <div className="bg-grey-100 rounded-lg shrink-0 size-8 flex items-center justify-center">
@@ -88,30 +94,32 @@ export const FormFieldItem = ({
           </div>
         </div>
 
-        <div
-          className="flex gap-2 items-center shrink-0"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            type="button"
-            disabled={isFirst}
-            onClick={() => onMoveUp(field.id)}
-            className="bg-grey-50 border border-grey-200 rounded size-6 flex items-center justify-center disabled:opacity-40"
+        {!isReadOnly && (
+          <div
+            className="flex gap-2 items-center shrink-0"
+            onClick={(e) => e.stopPropagation()}
           >
-            <ArrowUp02 className="size-4 text-grey-500" />
-          </button>
-          <button
-            type="button"
-            disabled={isLast}
-            onClick={() => onMoveDown(field.id)}
-            className="bg-grey-50 border border-grey-200 rounded size-6 flex items-center justify-center disabled:opacity-40"
-          >
-            <ArrowDown02 className="size-4 text-grey-500" />
-          </button>
-        </div>
+            <button
+              type="button"
+              disabled={isFirst}
+              onClick={() => onMoveUp(field.id)}
+              className="bg-grey-50 border border-grey-200 rounded size-6 flex items-center justify-center disabled:opacity-40"
+            >
+              <ArrowUp02 className="size-4 text-grey-500" />
+            </button>
+            <button
+              type="button"
+              disabled={isLast}
+              onClick={() => onMoveDown(field.id)}
+              className="bg-grey-50 border border-grey-200 rounded size-6 flex items-center justify-center disabled:opacity-40"
+            >
+              <ArrowDown02 className="size-4 text-grey-500" />
+            </button>
+          </div>
+        )}
       </button>
 
-      {isEditing && (
+      {!isReadOnly && isEditing && (
         <div className="border-t border-grey-200 p-4 flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-grey-900 text-sm font-medium">Label</label>
@@ -121,7 +129,6 @@ export const FormFieldItem = ({
               placeholder="Field label"
             />
           </div>
-
           <div className="flex flex-col gap-1.5">
             <label className="text-grey-900 text-sm font-medium">
               Placeholder
@@ -134,7 +141,6 @@ export const FormFieldItem = ({
               placeholder="Field placeholder"
             />
           </div>
-
           {isDropdown && (
             <div className="flex flex-col gap-1.5">
               <label className="text-grey-900 text-sm font-medium">
@@ -182,7 +188,6 @@ export const FormFieldItem = ({
               </Button>
             </div>
           )}
-
           <div className="flex items-center justify-between">
             <span className="text-grey-700 text-sm">Required field</span>
             <Switch
@@ -192,7 +197,6 @@ export const FormFieldItem = ({
               }
             />
           </div>
-
           {!field.isStandard && (
             <Button
               type="button"

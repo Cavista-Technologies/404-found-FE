@@ -74,7 +74,7 @@ export const getPriorityStyle = (priority: string) => {
     case "High":
       return "bg-error-50 text-error-500";
     case "Normal":
-      return "bg-warning text-warning";
+      return "bg-warning-50 text-warning";
     case "Low":
       return "bg-success-50 text-success-600";
     default:

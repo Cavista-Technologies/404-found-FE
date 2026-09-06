@@ -28,9 +28,7 @@ export function Sidebar() {
   const activeRole = useSelector((state: RootState) => state.role.activeRole);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { username, fullName } = useSelector(
-    (state: RootState) => state.auth,
-  );
+  const { username, fullName } = useSelector((state: RootState) => state.auth);
 
   const dashboardPath =
     activeRole === "SuperAdmin"
@@ -44,17 +42,38 @@ export function Sidebar() {
     navigate("/login", { replace: true });
   };
 
-
   const hasRoleAccess = (item: MenuItem): boolean => {
     if (!item.roles || item.roles.length === 0) return false;
     return item.roles.includes(activeRole);
   };
 
+  // Single source of truth, computed once per render from the CURRENT pathname.
+  const bestMatchPath = (() => {
+    const allPaths: string[] = [];
+    menuItems.forEach((item) => {
+      allPaths.push(item.path);
+      item.children?.forEach((child) => allPaths.push(child.path));
+    });
+
+    const matches = allPaths.filter(
+      (path) =>
+        location.pathname === path || location.pathname.startsWith(`${path}/`),
+    );
+
+    if (matches.length === 0) return null;
+
+    return matches.reduce((longest, path) =>
+      path.length > longest.length ? path : longest,
+    );
+  })();
+
+  const isPathActive = (path: string): boolean => path === bestMatchPath;
+
   const isActiveParent = (item: MenuItem): boolean => {
     if (item.children) {
-      return item.children.some((child) => location.pathname === child.path);
+      return item.children.some((child) => isPathActive(child.path));
     }
-    return location.pathname === item.path;
+    return isPathActive(item.path);
   };
 
   const toggleMenu = (menuName: string) => {
@@ -69,13 +88,11 @@ export function Sidebar() {
     return expandedMenus.includes(menuName);
   };
 
-  // Auto-expand menu if any of its children are active
   const shouldAutoExpand = (item: MenuItem): boolean => {
     if (!item.children) return false;
-    return item.children.some((child) => location.pathname === child.path);
+    return item.children.some((child) => isPathActive(child.path));
   };
 
-  // Effect to auto-expand parent menu when child is active
   useEffect(() => {
     menuItems.forEach((item) => {
       if (shouldAutoExpand(item) && !isMenuExpanded(item.name)) {
@@ -89,7 +106,6 @@ export function Sidebar() {
       return null;
     }
 
-    // const isActive = location.pathname === item.path;
     const isParentActive = isActiveParent(item);
     const isExpanded = isMenuExpanded(item.name);
 
@@ -98,7 +114,6 @@ export function Sidebar() {
         hasRoleAccess(child),
       );
 
-      // Don't render parent if no children are visible
       if (visibleChildren.length === 0) {
         return null;
       }
@@ -115,7 +130,6 @@ export function Sidebar() {
             style={{ paddingLeft: `${12 + level * 16}px` }}
           >
             <item.icon className="size-6" />
-            {/* {activeChild ? activeChild.icon : <div className="w-5 h-5" />} */}
             <span className="ml-3 flex-1 text-left">{item.name}</span>
             {isExpanded ? (
               <ChevronDown className="h-4 w-4" />
@@ -127,22 +141,20 @@ export function Sidebar() {
           {isExpanded && (
             <div className="space-y-1 overflow-hidden">
               {visibleChildren.map((child) => {
-                const isActiveChild = location.pathname === child.path;
-
+                const isActiveChild = isPathActive(child.path);
                 return (
                   <NavLink
                     key={child.name}
                     to={child.path}
-                    className={({ isActive }) =>
+                    className={() =>
                       `flex items-center px-3 py-2 text-sm font-medium rounded-[10px] transition-colors ${
-                        isActive
+                        isActiveChild
                           ? "bg-primary-50 text-gray-900"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                       }`
                     }
                     style={{ paddingLeft: `${12 + (level + 1) * 16}px` }}
                   >
-                    {/* {isActiveChild ? child.icon : <div className="w-4 h-4" />} */}
                     {isActiveChild ? (
                       <div className="bg-gray-600 w-2 h-2 rounded-[10px]" />
                     ) : (
@@ -162,9 +174,9 @@ export function Sidebar() {
       <NavLink
         key={item.name}
         to={item.path}
-        className={({ isActive }) =>
+        className={() =>
           `flex items-center py-2 px-3 text-base rounded-[10px] transition-colors ${
-            isActive && location.pathname === item.path
+            isPathActive(item.path)
               ? "bg-primary-500 text-white "
               : "text-grey-500 hover:bg-primary-50 hover:text-grey-900"
           } ${open || forceShowText ? "h-12" : "h-10 w-10"}`
@@ -172,7 +184,6 @@ export function Sidebar() {
       >
         <item.icon className="size-6" />
         {(open || forceShowText) && <span className="ml-2">{item.name}</span>}
-
         {item.badgeCount !== undefined &&
           item.badgeCount >= 0 &&
           (open || forceShowText) && (
