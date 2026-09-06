@@ -110,7 +110,7 @@ export const ApplicationFormBuilderPage = () => {
           fieldType: field.fieldType as FieldTypeValue,
           isRequired: field.isRequired,
           isStandard: field.isStandard,
-          options: field.options ?? [],
+          options: (field.options ?? []).map((option) => option.value),
         })),
     );
   }, [form]);
