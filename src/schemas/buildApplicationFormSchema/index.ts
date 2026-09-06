@@ -9,13 +9,12 @@ export const fieldName = (field: CandidateFormFieldDetail) => `field_${field.id}
 function buildFieldSchema(field: CandidateFormFieldDetail): z.ZodTypeAny {
   if (field.fieldType === FIELD_TYPE.FILE_UPLOAD) {
     return z
-      .custom<FileList | undefined>()
-      .refine(
-        (files) => !field.isRequired || (files && files.length > 0),
-        `${field.label} is required`
+      .custom<FileList | undefined>(
+        (val) => !field.isRequired || (val instanceof FileList && val.length > 0),
+        { message: `${field.label} is required` }
       )
       .refine((files) => {
-        const file = files?.[0];
+        const file = (files as FileList | undefined)?.[0];
         return !file || file.size <= 10 * 1024 * 1024; // 10MB, per the design
       }, "File must be 10MB or smaller");
   }

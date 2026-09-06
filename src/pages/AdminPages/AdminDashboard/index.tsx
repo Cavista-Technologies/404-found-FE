@@ -77,7 +77,7 @@ export const AdminDashboard = () => {
           <CheckmarkSquare01 className="text-success-500 size-4" />
         </div>
       ),
-      title: "Role Filled",
+      title: "Roles Filled",
       value: snapShotData?.rolesFilledThisQuarter ?? 0,
       bottomText: "This Quarter",
     },
