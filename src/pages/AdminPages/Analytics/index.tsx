@@ -65,15 +65,35 @@ export const AnalyticsAndInsights = () => {
   const departmentTimeToFillTrend = timeToFillData?.byDepartment ?? [];
 
   const dummyConversionData: ConversionTableValues[] = [
-  { source: "LinkedIn", appliedCount: 128, hiredCount: 14, conversionRate: 10.9 },
-  { source: "Company Website", appliedCount: 96, hiredCount: 9, conversionRate: 9.4 },
-  { source: "Indeed", appliedCount: 74, hiredCount: 5, conversionRate: 6.8 },
-  { source: "Referral", appliedCount: 42, hiredCount: 11, conversionRate: 26.2 },
-  { source: "Twitter/X", appliedCount: 31, hiredCount: 1, conversionRate: 3.2 },
-  { source: "Glassdoor", appliedCount: 27, hiredCount: 2, conversionRate: 7.4 },
-  { source: "Job Fair", appliedCount: 19, hiredCount: 3, conversionRate: 15.8 },
-  { source: "Other", appliedCount: 12, hiredCount: 0, conversionRate: 0 },
-];
+    {
+      source: "LinkedIn",
+      appliedCount: 128,
+      hiredCount: 14,
+      conversionRate: 10.9,
+    },
+    {
+      source: "Company Website",
+      appliedCount: 96,
+      hiredCount: 9,
+      conversionRate: 9.4,
+    },
+    { source: "Indeed", appliedCount: 74, hiredCount: 5, conversionRate: 6.8 },
+    {
+      source: "Referral",
+      appliedCount: 42,
+      hiredCount: 11,
+      conversionRate: 26.2,
+    },
+    {
+      source: "Twitter/X",
+      appliedCount: 31,
+      hiredCount: 1,
+      conversionRate: 3.2,
+    },
+    //   { source: "Glassdoor", appliedCount: 27, hiredCount: 2, conversionRate: 7.4 },
+    //   { source: "Job Fair", appliedCount: 19, hiredCount: 3, conversionRate: 15.8 },
+    //   { source: "Other", appliedCount: 12, hiredCount: 0, conversionRate: 0 },
+  ];
 
   const columns: Column<ConversionTableValues>[] = [
     {
@@ -181,23 +201,25 @@ export const AnalyticsAndInsights = () => {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6">
+        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit max-h-127">
           <div className="border-b border-grey-200 px-4 py-3">
             <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
               Conversion rate: Applied → Hired by channel
             </h3>
           </div>
 
-          <TableComponent
-            data={dummyConversionData}
-            columns={columns}
-            // loading={isLoadingUsers}
-            emptyMessage="No Data Yet"
-            emptySubMessage="No data to show yet"
-            loadingRows={10}
-            headerClassName="bg-grey-100 text-right"
-            showPagination={false}
-          />
+          <div className="px-4">
+            <TableComponent
+              data={dummyConversionData}
+              columns={columns}
+              // loading={isLoadingUsers}
+              emptyMessage="No Data Yet"
+              emptySubMessage="No data to show yet"
+              loadingRows={10}
+              headerClassName="bg-grey-100 text-right"
+              showPagination={false}
+            />
+          </div>
         </div>
       </div>
     </div>
