@@ -9,8 +9,10 @@ import { CreateRolePage } from "./pages/AdminPages/CreateRole";
 import { AdminRolesPage } from "./pages/AdminPages/Roles";
 import { RoleDetailPage } from "./pages/AdminPages/AdminRoleDetail";
 import { ApplicationFormBuilderPage } from "./pages/AdminPages/ApplicationFormBuilder";
-import {CandidateApplicationForm} from "./pages/PublicPages/ApplicationForm";
+import { CandidateApplicationForm } from "./pages/PublicPages/ApplicationForm";
 import { AnalyticsAndInsights } from "./pages/AdminPages/Analytics";
+import { RecruiterDashboard } from "./pages/RecruiterPages/RecruiterDashboard";
+import { RecruiterRoles } from "./pages/RecruiterPages/RecruiterRoles";
 
 function App() {
   return (
@@ -20,8 +22,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/check-email" element={<CheckEmail />} />
-        <Route path="/job/:slug" element={<CandidateApplicationForm
-         />} />
+        <Route path="/job/:slug" element={<CandidateApplicationForm />} />
 
         {/* Protected Routes */}
         <Route
@@ -32,7 +33,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          {/* Admin Routes */}
+          {/* ADMIN ROUTES*/}
           <Route path="admin">
             <Route
               index
@@ -78,12 +79,31 @@ function App() {
               }
             />
 
-
             <Route
               path="analytics"
               element={
                 <ProtectedRoute requiredRoles="SuperAdmin">
-                  <AnalyticsAndInsights/>
+                  <AnalyticsAndInsights />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
+          {/* RECRUITER ROUTES */}
+          <Route path="recruiter">
+            <Route
+              index
+              element={
+                <ProtectedRoute requiredRoles="Recruiter">
+                  <RecruiterDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="my-roles"
+              element={
+                <ProtectedRoute requiredRoles="Recruiter">
+                  <RecruiterRoles />
                 </ProtectedRoute>
               }
             />

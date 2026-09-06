@@ -7,10 +7,7 @@ import {
 } from "@/components/icons";
 import type { SVGProps } from "react";
 
-export type UserRole =
-  | "SuperAdmin"
-  | "Recruiter";
-
+export type UserRole = "SuperAdmin" | "Recruiter";
 
 export type AccountType = 1 | 2 | 3 | 4;
 
@@ -25,10 +22,7 @@ export interface MenuItem {
 }
 
 export const menuItems: MenuItem[] = [
-  /**
-   * ADMIN DASHBOARD
-   *
-   **/
+  /** ADMIN DASHBOARD **/
   {
     name: "Dashboard",
     path: "/dashboard/admin",
@@ -55,8 +49,34 @@ export const menuItems: MenuItem[] = [
   },
   {
     name: "Profile Settings",
-    path: "/dashboard/admin/calendar",
+    path: "/dashboard/admin/profile-settings",
     icon: UserSettings01,
     roles: "SuperAdmin",
+  },
+
+  /** RECRUITER DASHBOARD **/
+  {
+    name: "Dashboard",
+    path: "/dashboard/recruiter",
+    icon: DashboardSquare01,
+    roles: "Recruiter",
+  },
+  {
+    name: "Create Role",
+    path: "/dashboard/recruiter/create-role",
+    icon: PlusIcon,
+    roles: "Recruiter",
+  },
+  {
+    name: "My Roles",
+    path: "/dashboard/recruiter/my-roles",
+    icon: LeftToRightListBullet,
+    roles: "Recruiter",
+  },
+  {
+    name: "Profile Settings",
+    path: "/dashboard/recruiter/profile-settings",
+    icon: UserSettings01,
+    roles: "Recruiter",
   },
 ];
