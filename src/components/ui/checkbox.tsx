@@ -24,12 +24,12 @@ function Checkbox({ className, rounded = false, ...props }: CheckboxProps) {
         data-slot="checkbox-indicator"
         className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
       >
-        {/* {rounded ? (
-          <span className="size-1.5 rounded-full bg-current" />
+        {rounded ? (
+          <span className="size-1.5 rounded-full bg-white" />
         ) : (
           <CheckIcon />
-          )} */}
-          <CheckIcon />
+          )}
+          {/* <CheckIcon className=" text-white" /> */}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )

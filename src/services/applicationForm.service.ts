@@ -4,7 +4,6 @@ import type {
   CandidateApplicationFormDetail,
   CreateApplicationFormPayload,
   OpenRoleSummary,
-  SubmitApplicationRequest,
 } from "@/types/ApplicationForm";
 import {type BuiltSubmission } from "@/schemas/buildSubmissionPayload";
 
@@ -69,24 +68,17 @@ export const getPublicApplicationForm= async(
 }
 
 export async function submitPublicApplication({ body, files }: BuiltSubmission): Promise<void> {
-  if (files.length === 0) {
-    await httpClient.post<void, SubmitApplicationRequest>(
-      "/application-form/submit-application",
-      body
-    );
-    return;
-  }
-
   const formData = new FormData();
-  formData.append("slug", body.slug);
-  formData.append("source", String(body.source));
-  formData.append("fullName", body.fullName);
-  formData.append("email", body.email);
-  formData.append("phone", body.phone);
-  formData.append("answers", JSON.stringify(body.answers));
+  formData.append("Slug", body.slug);
+  formData.append("Source", String(body.source));
+  formData.append("FullName", body.fullName);
+  formData.append("Email", body.email);
+  formData.append("Phone", body.phone);
+  formData.append("AnswersJson", JSON.stringify(body.answers));
 
   files.forEach(({ formFieldId, file }) => {
-    formData.append(`file_${formFieldId}`, file);
+    formData.append("Files", file);
+    formData.append("FileFieldIds", String(formFieldId));
   });
 
   await httpClient.post("/application-form/submit-application", formData, {
@@ -94,3 +86,35 @@ export async function submitPublicApplication({ body, files }: BuiltSubmission):
   });
 }
 
+// export async function submitPublicApplication({ body, files }: BuiltSubmission): Promise<void> {
+//   const formData = new FormData();
+//   formData.append("Slug", body.slug);
+//   formData.append("Source", String(body.source));
+//   formData.append("FullName", body.fullName);
+//   formData.append("Email", body.email);
+//   formData.append("Phone", body.phone);
+//   formData.append("AnswersJson", JSON.stringify(body.answers));
+ 
+//   files.forEach(({ formFieldId, file }) => {
+//     formData.append(`file_${formFieldId}`, file);
+//   });
+ 
+//   await httpClient.post("/application-form/submit-application", formData);
+// }
+
+// export async function submitPublicApplication({ body, files }: BuiltSubmission): Promise<void> {
+//   const formData = new FormData();
+//   formData.append("Slug", body.slug);
+//   formData.append("Source", String(body.source));
+//   formData.append("FullName", body.fullName);
+//   formData.append("Email", body.email);
+//   formData.append("Phone", body.phone);
+//   formData.append("AnswersJson", JSON.stringify(body.answers));
+ 
+//   files.forEach(({ formFieldId, file }) => {
+//     formData.append("Files", file);
+//     formData.append("FileFieldIds", String(formFieldId));
+//   });
+ 
+//   await httpClient.post("/application-form/submit-application", formData);
+// }

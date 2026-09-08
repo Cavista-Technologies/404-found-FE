@@ -23,7 +23,7 @@ export const DashboardCards: React.FC<DashboardCardProps> = ({
   trendValue = 0,
 }) => {
   return (
-    <div className="p-6 rounded-2xl flex flex-col gap-10 h-54 w-88 shadow-[0px_6px_10px_0px_#B1B1B114] bg-white font-poppins">
+    <div className="p-6 rounded-2xl flex flex-col gap-10 h-54 min-w-88 w-full shadow-[0px_6px_10px_0px_#B1B1B114] bg-white font-poppins">
       <div className="flex gap-3 items-center">
         {icon}
         <h3 className="font-medium text-lg leading-7 text-grey-500">{title}</h3>

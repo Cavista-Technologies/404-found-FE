@@ -13,6 +13,7 @@ import { CandidateApplicationForm } from "./pages/PublicPages/ApplicationForm";
 import { AnalyticsAndInsights } from "./pages/AdminPages/Analytics";
 import { RecruiterDashboard } from "./pages/RecruiterPages/RecruiterDashboard";
 import { RecruiterRoles } from "./pages/RecruiterPages/RecruiterRoles";
+import { RecruiterCreateRolePage } from "./pages/RecruiterPages/CreateRole";
 
 function App() {
   return (
@@ -99,6 +100,16 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route
+              path="create-role"
+              element={
+                <ProtectedRoute requiredRoles="Recruiter">
+                  <RecruiterCreateRolePage />
+                </ProtectedRoute>
+              }
+            />
+
             <Route
               path="my-roles"
               element={

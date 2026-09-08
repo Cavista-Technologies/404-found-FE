@@ -18,21 +18,36 @@ import { useToast } from "@/context/toastContext";
 import { createNewRole } from "@/services/roleCreation.service";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import type { RootState } from "@/store";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export const CreateNewRoleForm = () => {
   const { showToast } = useToast();
+  const location = useLocation();
+  const { username, fullName } = useSelector((state: RootState) => state.auth);
 
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
     queryKey: ["getDepartments"],
     queryFn: fetchDepartments,
   });
 
+  useEffect(() => {
+    if (location.pathname.includes("/recruiter")) {
+      setValue("recruiterName", fullName ?? "");
+      setValue("recruiterEmail", username ?? "");
+    }
+  }, []);
+
+  const isRecruiter = location.pathname.includes("/recruiter");
+
   const {
     reset,
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { isDirty, isSubmitting },
   } = useForm<CreateNewRoleFormInput, unknown, CreateNewRoleFormOutput>({
     resolver: zodResolver(CreateNewRoleSchema),
@@ -313,8 +328,11 @@ export const CreateNewRoleForm = () => {
                                     {...field}
                                     id="recruiterName"
                                     placeholder="Enter name"
+                                    readOnly={isRecruiter}
                                     className={cn(
                                       fieldState.error && "border-error-200",
+                                      isRecruiter &&
+                                        "bg-grey-100 text-grey-500",
                                     )}
                                   />
                                   {fieldState.error && (
@@ -344,8 +362,11 @@ export const CreateNewRoleForm = () => {
                                     {...field}
                                     id="recruiterEmail"
                                     placeholder="mail@axxess.com"
+                                    readOnly={isRecruiter}
                                     className={cn(
                                       fieldState.error && "border-error-200",
+                                      isRecruiter &&
+                                        "bg-grey-100 text-grey-500",
                                     )}
                                   />
                                   {fieldState.error && (
@@ -576,7 +597,7 @@ export const CreateNewRoleForm = () => {
                                     placeholder="e.g 1,000,000 - 2,000,000"
                                     className={cn(
                                       fieldState.error && "border-error-200",
-                                      "w-1/2"
+                                      "w-1/2",
                                     )}
                                   />
                                   {fieldState.error && (
@@ -662,12 +683,12 @@ export const CreateNewRoleForm = () => {
               disabled={!isDirty && isSubmitting}
               onClick={handleActivate}
             >
-              Activate Role
+              {isRecruiter ? "Submit for Approval" : "Activate Role"}
             </Button>
             <Button
               size="lg"
               variant="ghost"
-              disabled={!isDirty && isSubmitting}
+              disabled={!isDirty || isSubmitting}
               onClick={handleSaveDraft}
             >
               Save as Draft
@@ -677,12 +698,19 @@ export const CreateNewRoleForm = () => {
               variant="link"
               className="border-none hover:bg-none hover:no-underline"
             >
-              <Link to="/dashboard/admin/roles">Cancel</Link>
+              {isRecruiter ? (
+                <Link to="/dashboard/recruiter/my-roles">Cancel</Link>
+              ) : (
+                <Link to="/dashboard/admin/roles">Cancel</Link>
+              )}
             </Button>
           </div>
 
-          <p className="text-grey-600 text-base leading-6 font-poppins mt-8">Complete all required fields above to activate.<br />
-          Save as Draft with just a title.</p>
+          <p className="text-grey-600 text-base leading-6 font-poppins mt-8">
+            Complete all required fields above to activate.
+            <br />
+            Save as Draft with just a title.
+          </p>
         </div>
       </div>
     </>
