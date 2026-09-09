@@ -24,12 +24,13 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { RichTextEditor } from "../GenericComponents/RichTextEditor";
 import { fetchRoleDetails } from "@/services/roleManagement.service";
+import { Loader2 } from "lucide-react";
 
 export const EditRoleForm = () => {
   const { id } = useParams<{ id: string }>();
   const { showToast } = useToast();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { username, fullName } = useSelector((state: RootState) => state.auth);
 
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
@@ -112,10 +113,9 @@ export const EditRoleForm = () => {
   const submitMutation = useMutation({
     mutationFn: createNewRole,
     onSuccess: (res) => {
-        reset();
-        showToast(res.message ?? "Role opened succesfully", "success");
-        navigate(-1)
-
+      reset();
+      showToast(res.message ?? "Role opened succesfully", "success");
+      navigate(-1);
     },
     onError: (error) => {
       showToast(`${error.message}`, "error");
@@ -137,6 +137,12 @@ export const EditRoleForm = () => {
   return (
     <>
       <div className="flex gap-8">
+        {roleDetailsLoading && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center h-100 bg-white/60 rounded-2xl">
+            <Loader2 className="h-8 w-8 animate-spin text-grey-400" />
+          </div>
+        )}
+
         <div className="border border-grey-200 p-6 rounded-2xl flex-1 space-y-10">
           <div className="space-y-2">
             <h3 className="text-grey-700 text-2xl font-medium">
@@ -699,7 +705,7 @@ export const EditRoleForm = () => {
             <Button
               size="lg"
               variant="ghost"
-              disabled={!isDirty || isSubmitting ||submitMutation.isPending}
+              disabled={!isDirty || isSubmitting || submitMutation.isPending}
               onClick={handleSaveDraft}
             >
               Save as Draft
