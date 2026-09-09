@@ -1,75 +1,108 @@
-# React + TypeScript + Vite
+# CT-Recruita
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CT-Recruita is a recruitment management platform frontend. It lets **Admins** and **Recruiters** open, activate, and manage job roles, build custom application forms for each role, and track candidates through the hiring pipeline — while **Candidates** apply through a public, no-login application form.
 
-Currently, two official plugins are available:
+> 📘 **Looking for usage instructions instead of setup steps?** See [`manual.md`](./manual.md) for a walkthrough of how to actually use the application (creating roles, building forms, reviewing applicants, etc.).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- **React 19** + **TypeScript** — UI and app logic
+- **Vite** — dev server and build tooling
+- **React Router v7** — routing, including role-protected routes
+- **Redux Toolkit** — auth/session and active-role state
+- **TanStack Query** — server-state fetching, caching, and mutations
+- **React Hook Form** + **Zod** — form state and schema validation
+- **Tailwind CSS v4** + **Radix UI / base-ui** + `shadcn` — styling and accessible UI primitives
+- **Tiptap** — rich text editing (role descriptions, form intros)
+- **Axios** — HTTP client with a shared envelope/error-handling layer
+- **Recharts** — analytics/dashboard charts
+- **pnpm** — package manager (see `pnpm-lock.yaml`)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 20+ (recommended)
+- [pnpm](https://pnpm.io/) installed globally (`npm install -g pnpm`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. **Install dependencies**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```bash
+   pnpm install
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. **Configure environment variables**
 
-```
+   Create a `.env` file in the project root:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   VITE_API_BASE_URL=https://your-api-base-url.com
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+   If `VITE_API_BASE_URL` is not set, the app falls back to a default development API URL baked into `src/services/httpClient.ts`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. **Run the dev server**
+
+   ```bash
+   pnpm dev
+   ```
+
+   The app will be available at `http://localhost:5173` by default.
+
+## Available Scripts
+
+| Command        | Description                                        |
+| -------------- | --------------------------------------------------- |
+| `pnpm dev`     | Start the Vite dev server with HMR                   |
+| `pnpm build`   | Type-check (`tsc -b`) and build for production        |
+| `pnpm lint`    | Run ESLint across the project                        |
+| `pnpm preview` | Preview the production build locally                  |
+
+## Project Structure
 
 ```
+src/
+├── assets/            Static images/icons
+├── components/
+│   ├── auth/           Route guards (ProtectedRoute)
+│   ├── cards/          Reusable card components
+│   ├── charts/         Analytics chart components
+│   ├── date-picker/    Date picker component
+│   ├── forms/          Shared form building blocks
+│   ├── GenericComponents/  Reusable inputs (dropdowns, rich text editor, etc.)
+│   ├── icons/           SVG icon components
+│   ├── layouts/         Authenticated app shell/layout
+│   ├── toast/            Toast notification system
+│   └── ui/                Base UI primitives (shadcn-style)
+├── config/              App-level config (e.g. role-based menu config)
+├── constants/           Shared constants (field types, helpers)
+├── context/              React context providers (e.g. toast)
+├── hooks/                Custom hooks (auth, application form)
+├── lib/                   Utilities (JWT decoding, storage, redirect resolution)
+├── pages/
+│   ├── AdminPages/        Admin dashboard, role management, form builder, analytics
+│   ├── AuthPages/          Login, forgot password, check email
+│   ├── ProtectedPages/     Shared authenticated pages
+│   ├── PublicPages/        Public candidate application form
+│   └── RecruiterPages/     Recruiter dashboard, role management
+├── schemas/               Zod schemas for forms and dynamic application form validation
+├── services/               API service modules (auth, roles, application forms, lookups)
+├── store/                   Redux store and slices (auth, active role)
+├── types/                   Shared TypeScript types
+├── App.tsx                   Route definitions
+└── main.tsx                  App entry point
+```
+
+## Core Features
+
+- **Authentication** — login, forgot password, and token refresh flow, with sessions persisted via `localStorage`/`sessionStorage`.
+- **Role-based access** — Admin (`SuperAdmin`) and Recruiter routes are separated and access-guarded via `ProtectedRoute`.
+- **Role management** — create, edit, and activate job roles, with a live "activation readiness" checklist.
+- **Application Form Builder** — attach a dynamic, drag-and-reorder application form (standard + custom fields) to a role, save as a draft, or publish it.
+- **Public candidate application** — a no-login public form (`/job/:slug`) built dynamically from the published form's field definitions, submitted as `multipart/form-data` to support file uploads (e.g. resumes).
+- **Admin dashboard & analytics** — role pipeline, applicant tracking, and hiring analytics via Recharts.
+
+## Notes
+
+- The HTTP client (`src/services/httpClient.ts`) wraps all API responses in a shared envelope (`{ isError, data, message, statusCode }`) and normalizes errors so services and mutations can consume/throw a consistent shape.
+- Auth tokens are stored under the `ctr-atk` key in `localStorage`/`sessionStorage`; the active role is persisted under `activeRole`.
