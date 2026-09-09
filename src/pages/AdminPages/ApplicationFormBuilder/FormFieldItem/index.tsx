@@ -40,6 +40,7 @@ interface FormFieldItemProps {
   isFirst: boolean;
   isLast: boolean;
   isReadOnly?: boolean;
+  error?: string;
   onToggleEdit: (id: string) => void;
   onChange: (id: string, patch: Partial<ApplicationFormFieldDraft>) => void;
   onRemove: (id: string) => void;
@@ -53,6 +54,7 @@ export const FormFieldItem = ({
   isFirst,
   isLast,
   isReadOnly = false,
+  error,
   onToggleEdit,
   onChange,
   onRemove,
@@ -64,7 +66,12 @@ export const FormFieldItem = ({
   const isDropdown = field.fieldType === FIELD_TYPE.DROPDOWN;
 
   return (
-    <div className="border border-grey-200 rounded-2xl w-full overflow-hidden">
+    <div
+      className={cn(
+        "border rounded-2xl w-full overflow-hidden",
+        error ? "border-error-200" : "border-grey-200",
+      )}
+    >
       <button
         type="button"
         onClick={() => !isReadOnly && onToggleEdit(field.id)}
@@ -91,6 +98,9 @@ export const FormFieldItem = ({
               {meta.label}
               {field.isStandard ? " · Standard Field" : ""}
             </p>
+            {error && !isEditing && (
+              <p className="text-error-500 text-xs">{error}</p>
+            )}
           </div>
         </div>
 
@@ -127,7 +137,9 @@ export const FormFieldItem = ({
               value={field.label}
               onChange={(e) => onChange(field.id, { label: e.target.value })}
               placeholder="Field label"
+              className={cn(error && "border-error-200")}
             />
+            {error && <p className="text-error-500 text-xs">{error}</p>}
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-grey-900 text-sm font-medium">

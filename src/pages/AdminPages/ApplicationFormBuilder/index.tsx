@@ -69,6 +69,11 @@ export const ApplicationFormBuilderPage = () => {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
 
+  const [formError, setFormError] = useState<string | null>(null);
+  const [titleError, setTitleError] = useState<string | undefined>();
+  const [introError, setIntroError] = useState<string | undefined>();
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
   const { data: role } = useQuery({
     queryKey: ["open-role", id],
     queryFn: () => fetchOpenRoleById(id as string),
@@ -88,12 +93,62 @@ export const ApplicationFormBuilderPage = () => {
     createDefaultStandardFields(),
   );
   const [editingFieldId, setEditingFieldId] = useState<string | null>(null);
-  const [formError, setFormError] = useState<string | null>(null);
 
   const { showToast } = useToast();
   const navigate = useNavigate();
 
   const isPublished = form?.statusStr === "Published";
+
+  const validateAndGetPayload = (): CreateApplicationFormPayload | null => {
+    setFormError(null);
+    setTitleError(undefined);
+    setIntroError(undefined);
+    setFieldErrors({});
+
+    const payload = buildPayload();
+    const result = CreateApplicationFormSchema.safeParse(payload);
+
+    if (!result.success) {
+      const nextFieldErrors: Record<string, string> = {};
+      let nextTitleError: string | undefined;
+      let nextIntroError: string | undefined;
+
+      for (const issue of result.error.issues) {
+        const [key, index] = issue.path;
+
+        if (key === "title") {
+          nextTitleError ??= issue.message;
+        } else if (key === "introMessage") {
+          nextIntroError ??= issue.message;
+        } else if (key === "fields" && typeof index === "number") {
+          const field = fields[index];
+          if (field && !nextFieldErrors[field.id]) {
+            nextFieldErrors[field.id] = issue.message;
+          }
+        }
+      }
+
+      setTitleError(nextTitleError);
+      setIntroError(nextIntroError);
+      setFieldErrors(nextFieldErrors);
+      setFormError("Please fix the errors below before continuing.");
+      return null;
+    }
+
+    return payload;
+  };
+
+  const handlePublish = () => {
+    const payload = validateAndGetPayload();
+    if (!payload) return;
+    submitForm(payload);
+  };
+
+  const handleSaveDraft = () => {
+    const payload = validateAndGetPayload();
+    if (!payload) return;
+    saveForm(payload);
+  };
 
   useEffect(() => {
     if (!form) return;
@@ -210,34 +265,6 @@ export const ApplicationFormBuilderPage = () => {
     })),
   });
 
-  const handlePublish = () => {
-    setFormError(null);
-    const payload = buildPayload();
-
-    const result = CreateApplicationFormSchema.safeParse(payload);
-    if (!result.success) {
-      setFormError(
-        result.error.issues[0]?.message ?? "Please check the form fields.",
-      );
-      return;
-    }
-    submitForm(payload);
-  };
-
-  const handleSaveDraft = () => {
-    setFormError(null);
-    const payload = buildPayload();
-
-    const result = CreateApplicationFormSchema.safeParse(payload);
-    if (!result.success) {
-      setFormError(
-        result.error.issues[0]?.message ?? "Please check the form fields.",
-      );
-      return;
-    }
-    saveForm(payload);
-  };
-
   return (
     <div className="w-full flex flex-col gap-6">
       <Link
@@ -311,6 +338,7 @@ export const ApplicationFormBuilderPage = () => {
                           placeholder="e.g Application — Senior Backend Engineer"
                           disabled={isPublished}
                         />
+                        {titleError && <p className="text-error-500 text-xs">{titleError}</p>}
                       </div>
                       <div className="flex flex-col gap-1.5">
                         <label className="text-grey-900 text-sm font-medium">
@@ -323,6 +351,7 @@ export const ApplicationFormBuilderPage = () => {
                           rows={5}
                           disabled={isPublished}
                         />
+                        {introError && <p className="text-error-500 text-xs">{introError}</p>}
                       </div>
                     </div>
                   </div>
@@ -343,6 +372,7 @@ export const ApplicationFormBuilderPage = () => {
                         <FormFieldItem
                           key={field.id}
                           field={field}
+                          error={fieldErrors[field.id]}
                           isEditing={
                             !isPublished && editingFieldId === field.id
                           }

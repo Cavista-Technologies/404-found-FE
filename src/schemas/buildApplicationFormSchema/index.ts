@@ -50,4 +50,4 @@ export function buildApplicationFormSchema(fields: CandidateFormFieldDetail[]) {
   return z.object(shape);
 }
 
-export type ApplicationFormValues = Record<string, unknown>;
+export type ApplicationFormValues = Record<string, unknown> & { source: string };

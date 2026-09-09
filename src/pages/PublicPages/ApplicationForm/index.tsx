@@ -1,25 +1,35 @@
 import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useParams } from "react-router-dom"; 
+import { useParams } from "react-router-dom";
 import { CavistaLogo } from "@/assets/images/images";
-
+import { z } from "zod";
 import { usePublicApplicationForm } from "@/hooks/applicationForm/usePublicApplicationForm";
 import { submitPublicApplication } from "@/services/applicationForm.service";
 import {
   buildApplicationFormSchema,
   fieldName,
+  type ApplicationFormValues,
 } from "@/schemas/buildApplicationFormSchema";
 import { buildSubmissionPayload } from "@/schemas/buildSubmissionPayload";
 import { DynamicField } from "./DynamicField";
 import { Button } from "@/components/ui/button";
+import { FieldWrapper } from "./FieldWrapper";
+import { DropdownInput } from "@/components/GenericComponents/DropdownInput";
+import { SourceOptions } from "@/constants";
+import DOMPurify from "dompurify";
 
 export function CandidateApplicationForm() {
   const { slug } = useParams<{ slug: string }>();
   const { data: form, isLoading, isError } = usePublicApplicationForm(slug);
 
   const schema = useMemo(
-    () => (form ? buildApplicationFormSchema(form.fields) : undefined),
+    () =>
+      form
+        ? buildApplicationFormSchema(form.fields).extend({
+            source: z.string().min(1, "Please select how you heard about us"),
+          })
+        : undefined,
     [form],
   );
 
@@ -27,16 +37,20 @@ export function CandidateApplicationForm() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-  } = useForm({
-    resolver: schema ? zodResolver(schema) : undefined,
+    control,
+    formState: { isDirty, errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<ApplicationFormValues>({
+    resolver: schema
+      ? (zodResolver(schema) as unknown as Resolver<ApplicationFormValues>)
+      : undefined,
   });
 
-  const onSubmit = async (values: Record<string, any>) => {
+  const onSubmit = async (values: ApplicationFormValues) => {
     if (!form) return;
 
     const submission = buildSubmissionPayload({
-      slug: slug as string,
+      slug: form.slug,
+      source: Number(values.source),
       fields: form.fields,
       values,
     });
@@ -56,7 +70,7 @@ export function CandidateApplicationForm() {
 
   if (isSubmitSuccessful) {
     return (
-      <FormStateMessage message="Your application has been submitted. Thank you!" />
+      <FormStateMessage message="Your application has been submitted. Thank you for your interest in joining the best and brightest team in Cavista Technologies" />
     );
   }
 
@@ -75,6 +89,23 @@ export function CandidateApplicationForm() {
         <h1 className="w-full text-center text-[24px] font-medium leading-8 tracking-[-0.48px] text-grey-700">
           {form.title}
         </h1>
+
+        <div className="text-grey-600 text-sm flex gap-4">
+          <p>{form.department}</p> &bull;
+          <p>{form.location}</p> &bull;
+          <p>{form.employmentTypeStr}</p>
+        </div>
+      </div>
+
+      <div>
+        {form.description && (
+          <div
+            className="prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(form.description),
+            }}
+          />
+        )}
       </div>
 
       <div className="flex w-full flex-col items-start gap-8.5">
@@ -99,12 +130,31 @@ export function CandidateApplicationForm() {
                   error={errors[fieldName(field)] as any}
                 />
               ))}
+
+              <Controller
+                name="source"
+                control={control}
+                render={({ field }) => (
+                  <FieldWrapper
+                    label="How did you hear about us?"
+                    required
+                    error={errors.source as any}
+                  >
+                    <DropdownInput
+                      value={field.value}
+                      placeholder="Select an option"
+                      dropDownValues={SourceOptions}
+                      onValueChange={(value) => field.onChange(value)}
+                    />
+                  </FieldWrapper>
+                )}
+              />
             </div>
 
             <Button
               size="lg"
               type="submit"
-              disabled={isSubmitting}
+              disabled={!isDirty || isSubmitting}
               className=" w-full"
             >
               {isSubmitting ? "Submitting..." : "Submit Application"}
@@ -124,8 +174,8 @@ export function CandidateApplicationForm() {
 
 function FormStateMessage({ message }: { message: string }) {
   return (
-    <div className="mx-auto flex w-full max-w-134.25 flex-col items-center gap-4 rounded-2xl bg-white px-8 py-16 text-center">
-      <p className="text-[14px] text-grey-600">{message}</p>
+    <div className="mx-auto flex w-full max-w-134.25 h-screen flex-col items-center gap-4 rounded-2xl bg-white px-8 py-16 text-center">
+      <p className="text-[14px] text-grey-600 font-medium">{message}</p>
     </div>
   );
 }

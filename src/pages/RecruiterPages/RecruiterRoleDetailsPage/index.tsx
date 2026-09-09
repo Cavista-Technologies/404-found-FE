@@ -22,7 +22,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 type RoleDetailTab = "pipeline" | "applicants" | "timeline";
 
-export const RoleDetailPage = () => {
+export const RecruiteroleDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<RoleDetailTab>("pipeline");
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export const RoleDetailPage = () => {
   return (
     <div className="w-full">
       <Link
-        to={"/dashboard/admin/roles"}
+        to={"/dashboard/recruiter/my-roles"}
         className="text-info text-base leading-6 flex items-center gap-1.5"
       >
         <ArrowLeft02 />
@@ -102,18 +102,14 @@ export const RoleDetailPage = () => {
               )}
             </div>
 
-
-              
-            {roleDetailsLoading ? (
-                <Skeleton className="w-30 h-8" />
-            )
-            :role?.statusStr === "Draft" ? (
+            {role?.statusStr === "Draft" ? (
               <div className="flex flex-col-reverse items-center gap-1">
                 <Button
                   variant="secondary"
                   size="md"
                   onClick={() =>
-                    navigate(`/dashboard/admin/roles/activation/${id}`)
+                    
+                    navigate(`/dashboard/recruiter/my-roles/${id}/create-form`)
                   }
                 >
                   Complete Role Activation
@@ -126,7 +122,7 @@ export const RoleDetailPage = () => {
                     variant="secondary"
                     size="md"
                     onClick={() =>
-                      navigate(`/dashboard/admin/roles/${id}/create-form`)
+                      navigate(`/dashboard/recruiter/my-roles/${id}/create-form`)
                     }
                   >
                     View Application Form Builder
@@ -136,7 +132,7 @@ export const RoleDetailPage = () => {
                     variant="secondary"
                     size="md"
                     onClick={() =>
-                      navigate(`/dashboard/admin/roles/${id}/create-form`)
+                      navigate(`/dashboard/recruiter/my-roles/${id}/create-form`)
                     }
                   >
                     Generate Application Form

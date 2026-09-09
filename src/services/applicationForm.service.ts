@@ -49,15 +49,6 @@ export const fetchOpenRoleById = async (
   return response;
 };
 
-// export const getPublicApplicationForm= async(
-//   slug: string
-// ): Promise<ApplicationFormDetail> => {
-//   const response = await httpClient.get<ApplicationFormDetail>(
-//     `/application-form/public/${slug}`
-//   );
-//   return response;
-// }
-
 export const getPublicApplicationForm= async(
   slug: string
 ): Promise<CandidateApplicationFormDetail> => {

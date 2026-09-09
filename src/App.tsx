@@ -14,6 +14,7 @@ import { AnalyticsAndInsights } from "./pages/AdminPages/Analytics";
 import { RecruiterDashboard } from "./pages/RecruiterPages/RecruiterDashboard";
 import { RecruiterRoles } from "./pages/RecruiterPages/RecruiterRoles";
 import { RecruiterCreateRolePage } from "./pages/RecruiterPages/CreateRole";
+import { EditRolePage } from "./pages/AdminPages/EditRolePage";
 
 function App() {
   return (
@@ -49,6 +50,15 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles="SuperAdmin">
                   <CreateRolePage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="roles/activation/:id"
+              element={
+                <ProtectedRoute requiredRoles="SuperAdmin">
+                  <EditRolePage />
                 </ProtectedRoute>
               }
             />
@@ -115,6 +125,15 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles="Recruiter">
                   <RecruiterRoles />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="roles/activation/:id"
+              element={
+                <ProtectedRoute requiredRoles="Recruiter">
+                  <EditRolePage />
                 </ProtectedRoute>
               }
             />

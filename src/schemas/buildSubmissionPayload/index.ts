@@ -1,10 +1,7 @@
-import type{ CandidateFormFieldDetail, AnswerPayload, SubmitApplicationRequest } from "@/types/ApplicationForm";
+import type { CandidateFormFieldDetail, AnswerPayload, SubmitApplicationRequest } from "@/types/ApplicationForm";
 import { FIELD_TYPE } from "@/constants/fieldTypes";
-import { fieldName } from "../buildApplicationFormSchema";
+import { fieldName } from "@/schemas/buildApplicationFormSchema";
 
-// The response no longer flags standard fields explicitly (no `isStandard`),
-// so these are matched by label text. Update the patterns if your labels
-// ever differ from "Full Name" / "Email Address" / "Phone Number".
 const STANDARD_MATCHERS: Record<"fullName" | "email" | "phone", RegExp> = {
   fullName: /full ?name/i,
   email: /email/i,
@@ -23,20 +20,19 @@ function standardKeyFor(field: CandidateFormFieldDetail): "fullName" | "email" |
 
 interface BuildPayloadArgs {
   slug: string;
-  source?: number;
+  source: number;
   fields: CandidateFormFieldDetail[];
   values: Record<string, unknown>;
 }
 
 export interface BuiltSubmission {
   body: SubmitApplicationRequest;
-  /** File-type fields, pulled out of `answers` since they can't be JSON strings. */
   files: { formFieldId: number; file: File }[];
 }
 
 export function buildSubmissionPayload({
   slug,
-  source = 1, // TODO: confirm what "source" values mean (e.g. 1 = careers site)
+  source,
   fields,
   values,
 }: BuildPayloadArgs): BuiltSubmission {
@@ -61,7 +57,8 @@ export function buildSubmissionPayload({
     if (standardKey === "fullName") fullName = stringValue;
     else if (standardKey === "email") email = stringValue;
     else if (standardKey === "phone") phone = stringValue;
-    else answers.push({ formFieldId: field.id, value: stringValue });
+
+    answers.push({ formFieldId: field.id, value: stringValue });
   });
 
   return { body: { slug, source, fullName, email, phone, answers }, files };

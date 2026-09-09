@@ -85,10 +85,19 @@ export interface SubmitApplicationRequest {
   answers: AnswerPayload[];
 }
 
-
 export interface CandidateApplicationFormDetail {
+  jobRoleId: number;
+  jobRoleTitle: string;
+  description: string;
+  department: string;
+  location: string;
+  employmentType: number;
+  employmentTypeStr: string;
+  numberOfOpenings: number;
+  salaryRange: string;
   title: string;
   introMessage: string;
+  slug: string;
   fields: CandidateFormFieldDetail[];
 }
 
@@ -145,12 +154,6 @@ export interface CandidateFormFieldDetail {
   isRequired: boolean;
   sortOrder: number;
   options: FormFieldOption[];
-}
-
-export interface CandidateApplicationFormDetail {
-  title: string;
-  introMessage: string;
-  fields: CandidateFormFieldDetail[];
 }
 
 export interface AnswerPayload {

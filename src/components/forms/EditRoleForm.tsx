@@ -18,13 +18,15 @@ import { useToast } from "@/context/toastContext";
 import { createNewRole } from "@/services/roleCreation.service";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import type { RootState } from "@/store";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { RichTextEditor } from "../GenericComponents/RichTextEditor";
+import { fetchRoleDetails } from "@/services/roleManagement.service";
 
-export const CreateNewRoleForm = () => {
+export const EditRoleForm = () => {
+  const { id } = useParams<{ id: string }>();
   const { showToast } = useToast();
   const location = useLocation();
   const navigate = useNavigate()
@@ -33,6 +35,12 @@ export const CreateNewRoleForm = () => {
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
     queryKey: ["getDepartments"],
     queryFn: fetchDepartments,
+  });
+
+  const { data: role, isLoading: roleDetailsLoading } = useQuery({
+    queryKey: ["fetchRoleDetails"],
+    queryFn: () => fetchRoleDetails(id as string),
+    enabled: !!id,
   });
 
   useEffect(() => {
@@ -54,20 +62,22 @@ export const CreateNewRoleForm = () => {
   } = useForm<CreateNewRoleFormInput, unknown, CreateNewRoleFormOutput>({
     resolver: zodResolver(CreateNewRoleSchema),
     defaultValues: {
-      title: "",
+      title: role?.title ?? "",
       description: "",
-      location: "",
-      employmentType: "",
-      priority: "",
-      departmentId: "",
-      recruiterName: "",
-      recruiterEmail: "",
-      hiringManagerName: "",
-      hiringManagerEmail: "",
-      numberOfOpenings: "",
-      slaTargetDays: "",
-      targetHireDate: undefined,
-      salaryRange: "",
+      location: role?.location ?? "",
+      employmentType: role?.employmentType.toString() ?? "",
+      priority: role?.priority.toString() ?? "",
+      departmentId: role?.department.toString() ?? "",
+      recruiterName: role?.recruiterName ?? "",
+      recruiterEmail: role?.recruiterEmail ?? "",
+      hiringManagerName: role?.hiringManagerName ?? "",
+      hiringManagerEmail: role?.hiringManagerEmail ?? "",
+      numberOfOpenings: role?.numberOfOpenings.toString() ?? "",
+      slaTargetDays: role?.slaTargetDays.toString() ?? "",
+      targetHireDate: role?.targetHireDate
+        ? new Date(role?.targetHireDate)
+        : undefined,
+      salaryRange: role?.salaryRange ?? "",
       reason: "",
       activate: false,
     },
@@ -102,9 +112,10 @@ export const CreateNewRoleForm = () => {
   const submitMutation = useMutation({
     mutationFn: createNewRole,
     onSuccess: (res) => {
-      reset();
-      showToast(res.message ?? "Role opened succesfully", "success");
-      navigate(-1)
+        reset();
+        showToast(res.message ?? "Role opened succesfully", "success");
+        navigate(-1)
+
     },
     onError: (error) => {
       showToast(`${error.message}`, "error");
@@ -273,37 +284,36 @@ export const CreateNewRoleForm = () => {
                               </Field>
                             )}
                           />
-                          </div>
+                        </div>
 
-                          <Controller
-                            name="description"
-                            control={control}
-                            render={({ field, fieldState }) => (
-                              <Field>
-                                <div className="space-y-1">
-                                  <FieldLabel
-                                    htmlFor={field.name}
-                                    className="text-sm text-grey-900 font-medium"
-                                  >
-                                    Description
-                                    <span className="text-error">*</span>
-                                  </FieldLabel>
-                                  <RichTextEditor
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    placeholder="Brief description of role"
-                                    error={!!fieldState.error}
-                                  />
-                                  {fieldState.error && (
-                                    <p className="text-xs text-primary-500">
-                                      {fieldState.error.message}
-                                    </p>
-                                  )}
-                                </div>
-                              </Field>
-                            )}
-                          />
-                      
+                        <Controller
+                          name="description"
+                          control={control}
+                          render={({ field, fieldState }) => (
+                            <Field>
+                              <div className="space-y-1">
+                                <FieldLabel
+                                  htmlFor={field.name}
+                                  className="text-sm text-grey-900 font-medium"
+                                >
+                                  Description
+                                  <span className="text-error">*</span>
+                                </FieldLabel>
+                                <RichTextEditor
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  placeholder="Brief description of role"
+                                  error={!!fieldState.error}
+                                />
+                                {fieldState.error && (
+                                  <p className="text-xs text-primary-500">
+                                    {fieldState.error.message}
+                                  </p>
+                                )}
+                              </div>
+                            </Field>
+                          )}
+                        />
                       </div>
 
                       {/* Ownership details */}
@@ -689,7 +699,7 @@ export const CreateNewRoleForm = () => {
             <Button
               size="lg"
               variant="ghost"
-              disabled={!isDirty || isSubmitting || submitMutation.isPending}
+              disabled={!isDirty || isSubmitting ||submitMutation.isPending}
               onClick={handleSaveDraft}
             >
               Save as Draft
