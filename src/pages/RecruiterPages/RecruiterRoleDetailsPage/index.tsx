@@ -281,7 +281,7 @@ export const RecruiteroleDetailPage = () => {
         <CardContent>
           {activeTab === "pipeline" && <PipelineTab roleId={id as string} />}
           {activeTab === "applicants" && (
-            <RecruiterApplicantsTab roleId={id as string} applicationId={role?.applicationFormId ?? 0} />
+            <RecruiterApplicantsTab roleId={id as string} />
           )}
           {activeTab === "timeline" && <RecruiterTimelineTab roleId={id as string} />}
         </CardContent>

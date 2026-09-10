@@ -18,14 +18,12 @@ import { useToast } from "@/context/toastContext";
 import type { RootState } from "@/store";
 import { useSelector } from "react-redux";
 
-interface ApplicantsTabProps {
+interface RecruiterApplicantsTabProps {
   roleId: string;
-  applicationId: number;
 }
 
 interface PendingStageChange {
-  applicationId: number;
-  candidateId: number;
+  applicationCandidateId: number;
   candidateName: string;
   fromStage: number;
   toStage: number;
@@ -43,8 +41,7 @@ const STAGE_COLORS: Record<number, string> = {
 
 export const RecruiterApplicantsTab = ({
   roleId,
-  applicationId,
-}: ApplicantsTabProps) => {
+}: RecruiterApplicantsTabProps) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -82,8 +79,7 @@ export const RecruiterApplicantsTab = ({
     if (!pendingStageChange || !userId) return;
 
     updateMutation.mutate({
-      applicationId: pendingStageChange.applicationId,
-      candidateId: pendingStageChange.candidateId,
+      applicationCandidateId: pendingStageChange.applicationCandidateId,
       currentUserId: Number(userId),
       toStage: pendingStageChange.toStage,
       reason: null,
@@ -192,8 +188,7 @@ export const RecruiterApplicantsTab = ({
                           const toStage = Number(value);
                           if (toStage === applicant.stage) return;
                           setPendingStageChange({
-                            applicationId: applicationId,
-                            candidateId: applicant.id,
+                            applicationCandidateId: applicant.id,
                             candidateName: applicant.candidateName,
                             fromStage: applicant.stage,
                             toStage,

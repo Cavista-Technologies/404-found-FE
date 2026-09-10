@@ -2,10 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "../ui/field";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import type {
-  CreateNewRoleFormInput,
-  CreateNewRoleFormOutput,
+  EditRoleFormInput,
+  EditRoleFormOutput,
 } from "@/types/RoleManagement";
-import { CreateNewRoleSchema } from "@/schemas";
+import { EditRoleSchema } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { DropdownInput } from "../GenericComponents/DropdownInput";
@@ -60,9 +60,10 @@ export const EditRoleForm = () => {
     watch,
     setValue,
     formState: { isDirty, isSubmitting },
-  } = useForm<CreateNewRoleFormInput, unknown, CreateNewRoleFormOutput>({
-    resolver: zodResolver(CreateNewRoleSchema),
+  } = useForm<EditRoleFormInput, unknown, EditRoleFormOutput>({
+    resolver: zodResolver(EditRoleSchema),
     defaultValues: {
+      jobRoleId: Number(id) ?? 0,
       title: role?.title ?? "",
       description: "",
       location: role?.location ?? "",
@@ -122,7 +123,7 @@ export const EditRoleForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<CreateNewRoleFormOutput> = (values) => {
+  const onSubmit: SubmitHandler<EditRoleFormOutput> = (values) => {
     submitMutation.mutate(values);
   };
 

@@ -20,12 +20,10 @@ import { useSelector } from "react-redux";
 
 interface ApplicantsTabProps {
   roleId: string;
-  applicationId: number;
 }
 
 interface PendingStageChange {
-  applicationId: number;
-  candidateId: number;
+  applicationCandidateId: number;
   candidateName: string;
   fromStage: number;
   toStage: number;
@@ -43,7 +41,6 @@ const STAGE_COLORS: Record<number, string> = {
 
 export const ApplicantsTab = ({
   roleId,
-  applicationId,
 }: ApplicantsTabProps) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -82,8 +79,7 @@ export const ApplicantsTab = ({
     if (!pendingStageChange || !userId) return;
 
     updateMutation.mutate({
-      applicationId: pendingStageChange.applicationId,
-      candidateId: pendingStageChange.candidateId,
+      applicationCandidateId: pendingStageChange.applicationCandidateId,
       currentUserId: Number(userId),
       toStage: pendingStageChange.toStage,
       reason: null,
@@ -192,8 +188,7 @@ export const ApplicantsTab = ({
                           const toStage = Number(value);
                           if (toStage === applicant.stage) return;
                           setPendingStageChange({
-                            applicationId: applicationId,
-                            candidateId: applicant.id,
+                            applicationCandidateId: applicant.id,
                             candidateName: applicant.candidateName,
                             fromStage: applicant.stage,
                             toStage,

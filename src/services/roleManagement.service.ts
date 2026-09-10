@@ -69,7 +69,7 @@ export const updateApplicantStage = async (
   credentials: ApplicantStageUpdate,
 ): Promise<ApiEnvelope<string[]>> => {
   const response = await httpClient.put<string[]>(
-    `/job-roles/candidates/${credentials.candidateId}/stage`,
+    `/job-roles/candidates/stage`,
     credentials,
     { returnFullEnvelope: true },
   );

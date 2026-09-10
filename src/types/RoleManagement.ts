@@ -1,8 +1,10 @@
-import type { CreateNewRoleSchema } from "@/schemas";
+import type { CreateNewRoleSchema, EditRoleSchema } from "@/schemas";
 import type z from "zod";
 
 export type CreateNewRoleFormInput = z.input<typeof CreateNewRoleSchema>;
 export type CreateNewRoleFormOutput = z.output<typeof CreateNewRoleSchema>;
+export type EditRoleFormInput = z.input<typeof EditRoleSchema>;
+export type EditRoleFormOutput = z.output<typeof EditRoleSchema>;
 
 export interface RolesTableValues {
   id: number;
@@ -84,8 +86,7 @@ export interface ApplicantsResponse {
 }
 
 export interface ApplicantStageUpdate {
-  applicationId: number;
-  candidateId: number;
+  applicationCandidateId: number;
   currentUserId: number;
   toStage: number;
   reason: string | null;

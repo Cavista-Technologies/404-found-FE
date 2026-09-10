@@ -1,4 +1,4 @@
-import type { CreateNewRoleFormOutput } from "@/types/RoleManagement";
+import type { CreateNewRoleFormOutput, EditRoleFormOutput } from "@/types/RoleManagement";
 import { httpClient, type ApiEnvelope } from "./httpClient";
 
 export const createNewRole = async (
@@ -13,10 +13,10 @@ export const createNewRole = async (
 };
 
 export const editRoleDetails = async (
-  credentials: CreateNewRoleFormOutput,
+  credentials: EditRoleFormOutput,
 ): Promise<ApiEnvelope<string[]>> => {
-  const response = await httpClient.post<string[]>(
-    "/job-roles/create",
+  const response = await httpClient.put<string[]>(
+    `/job-roles/update/${credentials.jobRoleId}`,
     credentials,
     { returnFullEnvelope: true },
   );
