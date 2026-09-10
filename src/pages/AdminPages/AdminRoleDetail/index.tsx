@@ -285,7 +285,7 @@ export const RoleDetailPage = () => {
         <CardContent>
           {activeTab === "pipeline" && <PipelineTab roleId={id as string} />}
           {activeTab === "applicants" && (
-            <ApplicantsTab roleId={id as string} />
+            <ApplicantsTab roleId={id as string} applicationId={role?.applicationFormId ?? 0} />
           )}
           {activeTab === "timeline" && <TimelineTab roleId={id as string} />}
         </CardContent>

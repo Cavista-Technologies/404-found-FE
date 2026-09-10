@@ -5,7 +5,10 @@ import { DropdownInput } from "@/components/GenericComponents/DropdownInput";
 import { Pagination } from "@/components/layouts/Pagination";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { formatDateTime, getAvatarInitials } from "@/constants/Helpers";
-import { fetchApplicants, updateApplicantStage } from "@/services/roleManagement.service";
+import {
+  fetchApplicants,
+  updateApplicantStage,
+} from "@/services/roleManagement.service";
 import { STAGE_OPTIONS } from "@/constants";
 import { ArrowRight02, File02 } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -17,6 +20,7 @@ import { useSelector } from "react-redux";
 
 interface ApplicantsTabProps {
   roleId: string;
+  applicationId: number;
 }
 
 interface PendingStageChange {
@@ -37,7 +41,10 @@ const STAGE_COLORS: Record<number, string> = {
   7: "text-[#A8A3A4]", // Withdrawn
 };
 
-export const ApplicantsTab = ({ roleId }: ApplicantsTabProps) => {
+export const ApplicantsTab = ({
+  roleId,
+  applicationId,
+}: ApplicantsTabProps) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -48,12 +55,11 @@ export const ApplicantsTab = ({ roleId }: ApplicantsTabProps) => {
     queryFn: () => fetchApplicants(roleId, pageNumber, pageSize),
     enabled: !!roleId,
   });
-  const {showToast} = useToast()
+  const { showToast } = useToast();
   const queryClient = useQueryClient();
-  const { userId} = useSelector((state: RootState) => state.auth);
+  const { userId } = useSelector((state: RootState) => state.auth);
 
-
-   const updateMutation = useMutation({
+  const updateMutation = useMutation({
     mutationFn: updateApplicantStage,
     onSuccess: (res) => {
       showToast(res.message ?? "Candidate moved successfully", "success");
@@ -93,19 +99,17 @@ export const ApplicantsTab = ({ roleId }: ApplicantsTabProps) => {
     <div className="bg-white flex flex-row w-full">
       <div className="flex flex-col gap-4 w-full">
         {!isLoading && !isError && applicants.length > 0 && (
-        <div className="flex items-center justify-between w-full">
-          <p className="text-grey-600 text-base font-normal">
-            All Applicants via form
-          </p>
-          <Button variant="ghost" size="sm">
-            Preview Form
-          </Button>
-        </div>
+          <div className="flex items-center justify-between w-full">
+            <p className="text-grey-600 text-base font-normal">
+              All Applicants via form
+            </p>
+            <Button variant="ghost" size="sm">
+              Preview Form
+            </Button>
+          </div>
         )}
 
-        {isLoading && (
-          <Skeleton className="h-150 w-full" />
-        )}
+        {isLoading && <Skeleton className="h-150 w-full" />}
 
         {isError && (
           <p className="text-sm text-[#B9243C] py-6 text-center">
@@ -115,9 +119,9 @@ export const ApplicantsTab = ({ roleId }: ApplicantsTabProps) => {
 
         {!isLoading && !isError && applicants.length === 0 && (
           <div className="h-80 flex items-center justify-center">
-          <p className="text-sm text-grey-500 text-center">
-            No applicants yet.
-          </p>
+            <p className="text-sm text-grey-500 text-center">
+              No applicants yet.
+            </p>
           </div>
         )}
 
@@ -182,14 +186,15 @@ export const ApplicantsTab = ({ roleId }: ApplicantsTabProps) => {
                         value={String(applicant.stage)}
                         placeholder="Move"
                         dropDownValues={STAGE_OPTIONS}
-                        onChange={(value: number) => {
-                          if (value === applicant.stage) return;
+                        onValueChange={(value: string) => {
+                          const toStage = Number(value);
+                          if (toStage === applicant.stage) return;
                           setPendingStageChange({
-                            applicationId: applicant.id,
-                            candidateId: applicant.candidateId,
+                            applicationId: applicationId,
+                            candidateId: applicant.id,
                             candidateName: applicant.candidateName,
                             fromStage: applicant.stage,
-                            toStage: value,
+                            toStage,
                           });
                         }}
                       />
@@ -263,25 +268,25 @@ export const ApplicantsTab = ({ roleId }: ApplicantsTabProps) => {
 
       <>
         <ConfirmModal
-        isOpen={!!pendingStageChange}
-        onConfirm={handleConfirmStageChange}
-        onClose={() => setPendingStageChange(null)}
-        icon={
-          <div className="size-10 rounded-full bg-success-50 flex justify-center items-center">
-            <ArrowRight02 className="size-6 text-success-500" />
-          </div>
-        }
-        title="Move Candidate?"
-        message={
-          pendingStageChange
-            ? `Are you sure you want to move ${pendingStageChange.candidateName} to the next stage?`
-            : "Are you sure you want to move this candidate to the next stage?"
-        }
-        confirmText="Confirm"
-        cancelText="Cancel"
-        type="success"
-        isLoading={updateMutation.isPending}
-      />
+          isOpen={!!pendingStageChange}
+          onConfirm={handleConfirmStageChange}
+          onClose={() => setPendingStageChange(null)}
+          icon={
+            <div className="size-10 rounded-full bg-success-50 flex justify-center items-center">
+              <ArrowRight02 className="size-6 text-success-500" />
+            </div>
+          }
+          title="Move Candidate?"
+          message={
+            pendingStageChange
+              ? `Are you sure you want to move ${pendingStageChange.candidateName} to the next stage?`
+              : "Are you sure you want to move this candidate to the next stage?"
+          }
+          confirmText="Confirm"
+          cancelText="Cancel"
+          type="success"
+          isLoading={updateMutation.isPending}
+        />
       </>
     </div>
   );
