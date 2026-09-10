@@ -1,6 +1,12 @@
 import type { PaginatedResponse } from "@/types/ApiResponse";
-import type { RoleDetails, RolesTableValues } from "@/types/RoleManagement";
-import { httpClient } from "./httpClient";
+import type {
+  ApplicantsResponse,
+  ApplicantStageUpdate,
+  RoleDetails,
+  RolesTableValues,
+  TimelineEntry,
+} from "@/types/RoleManagement";
+import { httpClient, type ApiEnvelope } from "./httpClient";
 import { builderQueryParams } from "@/constants/Helpers";
 
 export const fetchAllRoles = async (
@@ -23,23 +29,49 @@ export const fetchAllRoles = async (
   return response;
 };
 
-export const fetchRoleDetails = async(id:string):Promise<RoleDetails> => {
-  const response = await httpClient.get<RoleDetails>(`/job-roles/open-roles/${id}`)
-  return response
-}
-
+export const fetchRoleDetails = async (id: string): Promise<RoleDetails> => {
+  const response = await httpClient.get<RoleDetails>(
+    `/job-roles/open-roles/${id}`,
+  );
+  return response;
+};
 
 // export const fetchRolePipeline = async(id: string):Promise<>=>{
 //   const response = await httpClient.get<>(`/job-roles/$${id}/pipeline`)
 //   return response
 // }
 
-// export const fetchRoleApplicants = async(id: string):Promise<>=>{
-//   const response = await httpClient.get<>(`/job-roles/$${id}/applicants`)
-//   return response
-// }
+export const fetchRoleTimeline = async (
+  roleId: string,
+): Promise<TimelineEntry[]> => {
+  const response = await httpClient.get<TimelineEntry[]>(
+    `/job-roles/${roleId}/timeline`,
+  );
+  return response;
+};
 
-// export const fetchRoleTimeline = async(id: string):Promise<>=>{
-//   const response = await httpClient.get<>(`/job-roles/$${id}/timeline`)
-//   return response
-// }
+export const fetchApplicants = async (
+  roleId: string,
+  pageNumber: number,
+  pageSize: number,
+): Promise<PaginatedResponse<ApplicantsResponse>> => {
+  const params = builderQueryParams({
+    pageNumber,
+    pageSize,
+  });
+  const response = await httpClient.get<PaginatedResponse<ApplicantsResponse>>(
+    `/job-roles/${roleId}/applicants?${params.toString()}`,
+  );
+  return response;
+};
+
+export const updateApplicantStage = async (
+  credentials: ApplicantStageUpdate,
+): Promise<ApiEnvelope<string[]>> => {
+  const response = await httpClient.post<string[]>(
+    `/job-roles/candidates/${credentials.candidateId}/stage`,
+    credentials,
+    { returnFullEnvelope: true },
+  );
+  return response;
+};

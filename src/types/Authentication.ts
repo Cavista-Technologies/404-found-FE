@@ -1,4 +1,4 @@
-import * as z from "zod"
+import * as z from "zod";
 import type { ForgotPasswordSchema, LoginSchema } from "../schemas";
 
 export interface AuthData {
@@ -14,17 +14,19 @@ export interface AuthState {
   tokenExpiration: string | null;
   username: string | null;
   role: string | null;
-  fullName: string | null
+  fullName: string | null;
+  userId: string | null;
   isAuthenticated: boolean;
 }
 
 export interface LoginData {
-   tokenExpiration: string,
-    token: string,
-    refreshToken: string,
-    username: string,
-    role: string,
-    fullName: string | null,
+  tokenExpiration: string;
+  token: string;
+  refreshToken: string;
+  username: string;
+  role: string;
+  fullName: string | null;
+  userId: string | null;
 }
 
 export interface LoginRequest {
@@ -40,6 +42,7 @@ export interface StoredSession {
   username: string | null;
   role: string;
   fullName: string | null;
+  userId: string | null;
 }
 
 export interface ChangePasswordRequest {

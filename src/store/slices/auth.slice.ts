@@ -8,6 +8,7 @@ const initialState: AuthState = {
   ...persisted,
   isAuthenticated: !!persisted.token,
   fullName: persisted.fullName ?? null,
+  userId: persisted.userId ?? null,
 };
 
 interface SetCredentialsPayload extends LoginData {
@@ -27,6 +28,7 @@ const authSlice = createSlice({
       state.username = data.username;
       state.fullName = data.fullName;
       state.role = data.role;
+      state.userId = data.userId;
       state.isAuthenticated = true;
       
 
@@ -42,6 +44,7 @@ const authSlice = createSlice({
       state.username = null;
       state.role = null;
       state.fullName = null;
+      state. userId = null;
       state.isAuthenticated = false;
 
       clearSession();

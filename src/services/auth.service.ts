@@ -23,6 +23,7 @@ export const authService = {
 
     const decoded = decodeJwtPayload<{
       FullName: string;
+      UserId: number
       "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
     }>(response.data.token);
 
@@ -34,6 +35,7 @@ export const authService = {
           decoded?.[
             "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
           ] ?? null,
+        userId: decoded?.UserId ?? null,
       },
     };
   },
@@ -69,6 +71,7 @@ export const refreshTokenApi = async (): Promise<any> => {
 
   const decoded = decodeJwtPayload<{
     FullName: string;
+    UserId: string
     "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
   }>(response.data.token);
 
@@ -78,6 +81,7 @@ export const refreshTokenApi = async (): Promise<any> => {
       decoded?.[
         "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
       ] ?? null,
+      userId: decoded?.UserId ?? null,
   };
 
   saveSession(mergedData, true);   // ✅ now persists fullName too

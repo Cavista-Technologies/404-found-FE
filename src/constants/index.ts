@@ -65,3 +65,13 @@ export const SourceOptions = [
   { name: "Email", id: "7" },
   { name: "Other", id: "8" },
 ];
+
+export const STAGE_OPTIONS = [
+  { id: "1", name: "Applied" },
+  { id: "2", name: "Screen" },
+  { id: "3", name: "Interview" },
+  { id: "4", name: "Offer" },
+  { id: "5", name: "Hired" },
+  { id: "6", name: "Rejected" },
+  { id: "7", name: "Withdrawn" },
+];

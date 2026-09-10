@@ -11,3 +11,14 @@ export const createNewRole = async (
   );
   return response;
 };
+
+export const editRoleDetails = async (
+  credentials: CreateNewRoleFormOutput,
+): Promise<ApiEnvelope<string[]>> => {
+  const response = await httpClient.post<string[]>(
+    "/job-roles/create",
+    credentials,
+    { returnFullEnvelope: true },
+  );
+  return response;
+};

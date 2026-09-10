@@ -54,3 +54,39 @@ export interface RoleDetails {
   applicationFormStatus: number;
   applicationFormStatusStr: string;
 }
+
+export interface TimelineEntry {
+  type: "RolePublished" | "StageChange" | string;
+  description: string;
+  candidateName: string | null;
+  actor: string;
+  date: string;
+}
+
+export interface ApplicantFile {
+  fieldName: string;
+  fileUrl: string;
+}
+
+export interface ApplicantsResponse {
+  id: number;
+  candidateName: string;
+  email: string;
+  phoneNumber: string;
+  stage: number;
+  stageStr: string;
+  status: number;
+  statusStr: string;
+  source: number;
+  sourceStr: string;
+  appliedOn: string;
+  files: ApplicantFile[];
+}
+
+export interface ApplicantStageUpdate {
+  applicationId: number;
+  candidateId: number;
+  currentUserId: number;
+  toStage: number;
+  reason: string | null;
+}

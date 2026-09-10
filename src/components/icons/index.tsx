@@ -943,3 +943,72 @@ export const UserGroup = (props: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+export const File02 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M10.666 11.3333L5.99935 11.3333"
+        stroke="#2432F5"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.666 8.6665L8.66602 8.6665"
+        stroke="#2432F5"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.666 9.33317C13.666 11.8473 13.666 13.1044 12.8362 13.8855C12.0063 14.6665 10.6706 14.6665 7.99935 14.6665H7.4842C5.31006 14.6665 4.22299 14.6665 3.46806 14.1346C3.25176 13.9822 3.05974 13.8015 2.89782 13.5979C2.33268 12.8874 2.33268 11.8643 2.33268 9.81802V8.12105C2.33268 6.1456 2.33268 5.15788 2.64531 4.36901C3.14789 3.10079 4.21077 2.10043 5.55826 1.62741C6.39643 1.33317 7.44589 1.33317 9.5448 1.33317C10.7442 1.33317 11.3439 1.33317 11.8228 1.50131C12.5928 1.7716 13.2002 2.34324 13.4874 3.06793C13.666 3.51872 13.666 4.08313 13.666 5.21196V9.33317Z"
+        stroke="#2432F5"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2.33333 8C2.33333 6.7727 3.32826 5.77778 4.55556 5.77778C4.99941 5.77778 5.52269 5.85555 5.95424 5.73992C6.33768 5.63718 6.63718 5.33768 6.73992 4.95424C6.85555 4.52269 6.77778 3.99941 6.77778 3.55556C6.77778 2.32826 7.7727 1.33333 9 1.33333"
+        stroke="#2432F5"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const ArrowRight02 = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M19 11.9998L4 11.9998"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15 6.99988L19.2929 11.2928C19.6262 11.6261 19.7929 11.7928 19.7929 11.9999C19.7929 12.207 19.6262 12.3737 19.2929 12.707L15 16.9999"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};

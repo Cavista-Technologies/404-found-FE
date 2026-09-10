@@ -7,6 +7,7 @@ const KEYS = {
   username: "username",
   role: "role",
   fullName: "fullName",
+  userId: "userId"
 } as const;
 
 
@@ -28,6 +29,7 @@ export function loadSession(): StoredSession {
     username: readFromEither(KEYS.username),
     role: JSON.parse(readFromEither(KEYS.role) ?? "[]"),
     fullName: readFromEither(KEYS.fullName) || null,
+    userId: readFromEither(KEYS.userId) || null,
   };
 }
 
@@ -41,6 +43,7 @@ export function saveSession(
     username: string;
     role: string;
     fullName: string | null
+    userId: string | null
   },
   rememberMe: boolean
 ): void {
@@ -52,6 +55,7 @@ export function saveSession(
   storage.setItem(KEYS.username, data.username);
   storage.setItem(KEYS.role, JSON.stringify(data.role));
   storage.setItem(KEYS.fullName, data.fullName ?? "");
+  storage.setItem(KEYS.userId, data.userId ?? "");
 }
 
 export function clearSession(): void {

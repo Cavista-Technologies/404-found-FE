@@ -76,36 +76,3 @@ export async function submitPublicApplication({ body, files }: BuiltSubmission):
     headers: { "Content-Type": "multipart/form-data" },
   });
 }
-
-// export async function submitPublicApplication({ body, files }: BuiltSubmission): Promise<void> {
-//   const formData = new FormData();
-//   formData.append("Slug", body.slug);
-//   formData.append("Source", String(body.source));
-//   formData.append("FullName", body.fullName);
-//   formData.append("Email", body.email);
-//   formData.append("Phone", body.phone);
-//   formData.append("AnswersJson", JSON.stringify(body.answers));
- 
-//   files.forEach(({ formFieldId, file }) => {
-//     formData.append(`file_${formFieldId}`, file);
-//   });
- 
-//   await httpClient.post("/application-form/submit-application", formData);
-// }
-
-// export async function submitPublicApplication({ body, files }: BuiltSubmission): Promise<void> {
-//   const formData = new FormData();
-//   formData.append("Slug", body.slug);
-//   formData.append("Source", String(body.source));
-//   formData.append("FullName", body.fullName);
-//   formData.append("Email", body.email);
-//   formData.append("Phone", body.phone);
-//   formData.append("AnswersJson", JSON.stringify(body.answers));
- 
-//   files.forEach(({ formFieldId, file }) => {
-//     formData.append("Files", file);
-//     formData.append("FileFieldIds", String(formFieldId));
-//   });
- 
-//   await httpClient.post("/application-form/submit-application", formData);
-// }
