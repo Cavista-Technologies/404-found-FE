@@ -10,7 +10,7 @@ import {
   updateApplicantStage,
 } from "@/services/roleManagement.service";
 import { STAGE_OPTIONS } from "@/constants";
-import { ArrowRight02, File02 } from "@/components/icons";
+import { ArrowRight02, CancelSquare, File02 } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ConfirmModal from "@/components/GenericComponents/ConfirmModal";
@@ -58,6 +58,9 @@ export const ApplicantsTab = ({
   const { showToast } = useToast();
   const queryClient = useQueryClient();
   const { userId } = useSelector((state: RootState) => state.auth);
+
+  const REJECTED_STAGE = 6;
+  const isRejection = pendingStageChange?.toStage === REJECTED_STAGE;
 
   const updateMutation = useMutation({
     mutationFn: updateApplicantStage,
@@ -268,7 +271,7 @@ export const ApplicantsTab = ({
 
       <>
         <ConfirmModal
-          isOpen={!!pendingStageChange}
+          isOpen={!!pendingStageChange && !isRejection}
           onConfirm={handleConfirmStageChange}
           onClose={() => setPendingStageChange(null)}
           icon={
@@ -285,6 +288,27 @@ export const ApplicantsTab = ({
           confirmText="Confirm"
           cancelText="Cancel"
           type="success"
+          isLoading={updateMutation.isPending}
+        />
+        
+        <ConfirmModal
+          isOpen={!!pendingStageChange && isRejection}
+          onConfirm={handleConfirmStageChange}
+          onClose={() => setPendingStageChange(null)}
+          icon={
+            <div className="size-10 rounded-full bg-error-50 flex justify-center items-center">
+              <CancelSquare className="size-6 text-error-500" />
+            </div>
+          }
+          title="Reject Candidate?"
+          message={
+            pendingStageChange
+              ? `Are you sure you want to reject ${pendingStageChange.candidateName}?`
+              : "Are you sure you want to reject this candidate?"
+          }
+          confirmText="Confirm"
+          cancelText="Cancel"
+          type="danger"
           isLoading={updateMutation.isPending}
         />
       </>

@@ -7,7 +7,7 @@ import type { LoginFormValues } from "../../../types/Authentication";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "../../../schemas";
-import LoginImage from "../../../assets/images/ct-recruita.png";
+import { AuthImage } from "@/assets/images/images";
 import Logo from "../../../assets/images/CavistaLogoWithText.png";
 import { useLogin } from "@/hooks/auth/useLogin";
 
@@ -39,17 +39,17 @@ export const LoginPage = () => {
     const isPending = isSubmitting || login.isPending;
 
   return (
-    <div className="min-h-screen w-full bg-white px-8.5 py-10 flex flex-row-reverse items-stretch font-poppins overflow-hidden">
+    <div className="min-h-screen w-full bg-white flex flex-row-reverse items-stretch font-poppins overflow-hidden">
       {/* Left panel */}
       <div
-        className="relative hidden lg:flex shrink-0 overflow-hidden w-[52.24%] rounded-4xl border border-grey-300"
-        style={{ backgroundImage: `url(${LoginImage})` }}
+        className="relative hidden lg:flex shrink-0 overflow-hidden w-[52.24%] bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url(${AuthImage})` }}
       >
         <div className="absolute top-0 left-0 h-full w-full inset-0 bg-linear-to-b from-black/10 to-black/20 px-12.75 py-27 flex flex-col gap-2 justify-end">
           <h2 className="text-white font-medium text-4xl">
             Every Role. Every stage. Tracked.
           </h2>
-          <p className="text-grey-300 text-lg leading-7">Structure hiring data, timestamped automatically - so your metrics are trustworthy and your bottlenecks are explainable, not guessed at.</p>
+          <p className="text-grey-50 text-lg leading-7">Structure hiring data, timestamped automatically - so your metrics are trustworthy and your bottlenecks are explainable, not guessed at.</p>
         </div>
       </div>
 

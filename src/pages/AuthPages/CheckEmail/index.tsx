@@ -1,7 +1,7 @@
 import { Button } from "../../../components/ui/button";
 import { ArrowLeft, Mail } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LoginImage from "../../../assets/images/ct-recruita.png";
+import { AuthImage } from "@/assets/images/images";
 // import { useForgotPassword } from "@/hooks/auth/useForgotPassword";
 
 interface CheckEmailProps {
@@ -23,11 +23,11 @@ export const CheckEmail = ({ email: emailProp }: CheckEmailProps) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white px-8.5 py-10 flex flex-row-reverse items-stretch font-poppins overflow-hidden">
+    <div className="min-h-screen w-full bg-white flex flex-row-reverse items-stretch font-poppins overflow-hidden">
       {/* Left panel */}
       <div
-        className="relative hidden lg:flex shrink-0 overflow-hidden w-[52.24%] rounded-4xl border border-grey-300"
-        style={{ backgroundImage: `url(${LoginImage})` }}
+        className="relative hidden lg:flex shrink-0 overflow-hidden w-[52.24%] bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url(${AuthImage})` }}
       >
         <div className="absolute top-0 left-0 h-full w-full inset-0 bg-linear-to-b from-black/10 to-black/20 px-12.75 py-27 flex flex-col gap-2 justify-end">
           <h2 className="text-white font-medium text-4xl">

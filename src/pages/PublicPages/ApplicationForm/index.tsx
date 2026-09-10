@@ -100,7 +100,7 @@ export function CandidateApplicationForm() {
       <div>
         {form.description && (
           <div
-            className="prose prose-sm max-w-none"
+            className="prose prose-sm max-w-none bg-grey-50 rounded-lg py-4 px-6"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(form.description),
             }}
