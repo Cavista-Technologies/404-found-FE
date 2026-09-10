@@ -16,8 +16,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getAvatarInitials } from "@/constants/Helpers";
 import { useState } from "react";
 import { PipelineTab } from "./PipelineTab";
-import { ApplicantsTab } from "./ApplicantsTab";
-import { TimelineTab } from "./TimelineTab";
+import { RecruiterApplicantsTab } from "./ApplicantsTab";
+import { RecruiterTimelineTab } from "./TimelineTab";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type RoleDetailTab = "pipeline" | "applicants" | "timeline";
@@ -281,9 +281,9 @@ export const RecruiteroleDetailPage = () => {
         <CardContent>
           {activeTab === "pipeline" && <PipelineTab roleId={id as string} />}
           {activeTab === "applicants" && (
-            <ApplicantsTab roleId={id as string} />
+            <RecruiterApplicantsTab roleId={id as string} applicationId={role?.applicationFormId ?? 0} />
           )}
-          {activeTab === "timeline" && <TimelineTab roleId={id as string} />}
+          {activeTab === "timeline" && <RecruiterTimelineTab roleId={id as string} />}
         </CardContent>
       </Card>
     </div>

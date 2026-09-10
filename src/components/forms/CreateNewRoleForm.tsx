@@ -27,7 +27,7 @@ import { RichTextEditor } from "../GenericComponents/RichTextEditor";
 export const CreateNewRoleForm = () => {
   const { showToast } = useToast();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { username, fullName } = useSelector((state: RootState) => state.auth);
 
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
@@ -104,7 +104,9 @@ export const CreateNewRoleForm = () => {
     onSuccess: (res) => {
       reset();
       showToast(res.message ?? "Role opened succesfully", "success");
-      navigate(-1)
+      isRecruiter
+        ? navigate(`/dashboard/recruiter/my-roles`)
+        : navigate(`/dashboard/admin/roles`);
     },
     onError: (error) => {
       showToast(`${error.message}`, "error");
@@ -273,37 +275,36 @@ export const CreateNewRoleForm = () => {
                               </Field>
                             )}
                           />
-                          </div>
+                        </div>
 
-                          <Controller
-                            name="description"
-                            control={control}
-                            render={({ field, fieldState }) => (
-                              <Field>
-                                <div className="space-y-1">
-                                  <FieldLabel
-                                    htmlFor={field.name}
-                                    className="text-sm text-grey-900 font-medium"
-                                  >
-                                    Description
-                                    <span className="text-error">*</span>
-                                  </FieldLabel>
-                                  <RichTextEditor
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    placeholder="Brief description of role"
-                                    error={!!fieldState.error}
-                                  />
-                                  {fieldState.error && (
-                                    <p className="text-xs text-primary-500">
-                                      {fieldState.error.message}
-                                    </p>
-                                  )}
-                                </div>
-                              </Field>
-                            )}
-                          />
-                      
+                        <Controller
+                          name="description"
+                          control={control}
+                          render={({ field, fieldState }) => (
+                            <Field>
+                              <div className="space-y-1">
+                                <FieldLabel
+                                  htmlFor={field.name}
+                                  className="text-sm text-grey-900 font-medium"
+                                >
+                                  Description
+                                  <span className="text-error">*</span>
+                                </FieldLabel>
+                                <RichTextEditor
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  placeholder="Brief description of role"
+                                  error={!!fieldState.error}
+                                />
+                                {fieldState.error && (
+                                  <p className="text-xs text-primary-500">
+                                    {fieldState.error.message}
+                                  </p>
+                                )}
+                              </div>
+                            </Field>
+                          )}
+                        />
                       </div>
 
                       {/* Ownership details */}

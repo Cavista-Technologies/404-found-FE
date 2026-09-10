@@ -180,7 +180,6 @@ export const ApplicantsTab = ({
                       {applicant.stageStr}
                     </span>
 
-                    {/* TODO: wire to a real stage-change mutation once that endpoint exists */}
                     <div
                       className="w-28.5"
                       onClick={(e) => e.stopPropagation()}

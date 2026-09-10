@@ -35,7 +35,7 @@ export const DropdownInput = ({
     <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger className={cn("w-full", className)}>
         {loading ? (
-          <span className="text-gray-400 animate-pulse">Loading...</span>
+          <span className="text-grey-400 animate-pulse">Loading...</span>
         ) : (
           <SelectValue placeholder={placeholder} />
         )}

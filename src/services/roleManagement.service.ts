@@ -68,7 +68,7 @@ export const fetchApplicants = async (
 export const updateApplicantStage = async (
   credentials: ApplicantStageUpdate,
 ): Promise<ApiEnvelope<string[]>> => {
-  const response = await httpClient.post<string[]>(
+  const response = await httpClient.put<string[]>(
     `/job-roles/candidates/${credentials.candidateId}/stage`,
     credentials,
     { returnFullEnvelope: true },

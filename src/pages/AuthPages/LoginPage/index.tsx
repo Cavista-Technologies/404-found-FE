@@ -13,7 +13,7 @@ import { useLogin } from "@/hooks/auth/useLogin";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-    const login = useLogin();
+  const login = useLogin();
 
   const {
     register,

@@ -1,6 +1,4 @@
-// TimelineTab.tsx
 import { useQuery } from "@tanstack/react-query";
-// import { ArrowRight02 } from "@/components/icons";
 import { ArrowRight } from "lucide-react";
 import { fetchRoleTimeline } from "@/services/roleManagement.service";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,7 +9,6 @@ interface TimelineTabProps {
   roleId: string;
 }
 
-// "to"-stage color; the "from"-stage is always neutral grey per the design
 const STAGE_COLOR_MAP: Record<string, string> = {
   Screen: "text-info",
   Interview: "text-warning-500",
