@@ -87,7 +87,7 @@ export const RecruiterApplicantsTab = ({
   };
 
   const applicants = data?.items ?? [];
-  const totalCount = data?.itemCount ?? 0;
+  const totalCount = data?.totalCount ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   const toggleExpand = (id: number) => {

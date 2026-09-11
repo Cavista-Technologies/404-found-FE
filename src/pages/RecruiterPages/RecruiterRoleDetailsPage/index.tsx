@@ -3,7 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { ArrowLeft02 } from "@/components/icons";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { fetchRoleDetails } from "@/services/roleManagement.service";
+import {
+  fetchApplicants,
+  fetchRoleDetails,
+} from "@/services/roleManagement.service";
 import { cn } from "@/lib/utils";
 import {
   formatDateTime,
@@ -34,11 +37,20 @@ export const RecruiteroleDetailPage = () => {
     queryFn: () => fetchRoleDetails(id as string),
     enabled: !!id,
   });
-  console.log(id);
+
+  const { data: applicants } = useQuery({
+    queryKey: ["job-role-applicants", id],
+    queryFn: () => fetchApplicants(id as string),
+    enabled: !!id,
+  });
 
   const tabs: { key: RoleDetailTab; label: string; count: number }[] = [
     { key: "pipeline", label: "Pipeline", count: 4 },
-    { key: "applicants", label: "Applicants", count: 5 },
+    {
+      key: "applicants",
+      label: "Applicants",
+      count: applicants?.totalCount ?? 0,
+    },
   ];
 
   return (
@@ -108,7 +120,6 @@ export const RecruiteroleDetailPage = () => {
                   variant="secondary"
                   size="md"
                   onClick={() =>
-                    
                     navigate(`/dashboard/recruiter/my-roles/${id}/create-form`)
                   }
                 >
@@ -122,7 +133,9 @@ export const RecruiteroleDetailPage = () => {
                     variant="secondary"
                     size="md"
                     onClick={() =>
-                      navigate(`/dashboard/recruiter/my-roles/${id}/create-form`)
+                      navigate(
+                        `/dashboard/recruiter/my-roles/${id}/create-form`,
+                      )
                     }
                   >
                     View Application Form Builder
@@ -132,7 +145,9 @@ export const RecruiteroleDetailPage = () => {
                     variant="secondary"
                     size="md"
                     onClick={() =>
-                      navigate(`/dashboard/recruiter/my-roles/${id}/create-form`)
+                      navigate(
+                        `/dashboard/recruiter/my-roles/${id}/create-form`,
+                      )
                     }
                   >
                     Generate Application Form
@@ -283,7 +298,9 @@ export const RecruiteroleDetailPage = () => {
           {activeTab === "applicants" && (
             <RecruiterApplicantsTab roleId={id as string} />
           )}
-          {activeTab === "timeline" && <RecruiterTimelineTab roleId={id as string} />}
+          {activeTab === "timeline" && (
+            <RecruiterTimelineTab roleId={id as string} />
+          )}
         </CardContent>
       </Card>
     </div>
