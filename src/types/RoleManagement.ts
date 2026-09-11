@@ -91,8 +91,6 @@ export interface ApplicantStageUpdate {
   toStage: number;
   reason: string | null;
 }
-
-
 export type PipelineStageValue = 1 | 2 | 3 | 4 | 5 | 6 | 7;
  
 export interface PipelineItem {
@@ -104,14 +102,6 @@ export interface PipelineItem {
   source: number;
   sourceStr: string;
   daysInStage: number;
-}
- 
-// Matches the real shape from ApplicantsTab's updateMutation.mutate(...) call.
-export interface ApplicantStageUpdate {
-  applicationCandidateId: number;
-  currentUserId: number;
-  toStage: number;
-  reason: string | null;
 }
  
 export interface PendingStageChange {

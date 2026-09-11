@@ -66,9 +66,12 @@ export const fetchPipeline = async (
   pageNumber: number,
   pageSize: number,
 ): Promise<PaginatedResponse<PipelineItem>> => {
+  const params = builderQueryParams({
+    pageNumber,
+    pageSize,
+  });
   const response = await httpClient.get<PaginatedResponse<PipelineItem>>(
-    `/job-roles/${roleId}/pipeline`,
-    { params: { pageNumber, pageSize } },
+    `/job-roles/${roleId}/pipeline?${params.toString()}`,
   );
   return response;
 };

@@ -4,9 +4,10 @@ import { getAvatarInitials } from "@/constants/Helpers";
 import { STAGE_COLORS } from "@/constants";
 import { StageMoveDropdown } from "./StageMoveDropdown";
 import type { PipelineItem } from "@/types/RoleManagement";
+import type { PaginatedResponse } from "@/types/ApiResponse";
 
 interface PipelineListViewProps {
-  pageResult: PipelinePageResult;
+  pageResult: PaginatedResponse<PipelineItem>;
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;

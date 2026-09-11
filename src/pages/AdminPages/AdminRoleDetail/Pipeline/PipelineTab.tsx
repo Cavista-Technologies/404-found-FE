@@ -31,11 +31,13 @@ export const PipelineTab = ({ roleId, openingsCount }: PipelineTabProps) => {
   const effectivePageNumber = viewMode === "list" ? pageNumber : 1;
   const effectivePageSize = viewMode === "list" ? pageSize : BOARD_PAGE_SIZE;
 
-  const { data, isLoading, isError } = useQuery({
+  const { data: items, isLoading, isError } = useQuery({
     queryKey: ["job-role-pipeline", roleId, effectivePageNumber, effectivePageSize],
     queryFn: () => fetchPipeline(roleId, effectivePageNumber, effectivePageSize),
     enabled: !!roleId,
   });
+
+  const pipeline = items?.items ?? []
 
   const { showToast } = useToast();
   const queryClient = useQueryClient();
@@ -78,8 +80,6 @@ export const PipelineTab = ({ roleId, openingsCount }: PipelineTabProps) => {
       reason: null,
     });
   };
-
-  const items = data?.items ?? [];
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -126,14 +126,14 @@ export const PipelineTab = ({ roleId, openingsCount }: PipelineTabProps) => {
 
       {!isLoading && !isError && viewMode === "board" && (
         <PipelineBoardView
-          items={items}
+          items={pipeline}
           onRequestStageChange={handleRequestStageChange}
         />
       )}
 
-      {!isLoading && !isError && viewMode === "list" && data && (
+      {!isLoading && !isError && viewMode === "list" && items && (
         <PipelineListView
-          pageResult={data}
+          pageResult={items}
           pageSize={pageSize}
           onPageChange={setPageNumber}
           onPageSizeChange={(size) => {
