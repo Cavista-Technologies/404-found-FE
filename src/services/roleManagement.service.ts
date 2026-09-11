@@ -48,8 +48,8 @@ export const fetchRoleTimeline = async (
 
 export const fetchApplicants = async (
   roleId: string,
-  pageNumber: number,
-  pageSize: number,
+  pageNumber: number = 1,
+  pageSize: number = 10,
 ): Promise<PaginatedResponse<ApplicantsResponse>> => {
   const params = builderQueryParams({
     pageNumber,

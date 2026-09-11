@@ -72,7 +72,7 @@ export const AdminRolesPage = () => {
   });
 
   const allRoles = roles?.items ?? [];
-  const totalItems = roles?.itemCount || 0;
+  const totalItems = roles?.totalCount || 0;
 
   const columns: Column<RolesTableValues>[] = [
     {
@@ -95,6 +95,10 @@ export const AdminRolesPage = () => {
       ),
     },
     {
+      header: "Openings",
+      accessor: "numberOfOpenings",
+    },
+    {
       header: "Status",
       accessor: (data) => (
         <span
@@ -107,6 +111,7 @@ export const AdminRolesPage = () => {
         </span>
       ),
     },
+    
     {
       header: "SLA%",
       accessor: (data) => (
@@ -119,10 +124,7 @@ export const AdminRolesPage = () => {
       ),
       width: "250px",
     },
-    {
-      header: "Openings",
-      accessor: "numberOfOpenings",
-    },
+    
     {
       header: "Priority",
       accessor: (data) => (
