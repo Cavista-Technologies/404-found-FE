@@ -15,7 +15,7 @@ import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getAvatarInitials } from "@/constants/Helpers";
 import { useState } from "react";
-import { PipelineTab } from "./PipelineTab";
+import { PipelineTab } from "./Pipeline/PipelineTab";
 import { ApplicantsTab } from "./ApplicantsTab";
 import { TimelineTab } from "./TimelineTab";
 import { Skeleton } from "@/components/ui/skeleton";

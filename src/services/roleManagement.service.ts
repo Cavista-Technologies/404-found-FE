@@ -2,6 +2,7 @@ import type { PaginatedResponse } from "@/types/ApiResponse";
 import type {
   ApplicantsResponse,
   ApplicantStageUpdate,
+  PipelineItem,
   RoleDetails,
   RolesTableValues,
   TimelineEntry,
@@ -36,11 +37,6 @@ export const fetchRoleDetails = async (id: string): Promise<RoleDetails> => {
   return response;
 };
 
-// export const fetchRolePipeline = async(id: string):Promise<>=>{
-//   const response = await httpClient.get<>(`/job-roles/$${id}/pipeline`)
-//   return response
-// }
-
 export const fetchRoleTimeline = async (
   roleId: string,
 ): Promise<TimelineEntry[]> => {
@@ -61,6 +57,18 @@ export const fetchApplicants = async (
   });
   const response = await httpClient.get<PaginatedResponse<ApplicantsResponse>>(
     `/job-roles/${roleId}/applicants?${params.toString()}`,
+  );
+  return response;
+};
+
+export const fetchPipeline = async (
+  roleId: string,
+  pageNumber: number,
+  pageSize: number,
+): Promise<PaginatedResponse<PipelineItem>> => {
+  const response = await httpClient.get<PaginatedResponse<PipelineItem>>(
+    `/job-roles/${roleId}/pipeline`,
+    { params: { pageNumber, pageSize } },
   );
   return response;
 };
