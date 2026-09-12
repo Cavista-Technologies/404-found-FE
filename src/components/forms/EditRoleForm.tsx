@@ -15,7 +15,7 @@ import { EmploymentTypeOptions, PriorityLevelOptions } from "@/constants";
 import { Textarea } from "../ui/textarea";
 import DatePicker from "../date-picker/DatePicker";
 import { useToast } from "@/context/toastContext";
-import { createNewRole } from "@/services/roleCreation.service";
+import { editRoleDetails } from "@/services/roleCreation.service";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -112,7 +112,7 @@ export const EditRoleForm = () => {
   const isTargetHireDateFilled = !!targetHireDate;
 
   const submitMutation = useMutation({
-    mutationFn: createNewRole,
+    mutationFn: editRoleDetails,
     onSuccess: (res) => {
       reset();
       showToast(res.message ?? "Role opened succesfully", "success");
