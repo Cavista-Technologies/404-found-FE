@@ -9,7 +9,7 @@ interface PipelineBoardViewProps {
   onRequestStageChange: (candidate: PipelineItem, toStage: number) => void;
 }
 
-export function PipelineBoardView({
+export function RecruiterPipelineBoardView({
   items,
   onRequestStageChange,
 }: PipelineBoardViewProps) {

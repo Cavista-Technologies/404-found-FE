@@ -18,10 +18,10 @@ import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getAvatarInitials } from "@/constants/Helpers";
 import { useState } from "react";
-import { PipelineTab } from "./PipelineTab";
 import { RecruiterApplicantsTab } from "./ApplicantsTab";
 import { RecruiterTimelineTab } from "./TimelineTab";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RecruiterPipelineTab } from "./RecruiterPipeline/PipelineTab";
 
 type RoleDetailTab = "pipeline" | "applicants" | "timeline";
 
@@ -294,7 +294,7 @@ export const RecruiteroleDetailPage = () => {
         </CardHeader>
 
         <CardContent>
-          {activeTab === "pipeline" && <PipelineTab roleId={id as string} />}
+          {activeTab === "pipeline" && <RecruiterPipelineTab roleId={id as string} />}
           {activeTab === "applicants" && (
             <RecruiterApplicantsTab roleId={id as string} />
           )}

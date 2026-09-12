@@ -14,7 +14,7 @@ interface PipelineListViewProps {
   onRequestStageChange: (candidate: PipelineItem, toStage: number) => void;
 }
 
-export function PipelineListView({
+export function RecruiterPipelineListView({
   pageResult,
   pageSize,
   onPageChange,

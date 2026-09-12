@@ -7,10 +7,10 @@ import { ArrowRight02, CancelSquare } from "@/components/icons";
 import { useToast } from "@/context/toastContext";
 import type { RootState } from "@/store";
 import { useSelector } from "react-redux";
-import { PipelineBoardView } from "./PipelineBoardView";
-import { PipelineListView } from "./PipelineListView";
 import { REJECTED_STAGE } from "@/constants";
 import type { PendingStageChange, PipelineItem } from "@/types/RoleManagement";
+import { RecruiterPipelineListView } from "./PipelineListView";
+import { RecruiterPipelineBoardView } from "./PipelineBoardView";
 
 interface PipelineTabProps {
   roleId: string;
@@ -21,7 +21,7 @@ type PipelineViewMode = "board" | "list";
 
 const BOARD_PAGE_SIZE = 100;
 
-export const PipelineTab = ({ roleId }: PipelineTabProps) => {
+export const RecruiterPipelineTab = ({ roleId }: PipelineTabProps) => {
   const [viewMode, setViewMode] = useState<PipelineViewMode>("board");
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -125,14 +125,14 @@ export const PipelineTab = ({ roleId }: PipelineTabProps) => {
       )}
 
       {!isLoading && !isError && viewMode === "board" && (
-        <PipelineBoardView
+        <RecruiterPipelineBoardView
           items={pipeline}
           onRequestStageChange={handleRequestStageChange}
         />
       )}
 
       {!isLoading && !isError && viewMode === "list" && items && (
-        <PipelineListView
+        <RecruiterPipelineListView
           pageResult={items}
           pageSize={pageSize}
           onPageChange={setPageNumber}
