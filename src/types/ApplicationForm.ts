@@ -153,7 +153,7 @@ export interface CandidateFormFieldDetail {
   fieldType: FieldTypeValue;
   isRequired: boolean;
   sortOrder: number;
-  options: FormFieldOption[];
+  options: string[];
 }
 
 export interface AnswerPayload {

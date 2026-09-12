@@ -43,7 +43,7 @@ export function DynamicField({ field, register, setValue, error, control }: Dyna
               onValueChange={onChange}
               placeholder={field.placeholder || "Select an option..."}
               dropDownValues={
-                field.options?.map((opt) => ({ id: opt.value, name: opt.label })) ?? []
+                field.options?.map((opt) => ({ id: opt, name: opt })) ?? []
               }
             />
           )}

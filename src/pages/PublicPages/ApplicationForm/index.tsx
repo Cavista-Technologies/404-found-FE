@@ -127,6 +127,7 @@ export function CandidateApplicationForm() {
                   field={field}
                   register={register}
                   setValue={setValue}
+                  control={control}
                   error={errors[fieldName(field)] as any}
                 />
               ))}
