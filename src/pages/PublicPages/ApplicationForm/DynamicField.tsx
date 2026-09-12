@@ -1,18 +1,20 @@
-import type { FieldError, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { Controller, type Control, type FieldError, type UseFormRegister, type UseFormSetValue } from "react-hook-form";
 import { type CandidateFormFieldDetail } from "@/types/ApplicationForm";
 import { FIELD_TYPE } from "@/constants/fieldTypes";
 import { fieldName } from "@/schemas/buildApplicationFormSchema";
 import { FieldWrapper, inputClass } from "./FieldWrapper";
 import { FileDropInput } from "./FileDropInput";
+import { DropdownInput } from "@/components/GenericComponents/DropdownInput";
 
 interface DynamicFieldProps {
   field: CandidateFormFieldDetail;
   register: UseFormRegister<any>;
   setValue: UseFormSetValue<any>;
+  control: Control<any>;
   error?: FieldError;
 }
 
-export function DynamicField({ field, register, setValue, error }: DynamicFieldProps) {
+export function DynamicField({ field, register, setValue, error, control }: DynamicFieldProps) {
   const name = fieldName(field);
 
   if (field.fieldType === FIELD_TYPE.LONG_TEXT) {
@@ -31,16 +33,21 @@ export function DynamicField({ field, register, setValue, error }: DynamicFieldP
   if (field.fieldType === FIELD_TYPE.DROPDOWN) {
     return (
       <FieldWrapper label={field.label} required={field.isRequired} error={error}>
-        <select {...register(name)} defaultValue="" className={inputClass(!!error)}>
-          <option value="" disabled>
-            {field.placeholder || "Select an option..."}
-          </option>
-          {field.options?.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        <Controller
+          name={name}
+          control={control}
+          defaultValue=""
+          render={({ field: { value, onChange } }) => (
+            <DropdownInput
+              value={value}
+              onValueChange={onChange}
+              placeholder={field.placeholder || "Select an option..."}
+              dropDownValues={
+                field.options?.map((opt) => ({ id: opt.value, name: opt.label })) ?? []
+              }
+            />
+          )}
+        />
       </FieldWrapper>
     );
   }
