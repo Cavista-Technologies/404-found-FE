@@ -1,4 +1,8 @@
-import type { CandidateFormFieldDetail, AnswerPayload, SubmitApplicationRequest } from "@/types/ApplicationForm";
+import type {
+  CandidateFormFieldDetail,
+  AnswerPayload,
+  SubmitApplicationRequest,
+} from "@/types/ApplicationForm";
 import { FIELD_TYPE } from "@/constants/fieldTypes";
 import { fieldName } from "@/schemas/buildApplicationFormSchema";
 
@@ -8,10 +12,12 @@ const STANDARD_MATCHERS: Record<"fullName" | "email" | "phone", RegExp> = {
   phone: /phone/i,
 };
 
-function standardKeyFor(field: CandidateFormFieldDetail): "fullName" | "email" | "phone" | null {
+function standardKeyFor(
+  field: CandidateFormFieldDetail,
+): "fullName" | "email" | "phone" | null {
   for (const [key, pattern] of Object.entries(STANDARD_MATCHERS) as [
     "fullName" | "email" | "phone",
-    RegExp
+    RegExp,
   ][]) {
     if (pattern.test(field.label)) return key;
   }
@@ -58,7 +64,12 @@ export function buildSubmissionPayload({
     else if (standardKey === "email") email = stringValue;
     else if (standardKey === "phone") phone = stringValue;
 
-    answers.push({ formFieldId: field.id, value: stringValue });
+    if (!standardKey) {
+      answers.push({
+        formFieldId: field.id,
+        value: stringValue,
+      });
+    }
   });
 
   return { body: { slug, source, fullName, email, phone, answers }, files };
