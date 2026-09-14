@@ -19,7 +19,7 @@ interface PipelineTabProps {
 
 type PipelineViewMode = "board" | "list";
 
-const BOARD_PAGE_SIZE = 100;
+const BOARD_PAGE_SIZE = 10;
 
 export const PipelineTab = ({ roleId }: PipelineTabProps) => {
   const [viewMode, setViewMode] = useState<PipelineViewMode>("board");

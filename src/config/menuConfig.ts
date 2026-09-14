@@ -4,6 +4,7 @@ import {
   PlusIcon,
   VueSaxLinearDiagram,
   LeftToRightListBullet,
+  Validation,
 } from "@/components/icons";
 import type { SVGProps } from "react";
 
@@ -39,6 +40,12 @@ export const menuItems: MenuItem[] = [
     name: "Roles",
     path: "/dashboard/admin/roles",
     icon: LeftToRightListBullet,
+    roles: "SuperAdmin",
+  },
+  {
+    name: "Approvals",
+    path: "/dashboard/admin/approvals",
+    icon: Validation,
     roles: "SuperAdmin",
   },
   {

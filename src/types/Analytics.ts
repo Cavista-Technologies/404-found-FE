@@ -1,7 +1,7 @@
 export interface ConversionTableValues {
-//   id: number;
-  source: string;
-  appliedCount: number;
-  hiredCount: number;
+  source: number;
+  sourceStr: string;
+  applied: number;
+  hired: number;
   conversionRate: number;
 }

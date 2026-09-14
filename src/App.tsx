@@ -15,6 +15,7 @@ import { RecruiterDashboard } from "./pages/RecruiterPages/RecruiterDashboard";
 import { RecruiterRoles } from "./pages/RecruiterPages/RecruiterRoles";
 import { RecruiterCreateRolePage } from "./pages/RecruiterPages/CreateRole";
 import { EditRolePage } from "./pages/AdminPages/EditRolePage";
+import { AdminApprovalsPage } from "./pages/AdminPages/Approvals";
 
 function App() {
   return (
@@ -50,6 +51,14 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles="SuperAdmin">
                   <CreateRolePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="approvals"
+              element={
+                <ProtectedRoute requiredRoles="SuperAdmin">
+                  <AdminApprovalsPage />
                 </ProtectedRoute>
               }
             />

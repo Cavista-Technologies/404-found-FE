@@ -15,14 +15,14 @@ export const fetchAllRoles = async (
   page: number,
   pageLength: number,
   jobStatus?: number,
-  departmentIds?: number,
+  departmentId?: number,
   searchString?: string,
 ): Promise<PaginatedResponse<RolesTableValues>> => {
   const params = builderQueryParams({
     page,
     pageLength,
     jobStatus,
-    departmentIds,
+    departmentId,
     searchString,
   });
   const response = await httpClient.get<PaginatedResponse<RolesTableValues>>(
@@ -128,4 +128,22 @@ export const downloadApplicantsResponse = async (
   }
 
   return { blob: response.data, filename };
+};
+
+export const fetchAllRolesByRecruiter = async (
+  page: number,
+  pageLength: number,
+  departmentId?: number,
+  searchString?: string,
+): Promise<PaginatedResponse<RolesTableValues>> => {
+  const params = builderQueryParams({
+    page,
+    pageLength,
+    departmentId,
+    searchString,
+  });
+  const response = await httpClient.get<PaginatedResponse<RolesTableValues>>(
+    `/job-roles/recruiter-roles?${params.toString()}`,
+  );
+  return response;
 };

@@ -17,6 +17,7 @@ export interface RolesTableValues {
   priority: number;
   priorityStr: string;
   numberOfOpenings: number;
+  dateSubmitted?: string;
   slaTargetDays: number;
   targetHireDate: string;
   slaPercent: number;

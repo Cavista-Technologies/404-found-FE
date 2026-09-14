@@ -8,6 +8,7 @@ import SingleBarChart from "@/components/charts/SingleBarChart";
 import { SingleAreaChart } from "@/components/charts/SingleAreaChart";
 import {
   fetchCandidateFunnelStatistics,
+  fetchConversionByChannel,
   fetchDashboardTimeToFillTrends,
 } from "@/services/adminDashboard.service";
 import { RangeComponent } from "@/components/rangeComponent/RangeComponent";
@@ -42,6 +43,10 @@ export const AnalyticsAndInsights = () => {
     queryKey: ["fetchCandidateFunnel"],
     queryFn: fetchCandidateFunnelStatistics,
   });
+  const { data: conversionStats = [] } = useQuery({
+    queryKey: ["fetchConversion"],
+    queryFn: fetchConversionByChannel,
+  });
 
   const funnelStageMap: {
     key: keyof CandidateFunnelStats;
@@ -64,55 +69,24 @@ export const AnalyticsAndInsights = () => {
   const monthlyTimeToFillTrend = timeToFillData?.monthlyTrend ?? [];
   const departmentTimeToFillTrend = timeToFillData?.byDepartment ?? [];
 
-  const dummyConversionData: ConversionTableValues[] = [
-    {
-      source: "LinkedIn",
-      appliedCount: 128,
-      hiredCount: 14,
-      conversionRate: 10.9,
-    },
-    {
-      source: "Company Website",
-      appliedCount: 96,
-      hiredCount: 9,
-      conversionRate: 9.4,
-    },
-    { source: "Indeed", appliedCount: 74, hiredCount: 5, conversionRate: 6.8 },
-    {
-      source: "Referral",
-      appliedCount: 42,
-      hiredCount: 11,
-      conversionRate: 26.2,
-    },
-    {
-      source: "Twitter/X",
-      appliedCount: 31,
-      hiredCount: 1,
-      conversionRate: 3.2,
-    },
-    //   { source: "Glassdoor", appliedCount: 27, hiredCount: 2, conversionRate: 7.4 },
-    //   { source: "Job Fair", appliedCount: 19, hiredCount: 3, conversionRate: 15.8 },
-    //   { source: "Other", appliedCount: 12, hiredCount: 0, conversionRate: 0 },
-  ];
-
   const columns: Column<ConversionTableValues>[] = [
     {
       header: "Source",
-      accessor: "source",
+      accessor: "sourceStr",
     },
     {
       header: "Applied",
-      accessor: "appliedCount",
+      accessor: "applied",
     },
     {
       header: "Hired",
       accessor: (data) => (
         <span
           className={cn(
-            data.hiredCount > 0 ? "text-success-500" : "text-grey-600",
+            data.hired > 0 ? "text-success-500" : "text-grey-600",
           )}
         >
-          {data.hiredCount}
+          {data.hired}
         </span>
       ),
     },
@@ -210,7 +184,7 @@ export const AnalyticsAndInsights = () => {
 
           <div className="px-4">
             <TableComponent
-              data={dummyConversionData}
+              data={conversionStats}
               columns={columns}
               // loading={isLoadingUsers}
               emptyMessage="No Data Yet"

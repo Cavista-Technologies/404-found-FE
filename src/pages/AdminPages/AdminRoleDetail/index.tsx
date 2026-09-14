@@ -3,7 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { ArrowLeft02 } from "@/components/icons";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { fetchApplicants, fetchPipeline, fetchRoleDetails } from "@/services/roleManagement.service";
+import {
+  fetchApplicants,
+  fetchPipeline,
+  fetchRoleDetails,
+} from "@/services/roleManagement.service";
 import { cn } from "@/lib/utils";
 import {
   formatDateTime,
@@ -19,6 +23,7 @@ import { PipelineTab } from "./Pipeline/PipelineTab";
 import { ApplicantsTab } from "./ApplicantsTab";
 import { TimelineTab } from "./TimelineTab";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Check } from "lucide-react";
 
 type RoleDetailTab = "pipeline" | "applicants" | "timeline";
 
@@ -41,14 +46,20 @@ export const RoleDetailPage = () => {
     enabled: !!id,
   });
   const { data: pipeline } = useQuery({
-    queryKey: ["job-role-applicants", id],
+    queryKey: ["job-role-pipeline", id],
     queryFn: () => fetchPipeline(id as string),
     enabled: !!id,
   });
 
+  console.log(pipeline?.totalCount);
+
   const tabs: { key: RoleDetailTab; label: string; count: number }[] = [
-    { key: "pipeline", label: "Pipeline", count: pipeline?.totalCount ?? 0},
-    { key: "applicants", label: "Applicants", count:  applicants?.totalCount ?? 0},
+    { key: "pipeline", label: "Pipeline", count: pipeline?.totalCount ?? 0 },
+    {
+      key: "applicants",
+      label: "Applicants",
+      count: applicants?.totalCount ?? 0,
+    },
   ];
 
   return (
@@ -112,12 +123,9 @@ export const RoleDetailPage = () => {
               )}
             </div>
 
-
-              
             {roleDetailsLoading ? (
-                <Skeleton className="w-30 h-8" />
-            )
-            :role?.statusStr === "Draft" ? (
+              <Skeleton className="w-30 h-8" />
+            ) : role?.statusStr === "Draft" ? (
               <div className="flex flex-col-reverse items-center gap-1">
                 <Button
                   variant="secondary"
@@ -131,17 +139,7 @@ export const RoleDetailPage = () => {
               </div>
             ) : (
               <div className="flex flex-col-reverse items-center gap-1">
-                {role?.hasApplicationForm ? (
-                  <Button
-                    variant="secondary"
-                    size="md"
-                    onClick={() =>
-                      navigate(`/dashboard/admin/roles/${id}/create-form`)
-                    }
-                  >
-                    View Application Form Builder
-                  </Button>
-                ) : (
+                {!role?.hasApplicationForm && (
                   <Button
                     variant="secondary"
                     size="md"
@@ -152,13 +150,25 @@ export const RoleDetailPage = () => {
                     Generate Application Form
                   </Button>
                 )}
-                {role?.applicationFormSlug && (
-                  <Link
-                    to={`/job/${role.applicationFormSlug}`}
-                    className="text-info text-sm underline"
-                  >
-                    View Application Form
-                  </Link>
+                {role?.statusStr === "Filled" && (
+                  <div className="rounded-lg py-2 px-3 bg-info-container border border-info text-info text-center flex items-center gap-2.5">
+                      <Check />
+                      <span>Role has been filled</span>
+                    </div>
+                )}
+                {role?.applicationFormSlug && role?.statusStr !== "Filled" && (
+                  <div className="flex gap-3">
+                    <div className="rounded-lg py-1.5 px-3 bg-success-25 border border-success-200 text-success-500 text-center flex items-center gap-2.5">
+                      <span className="text-4xl">&bull;</span>
+                      <span>Form is Live</span>
+                    </div>
+                    <Link
+                      to={`/job/${role.applicationFormSlug}`}
+                      className="bg-primary-50 border border-primary-100 rounded-[10px] py-1.5 px-4 text-sm text-primary flex items-center justify-center"
+                    >
+                      View Public Application Form
+                    </Link>
+                  </div>
                 )}
               </div>
             )}

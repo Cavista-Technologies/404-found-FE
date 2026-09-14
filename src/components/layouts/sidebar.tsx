@@ -4,7 +4,6 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronUp,
 } from "lucide-react";
 import { CTRecruitaLogoWithText, CTMobileLogo } from "@/assets/images/images";
 import { Logout03 } from "@/components/icons";
@@ -17,7 +16,6 @@ import { clearCredentials } from "@/store/slices/auth.slice";
 import { capitalizeName, getAvatarInitials } from "../../constants/Helpers";
 import {
   Popover,
-  PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 
@@ -244,66 +242,26 @@ export function Sidebar() {
         </div>
 
         <div className="flex flex-col gap-6">
-          {!open ? (
-            <Popover open={openPopover} onOpenChange={setOpenPopover}>
-              <PopoverTrigger asChild>
-                <div className="rounded-full w-12 h-12 bg-[#414141] text-white font-poppins font-medium flex justify-center items-center cursor-pointer">
+          <Popover open={openPopover} onOpenChange={setOpenPopover}>
+            <PopoverTrigger asChild>
+              <div className="w-full h-18 p-3 pr-8 bg-grey-50 rounded-[10px] flex gap-3 items-center cursor-pointer">
+                <div className="shrink-0 rounded-full w-8 h-8 bg-[#414141] text-white font-poppins font-medium flex justify-center items-center">
                   {getAvatarInitials(fullName!)}
                 </div>
-              </PopoverTrigger>
-              <PopoverContent
-                align="start"
-                side="top"
-                sideOffset={4}
-                className="p-4 bg-white rounded-3xl border border-grey-200 shadow-md w-70 max-w-72 flex flex-col gap-3"
-              >
-                <div
-                  className="p-3 text-primary-500 font-poppins flex items-center gap-2 text-base cursor-pointer hover:bg-primary-50 rounded-3xl"
-                  onClick={logOut}
-                >
-                  <Logout03 className="size-6" />
-                  <span>Log Out</span>
+                <div className="flex flex-col">
+                  <h4 className="text-grey-900 font-medium text-sm font-poppins">
+                    {capitalizeName(fullName ?? " ")}
+                  </h4>
+                  <span className="text-grey-500 text-xs font-poppins font-medium max-w-31.75 truncate">
+                    {username}
+                  </span>
                 </div>
-              </PopoverContent>
-            </Popover>
-          ) : (
-            <Popover open={openPopover} onOpenChange={setOpenPopover}>
-              <PopoverTrigger asChild>
-                <div className="w-full h-18 p-3 pr-8 bg-grey-50 rounded-[10px] flex gap-3 items-center cursor-pointer">
-                  <div className="shrink-0 rounded-full w-8 h-8 bg-[#414141] text-white font-poppins font-medium flex justify-center items-center">
-                    {getAvatarInitials(fullName!)}
-                  </div>
-                  <div className="flex flex-col">
-                    <h4 className="text-grey-900 font-medium text-sm font-poppins">
-                      {capitalizeName(fullName ?? " ")}
-                    </h4>
-                    <span className="text-grey-500 text-xs font-poppins font-medium max-w-31.75 truncate">
-                      {username}
-                    </span>
-                  </div>
-                  {openPopover ? (
-                    <ChevronUp className="size-6 shrink-0 text-[#1E1E1E]" />
-                  ) : (
-                    <ChevronDown className="size-6 shrink-0 text-[#1E1E1E]" />
-                  )}
+                <div className="" onClick={logOut}>
+                  <Logout03 className="size-6 text-primary" />
                 </div>
-              </PopoverTrigger>
-              <PopoverContent
-                align="start"
-                side="top"
-                sideOffset={4}
-                className="p-4 bg-white rounded-3xl border border-grey-200 shadow-md w-70 max-w-72 flex flex-col gap-3"
-              >
-                <div
-                  className="p-3 text-primary-500 font-poppins flex items-center gap-2 text-base cursor-pointer hover:rounded-[10px] hover:bg-primary-50 rounded-3xl"
-                  onClick={logOut}
-                >
-                  <Logout03 className="size-6" />
-                  <span>Log Out</span>
-                </div>
-              </PopoverContent>
-            </Popover>
-          )}
+              </div>
+            </PopoverTrigger>
+          </Popover>
         </div>
       </div>
 

@@ -213,7 +213,7 @@ export const EditRoleForm = () => {
                                   </FieldLabel>
                                   <DropdownInput
                                     value={field.value}
-                                    placeholder="Select account type"
+                                    placeholder="Select department"
                                     dropDownValues={DepartmentList}
                                     loading={departmentLoading}
                                     onValueChange={(value) => {

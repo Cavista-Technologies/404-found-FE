@@ -58,7 +58,7 @@ export const JobStatusOptions = [
 export const SourceOptions = [
   { name: "Direct", id: "1" },
   { name: "LinkedIn", id: "2" },
-  { name: "CareersPage", id: "3" },
+  { name: "Careers Page", id: "3" },
   { name: "Indeed", id: "4" },
   { name: "Referral", id: "5" },
   { name: "Twitter", id: "6" },
