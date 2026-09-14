@@ -43,10 +43,14 @@ export const AnalyticsAndInsights = () => {
     queryKey: ["fetchCandidateFunnel"],
     queryFn: fetchCandidateFunnelStatistics,
   });
-  const { data: conversionStats = [] } = useQuery({
+  const { data: conversionData } = useQuery({
     queryKey: ["fetchConversion"],
     queryFn: fetchConversionByChannel,
   });
+
+  const conversionStats = conversionData?.channels ?? [];
+// const conversionInsight = conversionData?.insight ?? null;
+const conversionInsight = "Referrals convert better";
 
   const funnelStageMap: {
     key: keyof CandidateFunnelStats;
@@ -156,7 +160,7 @@ export const AnalyticsAndInsights = () => {
           loading={timeToFillLoading}
         />
 
-        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6">
+        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit pb-10">
           <div className="border-b border-grey-200 px-4 py-3">
             <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
               Candidate Funnel
@@ -175,7 +179,7 @@ export const AnalyticsAndInsights = () => {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit max-h-127">
+        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit">
           <div className="border-b border-grey-200 px-4 py-3">
             <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
               Conversion rate: Applied → Hired by channel
@@ -193,7 +197,13 @@ export const AnalyticsAndInsights = () => {
               headerClassName="bg-grey-100 text-right"
               showPagination={false}
             />
+          {conversionInsight && (
+            <div className="bg-success-50 p-4 rounded-lg my-8">
+              <p className="text-success-500 text-sm">{conversionInsight}</p>
+            </div>
+          )}
           </div>
+
         </div>
       </div>
     </div>

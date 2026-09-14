@@ -4,7 +4,7 @@ import type {
   TimeToFillTrends,
 } from "@/types/AdminDashboard";
 import { httpClient } from "./httpClient";
-import type { ConversionTableValues } from "@/types/Analytics";
+import type { ConversionByChannelResponse} from "@/types/Analytics";
 
 export const fetchDashboardSnapshotStatistics =
   async (): Promise<AdminSnapshotStatistics> => {
@@ -29,8 +29,8 @@ export const fetchCandidateFunnelStatistics =
   };
 
 export const fetchConversionByChannel =
-  async (): Promise<ConversionTableValues> => {
-    const response = await httpClient.get<ConversionTableValues>(
+  async (): Promise<ConversionByChannelResponse> => {
+    const response = await httpClient.get<ConversionByChannelResponse>(
       `/dashboard/conversion-by-channel`,
     );
     return response;
