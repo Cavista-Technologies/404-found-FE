@@ -6,6 +6,7 @@ import { Pagination } from "@/components/layouts/Pagination";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { formatDateTime, getAvatarInitials } from "@/constants/Helpers";
 import {
+  downloadApplicantsResponse,
   fetchApplicants,
   updateApplicantStage,
 } from "@/services/roleManagement.service";
@@ -17,6 +18,7 @@ import ConfirmModal from "@/components/GenericComponents/ConfirmModal";
 import { useToast } from "@/context/toastContext";
 import type { RootState } from "@/store";
 import { useSelector } from "react-redux";
+import type { ApiEnvelope } from "@/services/httpClient";
 
 interface ApplicantsTabProps {
   roleId: string;
@@ -39,9 +41,7 @@ const STAGE_COLORS: Record<number, string> = {
   7: "text-[#A8A3A4]", // Withdrawn
 };
 
-export const ApplicantsTab = ({
-  roleId,
-}: ApplicantsTabProps) => {
+export const ApplicantsTab = ({ roleId }: ApplicantsTabProps) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -75,6 +75,23 @@ export const ApplicantsTab = ({
     },
   });
 
+  const downloadResponseMutation = useMutation({
+    mutationFn: (id: number) => downloadApplicantsResponse(id),
+    onSuccess: ({ blob, filename }) => {
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    },
+    onError: (error: ApiEnvelope<any>) => {
+      showToast(`${error.message}`, "error");
+    },
+  });
+
   const handleConfirmStageChange = () => {
     if (!pendingStageChange || !userId) return;
 
@@ -102,8 +119,12 @@ export const ApplicantsTab = ({
             <p className="text-grey-600 text-base font-normal">
               All Applicants via form
             </p>
-            <Button variant="ghost" size="sm">
-              Preview Form
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => downloadResponseMutation.mutate(Number(roleId))}
+            >
+              Export Response
             </Button>
           </div>
         )}
@@ -284,7 +305,7 @@ export const ApplicantsTab = ({
           type="success"
           isLoading={updateMutation.isPending}
         />
-        
+
         <ConfirmModal
           isOpen={!!pendingStageChange && isRejection}
           onConfirm={handleConfirmStageChange}

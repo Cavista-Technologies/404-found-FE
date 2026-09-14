@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { ArrowLeft02 } from "@/components/icons";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { fetchApplicants, fetchRoleDetails } from "@/services/roleManagement.service";
+import { fetchApplicants, fetchPipeline, fetchRoleDetails } from "@/services/roleManagement.service";
 import { cn } from "@/lib/utils";
 import {
   formatDateTime,
@@ -40,9 +40,14 @@ export const RoleDetailPage = () => {
     queryFn: () => fetchApplicants(id as string),
     enabled: !!id,
   });
+  const { data: pipeline } = useQuery({
+    queryKey: ["job-role-applicants", id],
+    queryFn: () => fetchPipeline(id as string),
+    enabled: !!id,
+  });
 
   const tabs: { key: RoleDetailTab; label: string; count: number }[] = [
-    { key: "pipeline", label: "Pipeline", count: 4 },
+    { key: "pipeline", label: "Pipeline", count: pipeline?.totalCount ?? 0},
     { key: "applicants", label: "Applicants", count:  applicants?.totalCount ?? 0},
   ];
 

@@ -102,7 +102,7 @@ export interface BoardColumn {
 // endpoint ever returns them here. Flag if that needs a column too.
 export const PIPELINE_BOARD_COLUMNS: BoardColumn[] = [
   { value: 1, label: "Applied", columnBg: "#FCFCFC", columnBorder: "#E9E8E8" },
-  { value: 2, label: "Screen", columnBg: "#F0F1FE", columnBorder: "#C5C8FC" },
+  // { value: 2, label: "Screen", columnBg: "#F0F1FE", columnBorder: "#C5C8FC" },
   { value: 3, label: "Interview", columnBg: "#FDF9F1", columnBorder: "#F4DDB4" },
   { value: 4, label: "Offer", columnBg: "#F0F1FE", columnBorder: "#C5C8FC" },
   { value: 5, label: "Hired", columnBg: "#F4FAF6", columnBorder: "#B5DFC3" },
