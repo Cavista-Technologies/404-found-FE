@@ -12,12 +12,15 @@ export const exportTabAsPDF = async (
     return;
   }
 
+  const rect = root.getBoundingClientRect();
+  
   const clone = root.cloneNode(true) as HTMLElement;
   clone.style.position = "fixed";
   clone.style.top = "0";
   clone.style.left = "-10000px"; 
   clone.style.zIndex = "-1";
   clone.style.pointerEvents = "none";
+  clone.style.width = `${rect.width}px`; 
   document.body.appendChild(clone);
 
   clone.querySelectorAll<HTMLElement>(".no-export").forEach((el) => {
