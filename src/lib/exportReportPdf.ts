@@ -12,17 +12,22 @@ export const exportTabAsPDF = async (
     return;
   }
 
-  const restore: Array<{ el: HTMLElement; display: string }> = [];
+  const clone = root.cloneNode(true) as HTMLElement;
+  clone.style.position = "fixed";
+  clone.style.top = "0";
+  clone.style.left = "-10000px"; 
+  clone.style.zIndex = "-1";
+  clone.style.pointerEvents = "none";
+  document.body.appendChild(clone);
 
-  root.querySelectorAll<HTMLElement>(".no-export").forEach((el) => {
-    restore.push({ el, display: el.style.display });
+  clone.querySelectorAll<HTMLElement>(".no-export").forEach((el) => {
     el.style.display = "none";
   });
 
-  root.querySelectorAll<HTMLElement>(".pdf-only").forEach((el) => {
-    restore.push({ el, display: el.style.display });
+  clone.querySelectorAll<HTMLElement>(".pdf-only").forEach((el) => {
     el.style.display = "block";
   });
+
 
   try {
     const pdf = new jsPDF("p", "mm", "a4");
@@ -35,7 +40,7 @@ export const exportTabAsPDF = async (
     const blocks = Array.from(
       root.querySelectorAll<HTMLElement>(".export-block"),
     );
-    const pages: HTMLElement[] = blocks.length ? blocks : [root];
+    const pages: HTMLElement[] = blocks.length ? blocks : [clone];
 
     let isFirstPage = true;
 
@@ -69,8 +74,6 @@ export const exportTabAsPDF = async (
   } catch (err) {
     console.error("[exportTabAsPDF] Export failed:", err);
   } finally {
-    restore.forEach(({ el, display }) => {
-      el.style.display = display;
-    });
+     document.body.removeChild(clone); 
   }
 };
