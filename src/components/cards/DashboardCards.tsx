@@ -1,4 +1,4 @@
-import { ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface DashboardCardProps {
@@ -45,15 +45,17 @@ export const DashboardCards: React.FC<DashboardCardProps> = ({
           {trend && (
             <p className="text-base text-grey-500 font-medium leading-6">
               {trendValue > 0 && (
-                <span className="text-success">
-                  {trendValue}d <ArrowUp />
+                <span className="text-success flex items-center">
+                  {trendValue}d <ArrowUp className="size-4" />
                 </span>
               )}
               {trendValue === 0 && (
                 <span className="text-success">{trendValue}d </span>
               )}
               {trendValue < 0 && (
-                <span className="text-primary">{trendValue}d </span>
+                <span className="text-primary flex items-center">
+                  {trendValue}d <ArrowDown className="size-3.5" />{" "}
+                </span>
               )}
             </p>
           )}

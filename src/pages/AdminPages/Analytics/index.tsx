@@ -18,6 +18,7 @@ import {
 } from "@/components/GenericComponents/TableComponents";
 import type { ConversionTableValues } from "@/types/Analytics";
 import { cn } from "@/lib/utils";
+import { exportTabAsPDF } from "@/lib/exportReportPdf";
 
 interface CandidateFunnelStats {
   applicants: number;
@@ -29,6 +30,7 @@ interface CandidateFunnelStats {
 
 export const AnalyticsAndInsights = () => {
   const [department, setDepartment] = useState("all");
+   const [isExporting, setIsExporting] = useState(false);
 
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
     queryKey: ["getDepartments"],
@@ -49,8 +51,7 @@ export const AnalyticsAndInsights = () => {
   });
 
   const conversionStats = conversionData?.channels ?? [];
-// const conversionInsight = conversionData?.insight ?? null;
-const conversionInsight = "Referrals convert better";
+const conversionInsight = conversionData?.insight ?? null;
 
   const funnelStageMap: {
     key: keyof CandidateFunnelStats;
@@ -72,6 +73,17 @@ const conversionInsight = "Referrals convert better";
 
   const monthlyTimeToFillTrend = timeToFillData?.monthlyTrend ?? [];
   const departmentTimeToFillTrend = timeToFillData?.byDepartment ?? [];
+
+   const handleExport = async () => {
+    if (isExporting) return;
+    setIsExporting(true);
+
+    const elementId = "Talent Acquisition Metrics";
+    const filename = "CT-Recruita Report.pdf";
+
+    await exportTabAsPDF(elementId, filename);
+    setIsExporting(false);
+  };
 
   const columns: Column<ConversionTableValues>[] = [
     {
@@ -135,13 +147,13 @@ const conversionInsight = "Referrals convert better";
             }}
           />
 
-          <Button variant="outline" size="sm">
+          <Button variant="default" size="sm" onClick={handleExport}>
             Export Report
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-8" id="Talent Acquisition Metrics">
         <SingleAreaChart
           title="Time to fill trends: 6 months"
           titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
