@@ -1,7 +1,5 @@
-
 import domtoimage from "dom-to-image";
 import jsPDF from "jspdf";
-
 
 export const exportTabAsPDF = async (
   elementId: string,

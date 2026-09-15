@@ -19,6 +19,7 @@ import {
 import type { ConversionTableValues } from "@/types/Analytics";
 import { cn } from "@/lib/utils";
 import { exportTabAsPDF } from "@/lib/exportReportPdf";
+import { ReportPdfHeader } from "@/components/ReportHeader";
 
 interface CandidateFunnelStats {
   applicants: number;
@@ -30,7 +31,7 @@ interface CandidateFunnelStats {
 
 export const AnalyticsAndInsights = () => {
   const [department, setDepartment] = useState("all");
-   const [isExporting, setIsExporting] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const { data: DepartmentList = [], isLoading: departmentLoading } = useQuery({
     queryKey: ["getDepartments"],
@@ -51,7 +52,7 @@ export const AnalyticsAndInsights = () => {
   });
 
   const conversionStats = conversionData?.channels ?? [];
-const conversionInsight = conversionData?.insight ?? null;
+  const conversionInsight = conversionData?.insight ?? null;
 
   const funnelStageMap: {
     key: keyof CandidateFunnelStats;
@@ -74,11 +75,11 @@ const conversionInsight = conversionData?.insight ?? null;
   const monthlyTimeToFillTrend = timeToFillData?.monthlyTrend ?? [];
   const departmentTimeToFillTrend = timeToFillData?.byDepartment ?? [];
 
-   const handleExport = async () => {
+  const handleExport = async () => {
     if (isExporting) return;
     setIsExporting(true);
 
-    const elementId = "Talent Acquisition Metrics";
+    const elementId = "talent-acquisition-metrics";
     const filename = "CT-Recruita Report.pdf";
 
     await exportTabAsPDF(elementId, filename);
@@ -98,9 +99,7 @@ const conversionInsight = conversionData?.insight ?? null;
       header: "Hired",
       accessor: (data) => (
         <span
-          className={cn(
-            data.hired > 0 ? "text-success-500" : "text-grey-600",
-          )}
+          className={cn(data.hired > 0 ? "text-success-500" : "text-grey-600")}
         >
           {data.hired}
         </span>
@@ -153,69 +152,73 @@ const conversionInsight = conversionData?.insight ?? null;
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-8" id="Talent Acquisition Metrics">
-        <SingleAreaChart
-          title="Time to fill trends: 6 months"
-          titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
-          data={monthlyTimeToFillTrend}
-          labelKey="month"
-          valueKey="averageDays"
-          loading={timeToFillLoading}
-        />
-        <SingleBarChart
-          title="Average Time to fill by departments"
-          data={departmentTimeToFillTrend}
-          labelKey="department"
-          valueKey="averageDays"
-          noCartesianGrid
-          titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
-          loading={timeToFillLoading}
-        />
+      <div id="talent-acquisition-metrics">
+        <ReportPdfHeader tabLabel="Talent Acquisition Metrics" />
+        <div className="grid grid-cols-2 gap-8">
+          <SingleAreaChart
+            title="Time to fill trends: 6 months"
+            titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
+            data={monthlyTimeToFillTrend}
+            labelKey="month"
+            valueKey="averageDays"
+            loading={timeToFillLoading}
+          />
+          <SingleBarChart
+            title="Average Time to fill by departments"
+            data={departmentTimeToFillTrend}
+            labelKey="department"
+            valueKey="averageDays"
+            noCartesianGrid
+            titleClassName="text-grey-600 font-medium font-poppins text-lg leading-7"
+            loading={timeToFillLoading}
+          />
 
-        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit pb-10">
-          <div className="border-b border-grey-200 px-4 py-3">
-            <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
-              Candidate Funnel
-            </h3>
-          </div>
-
-          <div className="flex flex-col gap-6 px-4">
-            {candidateFunnel.map((item) => (
-              <RangeComponent
-                key={item.title}
-                title={item.title}
-                value={item.value}
-                total={totalApplicants}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit">
-          <div className="border-b border-grey-200 px-4 py-3">
-            <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
-              Conversion rate: Applied → Hired by channel
-            </h3>
-          </div>
-
-          <div className="px-4">
-            <TableComponent
-              data={conversionStats}
-              columns={columns}
-              // loading={isLoadingUsers}
-              emptyMessage="No Data Yet"
-              emptySubMessage="No data to show yet"
-              loadingRows={10}
-              headerClassName="bg-grey-100 text-right"
-              showPagination={false}
-            />
-          {conversionInsight && (
-            <div className="bg-success-50 p-4 rounded-lg my-8">
-              <p className="text-success-500 text-sm">{conversionInsight}</p>
+          <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit pb-10">
+            <div className="border-b border-grey-200 px-4 py-3">
+              <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
+                Candidate Funnel
+              </h3>
             </div>
-          )}
+
+            <div className="flex flex-col gap-6 px-4">
+              {candidateFunnel.map((item) => (
+                <RangeComponent
+                  key={item.title}
+                  title={item.title}
+                  value={item.value}
+                  total={totalApplicants}
+                />
+              ))}
+            </div>
           </div>
 
+          <div className="rounded-2xl bg-white overflow-hidden flex flex-col gap-6 h-fit">
+            <div className="border-b border-grey-200 px-4 py-3">
+              <h3 className="text-grey-600 font-medium text-lg leading-7 font-poppins">
+                Conversion rate: Applied → Hired by channel
+              </h3>
+            </div>
+
+            <div className="px-4">
+              <TableComponent
+                data={conversionStats}
+                columns={columns}
+                // loading={isLoadingUsers}
+                emptyMessage="No Data Yet"
+                emptySubMessage="No data to show yet"
+                loadingRows={10}
+                headerClassName="bg-grey-100 text-right"
+                showPagination={false}
+              />
+              {conversionInsight && (
+                <div className="bg-success-50 p-4 rounded-lg my-8">
+                  <p className="text-success-500 text-sm">
+                    {conversionInsight}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

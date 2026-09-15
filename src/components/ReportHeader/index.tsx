@@ -59,7 +59,7 @@ export const ReportPdfHeader: React.FC<ReportPdfHeaderProps> = ({
           color: "#b9243c",
         }}
       >
-        Cavista Technologies
+        Cavista Technologies Talent Team
       </p>
 
       <div

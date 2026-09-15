@@ -101,3 +101,7 @@
     @apply border-border outline-ring/50;
   } */
 }
+
+.pdf-only {
+  display: none;
+}
