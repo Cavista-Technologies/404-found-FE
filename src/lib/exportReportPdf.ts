@@ -1,9 +1,10 @@
-import domtoimage from "dom-to-image";
+// import domtoimage from "dom-to-image";
+import domtoimage from "dom-to-image-more";
 import jsPDF from "jspdf";
 
 export const exportTabAsPDF = async (
   elementId: string,
-  filename: string = "report.pdf"
+  filename: string = "report.pdf",
 ): Promise<void> => {
   const root = document.getElementById(elementId);
   if (!root) {
@@ -25,19 +26,20 @@ export const exportTabAsPDF = async (
 
   try {
     const pdf = new jsPDF("p", "mm", "a4");
-    const pageWidth = pdf.internal.pageSize.getWidth();   // 210 mm
+    const pageWidth = pdf.internal.pageSize.getWidth(); // 210 mm
     const pageHeight = pdf.internal.pageSize.getHeight(); // 297 mm
     const margin = 8; // mm
     const maxW = pageWidth - margin * 2;
     const maxH = pageHeight - margin * 2;
 
-    const blocks = Array.from(root.querySelectorAll<HTMLElement>(".export-block"));
+    const blocks = Array.from(
+      root.querySelectorAll<HTMLElement>(".export-block"),
+    );
     const pages: HTMLElement[] = blocks.length ? blocks : [root];
 
     let isFirstPage = true;
 
     for (const pageEl of pages) {
-    
       const dataUrl = await domtoimage.toPng(pageEl, { scale: 2 } as any);
 
       const img = new Image();
@@ -46,17 +48,14 @@ export const exportTabAsPDF = async (
         img.src = dataUrl;
       });
 
-    
       const pxPerMm = 3.7795275591;
-      const wMm = img.width / pxPerMm / 2;  
+      const wMm = img.width / pxPerMm / 2;
       const hMm = img.height / pxPerMm / 2;
 
-    
       const scale = Math.min(maxW / wMm, maxH / hMm, 1);
       const drawW = wMm * scale;
       const drawH = hMm * scale;
 
-    
       const x = margin + (maxW - drawW) / 2;
       const y = margin;
 
@@ -70,7 +69,6 @@ export const exportTabAsPDF = async (
   } catch (err) {
     console.error("[exportTabAsPDF] Export failed:", err);
   } finally {
-  
     restore.forEach(({ el, display }) => {
       el.style.display = display;
     });

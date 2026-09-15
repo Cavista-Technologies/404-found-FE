@@ -27,6 +27,7 @@
     "cn": "^0.2.5",
     "date-fns": "^4.1.0",
     "dom-to-image": "^2.6.0",
+    "dom-to-image-more": "^3.10.2",
     "dompurify": "^3.4.15",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.33.0",
